@@ -18,6 +18,7 @@ class LoginActivity : AppCompatActivity() {
     private val viewModel by lazy {
         LoginViewModel(auth)
     }
+    var time: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +39,16 @@ class LoginActivity : AppCompatActivity() {
                 finish()
             }
         })
+    }
+
+    override fun onBackPressed() {
+        if (System.currentTimeMillis() > time + 1000) {
+            time = System.currentTimeMillis()
+            return
+        }
+        if (System.currentTimeMillis() <= time + 1000) {
+            finishAffinity()
+        }
     }
 
 //    private fun moveHomeActivity(user: FirebaseUser?) {
