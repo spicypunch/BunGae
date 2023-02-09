@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "381501275647",
+    "project_id": "bungae-8ed15",
+    "storage_bucket": "bungae-8ed15.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:381501275647:android:da7348e2f69820852afbca",
+        "android_client_info": {
+          "package_name": "com.example.bungae"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "381501275647-t9facdfqr3htdfej12vqt4ssjitrnj57.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bungae",
+            "certificate_hash": "1ab3fa9de6070ea9d1f413b435c591d99b1dcd56"
+          }
+        },
+        {
+          "client_id": "381501275647-mld7jrbs2c6ed22mnv1k7ll0jh8g3022.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXG87nEVTuGRmkL9EnEaCvQpCrwu7ZPH8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "381501275647-mld7jrbs2c6ed22mnv1k7ll0jh8g3022.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
