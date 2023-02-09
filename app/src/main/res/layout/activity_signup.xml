@@ -13,6 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="200dp"
         android:ems="13"
+        android:inputType="textEmailAddress"
         android:hint="test@example.com" />
 
     <EditText
@@ -35,6 +36,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="15dp"
         android:ems="13"
+        android:inputType="textPassword"
         android:hint="비밀번호" />
 
     <EditText
@@ -46,6 +48,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="15dp"
         android:ems="13"
+        android:inputType="textPassword"
         android:hint="비밀번호 확인" />
 
     <Button

@@ -2,6 +2,7 @@ package com.example.bungae.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -12,8 +13,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
 class LoginActivity : AppCompatActivity() {
-    lateinit var binding : ActivityLoginBinding
-    private var auth: FirebaseAuth? = FirebaseAuth.getInstance()
+    lateinit var binding: ActivityLoginBinding
+    private val auth: FirebaseAuth? = FirebaseAuth.getInstance()
     private val viewModel by lazy {
         LoginViewModel(auth)
     }
@@ -31,30 +32,17 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this, SignUpActivity::class.java))
         }
 
-        viewModel.success.observe(this, Observer { it ->
-            if (it) {
-                Toast.makeText(baseContext, "로그인에 성공 하였습니다.", Toast.LENGTH_SHORT).show()
-                moveHomeActivity(auth?.currentUser)
-            } else {
-                Toast.makeText(baseContext, "로그인에 실패 하였습니다.", Toast.LENGTH_SHORT).show()
+        viewModel.message.observe(this, Observer { it ->
+            Toast.makeText(baseContext, it, Toast.LENGTH_SHORT).show()
+            if (it == "로그인에 성공하였습니다.") {
+                finish()
             }
         })
     }
-//    private fun signIn(email: String, passwd:String) {
-//        auth?.signInWithEmailAndPassword(email, passwd)
-//            ?.addOnCompleteListener(this) { task ->
-//                if (task.isSuccessful) {
-//                    Toast.makeText(baseContext, "로그인에 성공 하였습니다.", Toast.LENGTH_SHORT).show()
-//                    moveHomeActivity(auth?.currentUser)
-//                } else {
-//                    Toast.makeText(baseContext, "로그인에 실패 하였습니다.", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//    }
 
-    private fun moveHomeActivity(user: FirebaseUser?) {
-        if (user != null) {
-            startActivity(Intent(this, MainActivity::class.java))
-        }
-    }
+//    private fun moveHomeActivity(user: FirebaseUser?) {
+//        if (user != null) {
+//            startActivity(Intent(this, MainActivity::class.java))
+//        }
+//    }
 }
