@@ -1,5 +1,6 @@
 package com.example.bungae.ui.mypage
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,14 +9,16 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.bungae.databinding.FragmentMypageBinding
+import com.example.bungae.ui.login.LoginActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class MypageFragment : Fragment() {
 
     private var _binding: FragmentMypageBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +35,15 @@ class MypageFragment : Fragment() {
         mypageViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
+
+        binding.btnLogout.setOnClickListener {
+            auth.signOut()
+            startActivity(Intent(activity, LoginActivity::class.java))
+        }
+
         return root
+
+
     }
 
     override fun onDestroyView() {

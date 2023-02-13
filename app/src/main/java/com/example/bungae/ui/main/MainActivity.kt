@@ -12,9 +12,11 @@ import com.example.bungae.R
 import com.example.bungae.databinding.ActivityMainBinding
 import com.example.bungae.ui.login.LoginActivity
 import com.example.bungae.ui.signup.SignUpActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +42,9 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        startActivity(Intent(this, LoginActivity::class.java))
+        if (auth.currentUser == null) {
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
+
     }
 }
