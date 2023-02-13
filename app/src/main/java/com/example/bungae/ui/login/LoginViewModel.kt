@@ -5,24 +5,28 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 
-class LoginViewModel(private val auth: FirebaseAuth?) : ViewModel() {
+class LoginViewModel(private val auth: FirebaseAuth) : ViewModel() {
 
-    private var _message = MutableLiveData<String>()
-    val message: LiveData<String>
+    private var _message = MutableLiveData<Boolean>()
+    val message: LiveData<Boolean>
         get() = _message
+
+    private var _success = MutableLiveData<Boolean>()
+    val success: LiveData<Boolean>
+        get() = _success
+
+    init {
+        _success.value = true
+    }
 
     fun signIn(email: String, passwd:String) {
         if (email.isNotEmpty() && passwd.isNotEmpty()) {
-            auth?.signInWithEmailAndPassword(email, passwd)
-                ?.addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        _message.value = "로그인에 성공하였습니다."
-                    } else {
-                        _message.value = "로그인에 실패하였습니다."
-                    }
+            auth.signInWithEmailAndPassword(email, passwd)
+                .addOnCompleteListener { task ->
+                    _message.value = task.isSuccessful
                 }
         } else {
-            _message.value = "빈칸을 채워주세요!"
+            _success.value = false
         }
     }
 }

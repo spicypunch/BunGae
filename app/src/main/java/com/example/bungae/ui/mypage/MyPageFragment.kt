@@ -12,7 +12,7 @@ import com.example.bungae.databinding.FragmentMypageBinding
 import com.example.bungae.ui.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 
-class MypageFragment : Fragment() {
+class MyPageFragment : Fragment() {
 
     private var _binding: FragmentMypageBinding? = null
 
@@ -25,16 +25,13 @@ class MypageFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val mypageViewModel =
-            ViewModelProvider(this).get(MypageViewModel::class.java)
+        val myPageViewModel =
+            ViewModelProvider(this).get(MyPageViewModel::class.java)
 
         _binding = FragmentMypageBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textMypage
-        mypageViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+
 
         binding.btnLogout.setOnClickListener {
             auth.signOut()
