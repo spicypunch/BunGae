@@ -26,6 +26,7 @@ class LoginActivity : AppCompatActivity() {
             // 1초 안에 두 번 누르면 앱 종료
             if (System.currentTimeMillis() > time + 1000) {
                 time = System.currentTimeMillis()
+                Toast.makeText(baseContext, "앱을 종료하려면 뒤로 버튼을 두 번 눌러주세요", Toast.LENGTH_SHORT).show()
                 return
             }
             if (System.currentTimeMillis() <= time + 1000) {
@@ -49,16 +50,16 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel.message.observe(this, Observer { it ->
             if (it) {
-                Toast.makeText(baseContext, "로그인 되었습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "로그인 되었습니다.", Toast.LENGTH_SHORT).show()
                 finish()
             } else {
-                Toast.makeText(baseContext, "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
             }
         })
 
         viewModel.success.observe(this, Observer {
             if (!it) {
-                Toast.makeText(baseContext, "빈칸을 채워주세요!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "빈칸을 채워주세요!", Toast.LENGTH_SHORT).show()
             }
         })
 

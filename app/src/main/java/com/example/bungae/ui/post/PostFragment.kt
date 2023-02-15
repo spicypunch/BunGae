@@ -3,10 +3,12 @@ package com.example.bungae.ui.post
 import android.Manifest
 import android.app.AlertDialog
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +22,7 @@ import com.bumptech.glide.Glide
 import com.example.bungae.R
 import com.example.bungae.database.ItemSample
 import com.example.bungae.databinding.FragmentPostBinding
+import com.example.bungae.ui.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
@@ -36,7 +39,9 @@ class PostFragment : Fragment() {
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
     private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private var imageStorage: FirebaseStorage = Firebase.storage
-    private var uriInfo: Uri? = null
+//    private var uriInfo: Uri? = null
+
+    private var mainActivity: MainActivity? = null
 
     private val postViewModel by lazy {
         PostViewModel(auth, db, imageStorage)
@@ -76,13 +81,18 @@ class PostFragment : Fragment() {
 //            }
 //        }
 
-    private fun createImageFile(): Uri? {
-        val now = SimpleDateFormat("yyMMdd_HHmm ss", Locale.KOREA).format(Date())
-        val content = ContentValues().apply {
-            put(MediaStore.Images.Media.DISPLAY_NAME, "img_$now.jpg")
-            put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
-        }
-        return requireActivity().contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, content)
+//    private fun createImageFile(): Uri? {
+//        val now = SimpleDateFormat("yyMMdd_HHmm ss", Locale.KOREA).format(Date())
+//        val content = ContentValues().apply {
+//            put(MediaStore.Images.Media.DISPLAY_NAME, "img_$now.jpg")
+//            put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
+//        }
+//        return requireActivity().contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, content)
+//    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mainActivity = (activity as MainActivity)
     }
 
     override fun onCreateView(
@@ -92,7 +102,7 @@ class PostFragment : Fragment() {
     ): View {
         _binding = FragmentPostBinding.inflate(inflater, container, false)
         val root: View = binding.root
-//
+
 //        binding.btnAddImage.setOnClickListener {
 //            requestMultiplePermission.launch(permissionList)
 //        }
@@ -103,19 +113,18 @@ class PostFragment : Fragment() {
                 title = binding.editPostTitle.text.toString(),
                 content = binding.editPostContent.text.toString(),
                 category = binding.spinnerCategory.selectedItem.toString(),
-                address = "경기도 성남시 분당구 야탑동 CGV",
+                address = "경기도 성남시 분당구 야탑동",
             )
         }
 
         postViewModel.success.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if (it) {
                 Toast.makeText(context, "게시글이 등록되었습니다.", Toast.LENGTH_SHORT).show()
+                mainActivity!!.replaceFragment()
             } else {
                 Toast.makeText(context, "빈칸을 전부 채워주세요!", Toast.LENGTH_SHORT).show()
             }
         })
-
-
         return root
     }
 
@@ -146,5 +155,6 @@ class PostFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        mainActivity = null
     }
 }
