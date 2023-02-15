@@ -22,6 +22,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (auth.currentUser == null) {
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -42,9 +46,6 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        if (auth.currentUser == null) {
-            startActivity(Intent(this, LoginActivity::class.java))
-        }
 
     }
 

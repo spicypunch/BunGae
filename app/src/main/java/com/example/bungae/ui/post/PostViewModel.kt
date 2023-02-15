@@ -22,6 +22,10 @@ class PostViewModel(private val auth: FirebaseAuth, private var db: FirebaseFire
     val success: LiveData<Boolean>
         get() = _success
 
+    private var _blankCheck = MutableLiveData<Boolean>()
+    val blankCheck: LiveData<Boolean>
+        get() = _blankCheck
+
     fun insertFireStorage(
         title: String,
         content: String,
@@ -29,7 +33,7 @@ class PostViewModel(private val auth: FirebaseAuth, private var db: FirebaseFire
         address: String,
     ) {
         if (title.isBlank() || content.isBlank()) {
-            _success.value = false
+            _blankCheck.value = false
         } else {
             val itemSample = ItemSample(
                 uid = auth.currentUser!!.uid,
@@ -40,18 +44,19 @@ class PostViewModel(private val auth: FirebaseAuth, private var db: FirebaseFire
                 date = dateFormat.format(currentTime)
             )
 
-//            val colRef: CollectionReference = db.collection("ItemInfo")
-//            val docRef: Task<DocumentReference> = colRef.add(itemSample)
-//            docRef.addOnSuccessListener { documentReference ->
-//                Log.e("성공", "$documentReference")
-//            }
-//            docRef.addOnFailureListener {e ->
-//                Log.e("실패", "e")
-//            }
+            val colRef: CollectionReference = db.collection("ItemInfo")
+            val docRef: Task<DocumentReference> = colRef.add(itemSample)
+            docRef.addOnSuccessListener { documentReference ->
+                Log.e("성공", "$documentReference")
+                _success.value = true
+            }
+            docRef.addOnFailureListener {e ->
+                Log.e("실패", "e")
+                _success.value = false
+            }
 
-            db.collection("ItemInfo").document().set(itemSample)
-//            db.collection(auth.currentUser!!.uid).document().set(itemSample)
-            _success.value = true
+//            db.collection("ItemInfo").document().set(itemSample)
+//            _success.value = true
         }
 
     }

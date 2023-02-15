@@ -11,7 +11,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private var auth : FirebaseAuth = FirebaseAuth.getInstance()
     lateinit var binding: ActivitySignupBinding
-    private val viewModel by lazy {
+    private val signUpActivity by lazy {
         SignUpViewModel(auth)
     }
 
@@ -21,10 +21,10 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnRegister.setOnClickListener {
-            viewModel.checkPasswd(binding.editId.text.toString(), binding.editPw.text.toString(), binding.editPw2.text.toString())
+            signUpActivity.checkPasswd(binding.editId.text.toString(), binding.editPw.text.toString(), binding.editPw2.text.toString())
         }
 
-        viewModel.message.observe(this, Observer {
+        signUpActivity.message.observe(this, Observer {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
             if (it == "계정 생성을 완료했습니다.") {
                 finish()

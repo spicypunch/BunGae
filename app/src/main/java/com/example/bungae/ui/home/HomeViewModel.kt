@@ -31,6 +31,7 @@ class HomeViewModel(private val auth: FirebaseAuth, private var db: FirebaseFire
                     val item = document.toObject(ItemSample::class.java)
                     list.add(item)
                 }
+
                 // 데이터를 불러올 때 저장한 순서대로 불러지지가 않아 재정렬 후 초기화
                 list.sortByDescending { it.date }
                 _itemList.value = list

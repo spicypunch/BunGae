@@ -13,7 +13,7 @@
         app:layout_constraintBottom_toTopOf="@+id/edit_write_profile_nickname"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="50dp"
-
+        android:src="@drawable/icon_user"
         />
 
     <EditText
@@ -21,24 +21,73 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_write_profile_completion"
+        app:layout_constraintEnd_toStartOf="@+id/btn_write_profile_check"
         app:layout_constraintTop_toBottomOf="@+id/image_write_profile"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="20dp"
-        android:ems="13"
+        android:layout_marginTop="35dp"
+        android:layout_marginStart="25dp"
         android:hint="닉네임" />
 
     <Button
-        android:id="@+id/btn_write_profile_completion"
+        android:id="@+id/btn_write_profile_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/image_write_profile"
         app:layout_constraintStart_toEndOf="@+id/edit_write_profile_nickname"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="35dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:text="중복 체크" />
+
+    <EditText
+        android:id="@+id/edit_write_profile_age"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv_write_profile_age"
+        app:layout_constraintTop_toBottomOf="@+id/btn_write_profile_check"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="20dp"
+        android:inputType="number"
+        android:maxLength="2"
+        android:hint="나이는" />
+
+    <TextView
+        android:id="@+id/tv_write_profile_age"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/edit_write_profile_age"
+        app:layout_constraintEnd_toEndOf="@+id/spinner_age"
+        app:layout_constraintTop_toBottomOf="@+id/btn_write_profile_check"
+        android:layout_marginTop="18dp"
+        android:layout_marginStart="10dp"
+        android:text="살이고,"
+        android:textSize="25dp" />
+
+    <Spinner
+        android:id="@+id/spinner_age"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:entries="@array/spinner_category"
+        app:layout_constraintStart_toEndOf="@+id/tv_write_profile_age"
+        app:layout_constraintEnd_toStartOf="@+id/tv_write_profile_gender"
+        app:layout_constraintTop_toBottomOf="@+id/btn_write_profile_check"
+        android:layout_marginTop="18dp"
+        android:layout_marginStart="15dp" />
+
+    <TextView
+        android:id="@+id/tv_write_profile_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/spinner_age"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_write_profile_check"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="20dp"
+        android:text="입니다."
+        android:textSize="25dp" />
+
 
 
 

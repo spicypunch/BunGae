@@ -6,13 +6,14 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.example.bungae.database.Profile
 import com.example.bungae.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val viewModel by lazy {
+    private val loginViewModel by lazy {
         LoginViewModel(auth)
     }
     private var time: Long = 0
@@ -37,23 +38,23 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnLogin.setOnClickListener {
-            viewModel.signIn(binding.editId.text.toString(), binding.editPw.text.toString())
+            loginViewModel.signIn(binding.editId.text.toString(), binding.editPw.text.toString())
         }
 
         binding.btnSignup.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
         }
 
-        viewModel.message.observe(this, Observer { it ->
+        loginViewModel.message.observe(this, Observer { it ->
             if (it) {
                 Toast.makeText(this, "로그인 되었습니다.", Toast.LENGTH_SHORT).show()
-                finish()
+                startActivity(Intent(this, ProfileActivity::class.java))
             } else {
                 Toast.makeText(this, "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
             }
         })
 
-        viewModel.success.observe(this, Observer {
+        loginViewModel.success.observe(this, Observer {
             if (!it) {
                 Toast.makeText(this, "빈칸을 채워주세요!", Toast.LENGTH_SHORT).show()
             }

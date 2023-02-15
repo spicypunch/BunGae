@@ -74,7 +74,13 @@ class PostFragment : Fragment() {
                 Toast.makeText(context, "게시글이 등록되었습니다.", Toast.LENGTH_SHORT).show()
                 mainActivity!!.replaceFragment()
             } else {
-                Toast.makeText(context, "빈칸을 전부 채워주세요!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "게시글 등록에 실패했습니다.", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        postViewModel.blankCheck.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if (!it) {
+                Toast.makeText(context, "빈칸을 전부 채워주세요.", Toast.LENGTH_SHORT).show()
             }
         })
         return root
