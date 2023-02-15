@@ -1,4 +1,4 @@
-package com.example.bungae.ui.signup
+package com.example.bungae.ui.account
 
 import android.os.Bundle
 import android.widget.Toast

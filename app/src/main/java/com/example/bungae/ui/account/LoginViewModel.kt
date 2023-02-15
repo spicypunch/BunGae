@@ -1,4 +1,4 @@
-package com.example.bungae.ui.login
+package com.example.bungae.ui.account
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -1,5 +1,6 @@
 package com.example.bungae.ui.home.adapter
 
+import android.util.Log
 import androidx.recyclerview.widget.DiffUtil
 import com.example.bungae.database.ItemSample
 
@@ -10,7 +11,6 @@ class HomeDiffUtilCallback(
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int = oldList.size
-
     override fun getNewListSize(): Int = newList.size
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =

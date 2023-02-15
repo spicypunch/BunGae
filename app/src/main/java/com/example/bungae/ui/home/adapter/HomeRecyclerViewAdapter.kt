@@ -1,5 +1,6 @@
 package com.example.bungae.ui.home.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -17,6 +18,7 @@ class HomeRecyclerViewAdapter() : RecyclerView.Adapter<HomeRecyclerViewAdapter.M
 
         itemList.clear()
         itemList.addAll(items)
+
         diffResult.dispatchUpdatesTo(this)
     }
 
