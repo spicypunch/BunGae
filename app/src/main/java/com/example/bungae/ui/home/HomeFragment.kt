@@ -15,7 +15,6 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val adapter by lazy { HomeRecyclerViewAdapter() }
-    private var list: MutableList<ItemSample> = mutableListOf(ItemSample("test", "test", "test"))
 
     private val binding
         get() = _binding!!
@@ -30,14 +29,11 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        list.add(ItemSample("test1", "test1", "test1"))
-        list.add(ItemSample("test2", "test2", "test2"))
-        list.add(ItemSample("test3", "test3", "test3"))
-        list.add(ItemSample("test4", "test4", "test4"))
+
 
         binding.recyclerviewHome.adapter = adapter
         binding.recyclerviewHome.layoutManager = LinearLayoutManager(activity)
-        adapter.updateList(list)
+//        adapter.updateList(list)
 
         return binding.root
     }

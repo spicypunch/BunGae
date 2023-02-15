@@ -41,7 +41,6 @@ class HomeRecyclerViewAdapter() : RecyclerView.Adapter<HomeRecyclerViewAdapter.M
         val homeData = itemList[position]
         holder.tv_title.text = homeData.title
         holder.tv_address.text = homeData.address
-        holder.tv_nick.text = homeData.nickname
     }
 
     override fun getItemCount(): Int {
