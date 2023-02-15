@@ -28,10 +28,9 @@ class PostFragment : Fragment() {
         _binding = FragmentPostBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textPost
-        postViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+
+
+
         return root
     }
 

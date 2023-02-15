@@ -7,17 +7,92 @@
     tools:context=".ui.post.PostFragment">
 
     <TextView
-        android:id="@+id/text_post"
-        android:layout_width="match_parent"
+        android:id="@+id/tv_post_title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:text="글쓰기 페이지입니다."
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:gravity="center"
+        android:minHeight="?actionBarSize"
+        android:text="글 작성"
+        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"/>
+
+    <EditText
+        android:id="@+id/edit_post_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:hint="제목"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:textSize="14sp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/spinner_category"
+        app:layout_constraintTop_toBottomOf="@+id/tv_post_title" />
+
+    <Spinner
+        android:id="@+id/spinner_category"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:entries="@array/spinner_category"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/edit_post_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_post_title" />
+
+    <EditText
+        android:id="@+id/edit_post_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="20dp"
+        android:hint="내용"
+        android:imeOptions="actionNone"
+        android:inputType="textMultiLine"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/edit_post_title"/>
+
+    <Button
+        android:id="@+id/btn_addImage"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:drawableBottom="@drawable/ic_baseline_photo_camera_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_post_content" />
+
+    <ImageView
+        android:id="@+id/img_load"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        app:layout_constraintStart_toEndOf="@+id/btn_addImage"
+        app:layout_constraintTop_toBottomOf="@+id/edit_post_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/photo_frame"/>
+
+    <Button
+        android:id="@+id/btn_completion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"
+        android:text="등록하기"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

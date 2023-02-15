@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinner_category">
+        <item>아무거나!</item>
+        <item>카페 투어</item>
+        <item>러닝</item>
+        <item>맛집 탐방</item>
+        <item>등산</item>
+        <item>영화</item>
+    </string-array>
+</resources>

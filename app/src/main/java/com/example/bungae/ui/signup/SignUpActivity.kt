@@ -9,7 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class SignUpActivity : AppCompatActivity() {
 
-    private var auth : FirebaseAuth? = FirebaseAuth.getInstance()
+    private var auth : FirebaseAuth = FirebaseAuth.getInstance()
     lateinit var binding: ActivitySignupBinding
     private val viewModel by lazy {
         SignUpViewModel(auth)
@@ -21,14 +21,8 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnRegister.setOnClickListener {
-            viewModel.checkPasswd(binding.editPw.text.toString(), binding.editPw2.text.toString())
+            viewModel.checkPasswd(binding.editId.text.toString(), binding.editPw.text.toString(), binding.editPw2.text.toString())
         }
-
-        viewModel.chekPasswd.observe(this, Observer {
-            if (it) {
-                viewModel.createAccount(binding.editId.text.toString(), binding.editPw.text.toString())
-            }
-        })
 
         viewModel.message.observe(this, Observer {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()

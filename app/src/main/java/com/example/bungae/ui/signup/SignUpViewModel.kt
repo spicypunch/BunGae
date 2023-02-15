@@ -7,24 +7,19 @@ import com.google.firebase.auth.FirebaseAuth
 
 class SignUpViewModel(private val auth: FirebaseAuth?) : ViewModel() {
 
-    private var _checkPasswd = MutableLiveData<Boolean>()
-    val chekPasswd: LiveData<Boolean>
-        get() = _checkPasswd
-
     private var _message = MutableLiveData<String>()
     val message: LiveData<String>
         get() = _message
 
-    fun checkPasswd(passwd1: String, passwd2: String) {
+    fun checkPasswd(email: String, passwd1: String, passwd2: String) {
         if (passwd1 != passwd2) {
-            _checkPasswd.value = false
             _message.value = "비밀번호가 일치하지 않습니다."
         } else {
-            _checkPasswd.value = true
+            createAccount(email, passwd1)
         }
     }
 
-    fun createAccount(email: String, passwd: String) {
+    private fun createAccount(email: String, passwd: String) {
         if (email.isNotEmpty() && passwd.isNotEmpty()) {
             auth?.createUserWithEmailAndPassword(email, passwd)
                 ?.addOnCompleteListener { task ->
