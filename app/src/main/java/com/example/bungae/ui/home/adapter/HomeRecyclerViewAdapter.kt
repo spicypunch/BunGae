@@ -21,14 +21,11 @@ class HomeRecyclerViewAdapter() : RecyclerView.Adapter<HomeRecyclerViewAdapter.M
     }
 
     class MyViewHolder(private val binding: ItemHomeBinding) : RecyclerView.ViewHolder(binding.root){
-        val root = binding.root
 
-//        fun bind(item: DataSample) {
-//        }
 
-        val tv_title = binding.tvHomeTitle
-        val tv_address = binding.tvHomeAddress
-        val tv_nick = binding.tvHomeNickname
+        fun bind(item: ItemSample) {
+            binding.data = item
+        }
 
     }
 
@@ -38,9 +35,7 @@ class HomeRecyclerViewAdapter() : RecyclerView.Adapter<HomeRecyclerViewAdapter.M
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val homeData = itemList[position]
-        holder.tv_title.text = homeData.title
-        holder.tv_address.text = homeData.address
+        holder.bind(itemList[position])
     }
 
     override fun getItemCount(): Int {

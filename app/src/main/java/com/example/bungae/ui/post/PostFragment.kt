@@ -34,7 +34,8 @@ import java.util.*
 class PostFragment : Fragment() {
 
     private var _binding: FragmentPostBinding? = null
-    private val binding get() = _binding!!
+    private val binding
+        get() = _binding!!
 
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
     private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -61,7 +62,6 @@ class PostFragment : Fragment() {
 
         binding.btnCompletion.setOnClickListener {
             postViewModel.insertFireStorage(
-                uId = auth.currentUser!!.uid,
                 title = binding.editPostTitle.text.toString(),
                 content = binding.editPostContent.text.toString(),
                 category = binding.spinnerCategory.selectedItem.toString(),
