@@ -48,9 +48,4 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-
-    fun replaceFragment() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.nav_host_fragment_activity_main, HomeFragment()).commit()
-    }
 }

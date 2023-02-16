@@ -1,5 +1,6 @@
 package com.example.bungae.ui.account
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -27,6 +28,7 @@ class SignUpActivity : AppCompatActivity() {
         signUpActivity.message.observe(this, Observer {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
             if (it == "계정 생성을 완료했습니다.") {
+                startActivity(Intent(this, ProfileActivity::class.java))
                 finish()
             }
         })

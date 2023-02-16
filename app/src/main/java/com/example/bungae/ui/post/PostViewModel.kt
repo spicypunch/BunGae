@@ -47,11 +47,11 @@ class PostViewModel(private val auth: FirebaseAuth, private var db: FirebaseFire
             val colRef: CollectionReference = db.collection("ItemInfo")
             val docRef: Task<DocumentReference> = colRef.add(itemSample)
             docRef.addOnSuccessListener { documentReference ->
-                Log.e("성공", "$documentReference")
+                Log.d("게시글 등록 성공", "$documentReference")
                 _success.value = true
             }
             docRef.addOnFailureListener {e ->
-                Log.e("실패", "e")
+                Log.e("게시글 등록 실패", "e")
                 _success.value = false
             }
 

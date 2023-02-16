@@ -48,7 +48,7 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.message.observe(this, Observer { it ->
             if (it) {
                 Toast.makeText(this, "로그인 되었습니다.", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, ProfileActivity::class.java))
+                finish()
             } else {
                 Toast.makeText(this, "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
             }
