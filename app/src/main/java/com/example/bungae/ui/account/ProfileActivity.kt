@@ -1,28 +1,40 @@
 package com.example.bungae.ui.account
 
+import android.Manifest
+import android.content.ContentValues
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.os.PersistableBundle
+import android.provider.MediaStore
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.example.bungae.databinding.ActivityLoginBinding
+import com.bumptech.glide.Glide
+import com.example.bungae.R
 import com.example.bungae.databinding.ActivityWriteProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ProfileActivity : AppCompatActivity() {
     lateinit var binding: ActivityWriteProfileBinding
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
     private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private var imageStorage: FirebaseStorage = Firebase.storage
 
     private val profileViewModel by lazy {
         ProfileViewModel(auth, db, imageStorage)
     }
+
     private var time: Long = 0
 
     private val callBack = object : OnBackPressedCallback(true) {
@@ -39,6 +51,72 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    private val permissionList = arrayOf(
+        Manifest.permission.CAMERA,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.READ_EXTERNAL_STORAGE
+    )
+
+    private val requestMultiplePermission =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
+            result.forEach {
+                if (!it.value) {
+                    Toast.makeText(applicationContext, "${it.key}권한 허용 필요", Toast.LENGTH_SHORT).show()
+                }
+            }
+            openDialog(this)
+        }
+
+    private val readImage =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            it.data?.data?.let { uri ->
+                contentResolver.takePersistableUriPermission(uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+                Glide.with(this).load(uri).into(binding.)
+                uriInfo = uri
+            }
+        }
+
+    private val getTakePicture =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) {
+            if (it) {
+                uriInfo.let { binding.imgLoad.setImageURI(uriInfo) }
+            }
+        }
+
+    private fun createImageFile(): Uri? {
+        val now = SimpleDateFormat("yyMMdd_HHmm ss", Locale.KOREA).format(Date())
+        val content = ContentValues().apply {
+            put(MediaStore.Images.Media.DISPLAY_NAME, "img_$now.jpg")
+            put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
+        }
+        return contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, content)
+    }
+
+    private fun openDialog(context: Context) {
+        val dialogLayout = layoutInflater.inflate(R.layout.dialog, null)
+        val dialogBuild = AlertDialog.Builder(context).apply {
+            setView(dialogLayout)
+        }
+        val dialog = dialogBuild.create().apply { show() }
+
+        val cameraAddBtn = dialogLayout.findViewById<Button>(R.id.btn_camera)
+        val fileAddBtn = dialogLayout.findViewById<Button>(R.id.btn_file)
+
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intent.type = "image/*"
+
+        cameraAddBtn.setOnClickListener {
+            uriInfo = createImageFile()
+            getTakePicture.launch(uriInfo)
+            dialog.dismiss()
+        }
+        fileAddBtn.setOnClickListener {
+            readImage.launch(intent)
+            dialog.dismiss()
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWriteProfileBinding.inflate(layoutInflater)
@@ -46,6 +124,10 @@ class ProfileActivity : AppCompatActivity() {
 
         binding.btnWriteProfileCheck.setOnClickListener {
             profileViewModel.checkNickName(binding.editWriteProfileNickname.text.toString())
+        }
+
+        binding.imageWriteProfile.setOnClickListener {
+            requestMultiplePermission.launch(permissionList)
         }
 
         binding.btnWriteProfileComplete.setOnClickListener {
