@@ -30,6 +30,7 @@ class ProfileActivity : AppCompatActivity() {
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
     private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private var imageStorage: FirebaseStorage = Firebase.storage
+    private var uriInfo: Uri? = null
 
     private val profileViewModel by lazy {
         ProfileViewModel(auth, db, imageStorage)
@@ -73,7 +74,7 @@ class ProfileActivity : AppCompatActivity() {
                 contentResolver.takePersistableUriPermission(uri,
                     Intent.FLAG_GRANT_READ_URI_PERMISSION
                 )
-                Glide.with(this).load(uri).into(binding.)
+                Glide.with(this).load(uri).into(binding.imageWriteProfile)
                 uriInfo = uri
             }
         }
@@ -81,7 +82,7 @@ class ProfileActivity : AppCompatActivity() {
     private val getTakePicture =
         registerForActivityResult(ActivityResultContracts.TakePicture()) {
             if (it) {
-                uriInfo.let { binding.imgLoad.setImageURI(uriInfo) }
+                uriInfo.let { Glide.with(this).load(uriInfo).into(binding.imageWriteProfile) }
             }
         }
 
@@ -131,6 +132,7 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         binding.btnWriteProfileComplete.setOnClickListener {
+            uploadImageTOFirebase(uriInfo!!)
             if (binding.spinnerAge.selectedItem.toString() == "남자") {
                 profileViewModel.createProfile(binding.editWriteProfileNickname.text.toString(),
                     binding.editWriteProfileAge.text.toString().toInt(),
@@ -161,5 +163,17 @@ class ProfileActivity : AppCompatActivity() {
         })
 
         this.onBackPressedDispatcher.addCallback(this, callBack)
+    }
+
+    fun uploadImageTOFirebase(uriInfo: Uri) {
+        val storage: FirebaseStorage? = FirebaseStorage.getInstance()
+        val fileName = "IMAGE_${SimpleDateFormat("yyyymmdd_HHmmss").format(Date())}_.png"
+        val imagesRef = storage!!.reference.child("images/").child(fileName)
+        imagesRef.putFile(uriInfo).addOnSuccessListener {
+            Toast.makeText(this, "성공 마루", Toast.LENGTH_SHORT).show()
+        }.addOnFailureListener {
+            println(it)
+            Toast.makeText(this, "실패 마루", Toast.LENGTH_SHORT).show()
+        }
     }
 }
