@@ -38,7 +38,7 @@ class MyPageFragment : Fragment() {
         _binding = FragmentMypageBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        myPageViewModel.getProfileImage()
+        myPageViewModel.getNickname()
 
         myPageViewModel.task.observe(viewLifecycleOwner, Observer {
 

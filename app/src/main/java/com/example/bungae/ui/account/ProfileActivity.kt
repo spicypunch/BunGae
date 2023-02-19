@@ -26,11 +26,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ProfileActivity : AppCompatActivity() {
-    lateinit var binding: ActivityWriteProfileBinding
+    private lateinit var binding: ActivityWriteProfileBinding
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
     private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private var imageStorage: FirebaseStorage = Firebase.storage
     private var uriInfo: Uri? = null
+    private var nickNameCheckResult: Boolean = false
 
     private val profileViewModel by lazy {
         ProfileViewModel(auth, db, imageStorage)
@@ -61,7 +62,8 @@ class ProfileActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
             result.forEach {
                 if (!it.value) {
-                    Toast.makeText(applicationContext, "${it.key}권한 허용 필요", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "${it.key}권한 허용 필요", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
             openDialog(this)
@@ -70,7 +72,8 @@ class ProfileActivity : AppCompatActivity() {
     private val readImage =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             it.data?.data?.let { uri ->
-                contentResolver.takePersistableUriPermission(uri,
+                contentResolver.takePersistableUriPermission(
+                    uri,
                     Intent.FLAG_GRANT_READ_URI_PERMISSION
                 )
                 Glide.with(this).load(uri).into(binding.imageWriteProfile)
@@ -117,6 +120,7 @@ class ProfileActivity : AppCompatActivity() {
             dialog.dismiss()
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWriteProfileBinding.inflate(layoutInflater)
@@ -131,28 +135,37 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         binding.btnWriteProfileComplete.setOnClickListener {
-            profileViewModel.uploadImageTOFirebase(uriInfo ,binding.editWriteProfileNickname.text.toString())
-
-            if (binding.spinnerAge.selectedItem.toString() == "남자") {
-                profileViewModel.createProfile(
-                    binding.editWriteProfileNickname.text.toString(),
-                    binding.editWriteProfileAge.text.toString().toInt(),
-                    true
-                )
+            if (!nickNameCheckResult) {
+                Toast.makeText(this, "닉네임이 중복됐는지 확인해주세요!", Toast.LENGTH_SHORT).show()
             } else {
-                profileViewModel.createProfile(
-                    binding.editWriteProfileNickname.text.toString(),
-                    binding.editWriteProfileAge.text.toString().toInt(),
-                    false
+                profileViewModel.uploadImageTOFirebase(
+                    uriInfo,
+                    binding.editWriteProfileNickname.text.toString()
                 )
+
+                if (binding.spinnerAge.selectedItem.toString() == "남자") {
+                    profileViewModel.createProfile(
+                        binding.editWriteProfileNickname.text.toString(),
+                        binding.editWriteProfileAge.text.toString().toInt(),
+                        true
+                    )
+                } else {
+                    profileViewModel.createProfile(
+                        binding.editWriteProfileNickname.text.toString(),
+                        binding.editWriteProfileAge.text.toString().toInt(),
+                        false
+                    )
+                }
             }
         }
 
         profileViewModel.checkNickname.observe(this, Observer {
-            if (!it) {
+            nickNameCheckResult = if (!it) {
                 Toast.makeText(this, "중복된 값이 있습니다.", Toast.LENGTH_SHORT).show()
+                false
             } else {
                 Toast.makeText(this, "사용해도 되는 닉네임입니다.", Toast.LENGTH_SHORT).show()
+                true
             }
         })
 

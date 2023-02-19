@@ -10,7 +10,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.storage.FirebaseStorage
 
-class HomeViewModel(private val auth: FirebaseAuth, private var db: FirebaseFirestore, private var imageStorage: FirebaseStorage) : ViewModel() {
+class HomeViewModel(private val auth: FirebaseAuth,
+                    private var db: FirebaseFirestore,) : ViewModel() {
 
     private var list: MutableList<ItemSample> = mutableListOf()
 
@@ -29,10 +30,11 @@ class HomeViewModel(private val auth: FirebaseAuth, private var db: FirebaseFire
             .addOnSuccessListener { documents ->
                 for (document in documents) {
                     val item = document.toObject(ItemSample::class.java)
+                    list.clear()
                     list.add(item)
                 }
 
-                // 데이터를 불러올 때 저장한 순서대로 불러지지가 않아 재정렬 후 초기화
+                // firebase order by로 수정할 것
                 list.sortByDescending { it.date }
                 _itemList.value = list
             }

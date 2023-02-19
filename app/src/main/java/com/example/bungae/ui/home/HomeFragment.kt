@@ -28,10 +28,9 @@ class HomeFragment : Fragment() {
 
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
     private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
-    private var imageStorage: FirebaseStorage = Firebase.storage
 
     private val homeViewModel by lazy {
-        HomeViewModel(auth, db, imageStorage)
+        HomeViewModel(auth, db)
     }
 
     override fun onCreateView(

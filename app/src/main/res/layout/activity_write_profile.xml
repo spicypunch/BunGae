@@ -13,8 +13,16 @@
         app:layout_constraintBottom_toTopOf="@+id/edit_write_profile_nickname"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="50dp"
-        android:src="@drawable/icon_user"
-        />
+        android:src="@drawable/icon_user" />
+
+    <TextView
+        android:id="@+id/tv_mypage_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/image_write_profile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="이미지를 눌러 사진을 등록해주세요!"/>
 
     <EditText
         android:id="@+id/edit_write_profile_nickname"
@@ -99,8 +107,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
