@@ -54,8 +54,7 @@ class ProfileActivity : AppCompatActivity() {
 
     private val permissionList = arrayOf(
         Manifest.permission.CAMERA,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.READ_EXTERNAL_STORAGE
+        Manifest.permission.READ_MEDIA_IMAGES
     )
 
     private val requestMultiplePermission =
@@ -132,15 +131,20 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         binding.btnWriteProfileComplete.setOnClickListener {
-            uploadImageTOFirebase(uriInfo!!)
+            profileViewModel.uploadImageTOFirebase(uriInfo ,binding.editWriteProfileNickname.text.toString())
+
             if (binding.spinnerAge.selectedItem.toString() == "남자") {
-                profileViewModel.createProfile(binding.editWriteProfileNickname.text.toString(),
+                profileViewModel.createProfile(
+                    binding.editWriteProfileNickname.text.toString(),
                     binding.editWriteProfileAge.text.toString().toInt(),
-                    true)
+                    true
+                )
             } else {
-                profileViewModel.createProfile(binding.editWriteProfileNickname.text.toString(),
+                profileViewModel.createProfile(
+                    binding.editWriteProfileNickname.text.toString(),
                     binding.editWriteProfileAge.text.toString().toInt(),
-                    false)
+                    false
+                )
             }
         }
 
@@ -163,17 +167,5 @@ class ProfileActivity : AppCompatActivity() {
         })
 
         this.onBackPressedDispatcher.addCallback(this, callBack)
-    }
-
-    fun uploadImageTOFirebase(uriInfo: Uri) {
-        val storage: FirebaseStorage? = FirebaseStorage.getInstance()
-        val fileName = "IMAGE_${SimpleDateFormat("yyyymmdd_HHmmss").format(Date())}_.png"
-        val imagesRef = storage!!.reference.child("images/").child(fileName)
-        imagesRef.putFile(uriInfo).addOnSuccessListener {
-            Toast.makeText(this, "성공 마루", Toast.LENGTH_SHORT).show()
-        }.addOnFailureListener {
-            println(it)
-            Toast.makeText(this, "실패 마루", Toast.LENGTH_SHORT).show()
-        }
     }
 }

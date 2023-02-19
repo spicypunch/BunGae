@@ -5,11 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.bungae.databinding.FragmentMypageBinding
 import com.example.bungae.ui.account.LoginActivity
+import com.example.bungae.ui.account.ProfileViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 
 class MyPageFragment : Fragment() {
 
@@ -17,20 +23,28 @@ class MyPageFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
+    private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
+
+    private val  myPageViewModel by lazy {
+        MyPageViewModel(auth, db)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val myPageViewModel =
-            ViewModelProvider(this).get(MyPageViewModel::class.java)
-
         _binding = FragmentMypageBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        myPageViewModel.getProfileImage()
 
+        myPageViewModel.task.observe(viewLifecycleOwner, Observer {
+
+            Glide.with(this).load(it).into(binding.imageMypageProfile)
+
+        })
 
         binding.btnLogout.setOnClickListener {
             auth.signOut()
