@@ -9,7 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
-class MyPageViewModel(private val auth: FirebaseAuth, private var db: FirebaseFirestore) :
+class MyPageViewModel(private val auth: FirebaseAuth, private val db: FirebaseFirestore) :
     ViewModel() {
 
     private var _task = MutableLiveData<Uri>()

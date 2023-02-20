@@ -15,8 +15,8 @@ class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
     private lateinit var item: ItemSample
-    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     private val detailViewModel by lazy {
         DetailViewModel(db)

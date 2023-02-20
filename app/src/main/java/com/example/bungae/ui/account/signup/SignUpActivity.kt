@@ -6,12 +6,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.bungae.databinding.ActivitySignupBinding
+import com.example.bungae.ui.account.profile.ProfileActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class SignUpActivity : AppCompatActivity() {
 
-    private var auth : FirebaseAuth = FirebaseAuth.getInstance()
-    lateinit var binding: ActivitySignupBinding
+    private val auth : FirebaseAuth = FirebaseAuth.getInstance()
+    private lateinit var binding: ActivitySignupBinding
     private val signUpActivity by lazy {
         SignUpViewModel(auth)
     }

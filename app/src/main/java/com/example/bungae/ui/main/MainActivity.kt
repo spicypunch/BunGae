@@ -10,8 +10,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.bungae.R
 import com.example.bungae.databinding.ActivityMainBinding
-import com.example.bungae.ui.home.HomeFragment
-import com.example.bungae.ui.account.LoginActivity
+import com.example.bungae.ui.account.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {

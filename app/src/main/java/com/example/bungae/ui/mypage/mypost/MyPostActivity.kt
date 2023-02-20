@@ -11,7 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class MyPostActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityMypostBinding
+    private lateinit var binding: ActivityMypostBinding
 
     private val adapter by lazy { MyPostAdapter() }
 
@@ -30,6 +30,8 @@ class MyPostActivity : AppCompatActivity() {
 
         binding.recyclerviewMypost.adapter = adapter
         binding.recyclerviewMypost.layoutManager = LinearLayoutManager(this)
+
+        myPostViewModel.getMyPostList()
 
         myPostViewModel.itemList.observe(this, Observer {
             adapter.submitList(it)

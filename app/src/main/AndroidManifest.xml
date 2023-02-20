@@ -28,10 +28,10 @@
             android:name=".ui.detail.DetailActivity"
             android:label="상세보기" />
         <activity
-            android:name=".ui.account.LoginActivity"
+            android:name=".ui.account.login.LoginActivity"
             android:label="로그인" />
         <activity
-            android:name=".ui.account.ProfileActivity"
+            android:name=".ui.account.profile.ProfileActivity"
             android:label="프로필 등록" />
         <activity
             android:name=".ui.account.SignUpActivity"
