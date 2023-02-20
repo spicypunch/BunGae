@@ -25,12 +25,11 @@ class HomeViewModel(private val auth: FirebaseAuth,
 
     fun getFireStorage() {
         db.collection("ItemInfo")
-            .whereEqualTo("uid", auth.currentUser!!.uid)
             .get()
             .addOnSuccessListener { documents ->
+                list.clear()
                 for (document in documents) {
                     val item = document.toObject(ItemSample::class.java)
-                    list.clear()
                     list.add(item)
                 }
 

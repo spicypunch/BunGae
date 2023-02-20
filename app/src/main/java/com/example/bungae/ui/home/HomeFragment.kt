@@ -13,13 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bungae.database.ItemSample
 import com.example.bungae.databinding.FragmentHomeBinding
 import com.example.bungae.ui.home.adapter.HomeRecyclerViewAdapter
+import com.example.bungae.ui.home.adapter.OnItemLongClickListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 
-class HomeFragment : Fragment() {
+class HomeFragment() : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding
@@ -47,7 +48,8 @@ class HomeFragment : Fragment() {
         homeViewModel.getFireStorage()
 
         homeViewModel.itemList.observe(viewLifecycleOwner, Observer {
-            adapter.updateList(it)
+//            adapter.updateList(it)
+            adapter.submitList(it)
         })
 
         homeViewModel.message.observe(viewLifecycleOwner, Observer {
@@ -60,4 +62,6 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }
