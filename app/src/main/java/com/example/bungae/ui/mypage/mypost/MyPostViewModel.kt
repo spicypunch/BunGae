@@ -1,4 +1,4 @@
-package com.example.bungae.ui.mypage
+package com.example.bungae.ui.mypage.mypost
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import com.example.bungae.database.ItemSample
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.toObject
 
 class MyPostViewModel(private val auth: FirebaseAuth,
     private val db: FirebaseFirestore) : ViewModel() {

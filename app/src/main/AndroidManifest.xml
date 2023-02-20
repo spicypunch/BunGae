@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
@@ -20,9 +20,9 @@
         android:roundIcon="@mipmap/ic_main_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BunGae"
-        tools:targetApi="31" >
+        tools:targetApi="31">
         <activity
-            android:name=".ui.mypage.MyPostActivity"
+            android:name=".ui.mypage.mypost.MyPostActivity"
             android:label="내가 쓴 글"/>
         <activity
             android:name=".ui.detail.DetailActivity"
@@ -39,7 +39,7 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,4 +1,4 @@
-package com.example.bungae.ui.mypage
+package com.example.bungae.ui.mypage.mypage
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.bungae.databinding.FragmentMypageBinding
 import com.example.bungae.ui.account.LoginActivity
+import com.example.bungae.ui.mypage.mypost.MyPostActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 

@@ -1,4 +1,4 @@
-package com.example.bungae.ui.mypage
+package com.example.bungae.ui.mypage.mypage
 
 import android.net.Uri
 import androidx.lifecycle.LiveData

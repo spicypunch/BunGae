@@ -1,4 +1,4 @@
-package com.example.bungae.ui.mypage
+package com.example.bungae.ui.mypage.mypost
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
