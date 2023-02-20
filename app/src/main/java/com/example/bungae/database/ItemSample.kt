@@ -8,4 +8,4 @@ data class ItemSample (
     var address: String = "",
     var category: String = "",
     var date: String = ""
-)
+): java.io.Serializable

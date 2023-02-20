@@ -1,4 +1,4 @@
-package com.example.bungae.ui.home.adapter
+package com.example.bungae.ui.message.adapter
 
 import com.example.bungae.database.ItemSample
 

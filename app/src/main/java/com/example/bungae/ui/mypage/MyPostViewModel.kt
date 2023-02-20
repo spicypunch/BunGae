@@ -1,4 +1,4 @@
-package com.example.bungae.ui.home
+package com.example.bungae.ui.mypage
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -8,9 +8,9 @@ import com.example.bungae.database.ItemSample
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.storage.FirebaseStorage
 
-class HomeViewModel(private val db: FirebaseFirestore) : ViewModel() {
+class MyPostViewModel(private val auth: FirebaseAuth,
+    private val db: FirebaseFirestore) : ViewModel() {
 
     private val list: MutableList<ItemSample> = mutableListOf()
 
@@ -22,24 +22,23 @@ class HomeViewModel(private val db: FirebaseFirestore) : ViewModel() {
     val message: LiveData<String>
         get() = _message
 
-    fun getFireStorage() {
+    fun getMyPostList() {
         db.collection("ItemInfo")
+            .whereEqualTo("uid", auth.currentUser!!.uid)
             .get()
             .addOnSuccessListener { results ->
-                list.clear()
+//                list.clear()
                 for (result in results) {
                     val item = result.toObject(ItemSample::class.java)
                     list.add(item)
                 }
 
-                // firebase order by로 수정할 것
                 list.sortByDescending { it.date }
                 _itemList.value = list
             }
             .addOnFailureListener { e ->
                 Log.e("Failed to get data", e.toString())
-                _message.value = "데이터를 가져오는데 실패했습니다."
+                _message.value = "데이"
             }
     }
-
 }

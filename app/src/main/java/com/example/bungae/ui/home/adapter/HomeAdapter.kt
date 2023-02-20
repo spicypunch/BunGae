@@ -12,9 +12,9 @@ import com.example.bungae.database.ItemSample
 import com.example.bungae.databinding.ItemHomeBinding
 import com.example.bungae.ui.detail.DetailActivity
 
-class HomeRecyclerViewAdapter() : ListAdapter<ItemSample, HomeRecyclerViewAdapter.MyViewHolder>(diffUtil){
+class HomeAdapter() : ListAdapter<ItemSample, HomeAdapter.MyViewHolder>(diffUtil){
 
-    class MyViewHolder(private val binding: ItemHomeBinding) : RecyclerView.ViewHolder(root) {
+    class MyViewHolder(private val binding: ItemHomeBinding) : RecyclerView.ViewHolder(binding.root) {
         val root = binding.root
         fun bind(item: ItemSample) {
             binding.data = item

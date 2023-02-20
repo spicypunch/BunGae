@@ -42,14 +42,16 @@ class MyPageFragment : Fragment() {
 
         })
 
+        binding.btnGetMyitem.setOnClickListener {
+            startActivity(Intent(activity, MyPostActivity::class.java))
+        }
+
         binding.btnLogout.setOnClickListener {
             auth.signOut()
             startActivity(Intent(activity, LoginActivity::class.java))
         }
 
         return root
-
-
     }
 
     override fun onDestroyView() {
