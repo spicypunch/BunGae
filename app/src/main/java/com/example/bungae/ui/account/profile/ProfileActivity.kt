@@ -89,39 +89,6 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
 
-    private fun createImageFile(): Uri? {
-        val now = SimpleDateFormat("yyMMdd_HHmm ss", Locale.KOREA).format(Date())
-        val content = ContentValues().apply {
-            put(MediaStore.Images.Media.DISPLAY_NAME, "img_$now.jpg")
-            put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
-        }
-        return contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, content)
-    }
-
-    private fun openDialog(context: Context) {
-        val dialogLayout = layoutInflater.inflate(R.layout.dialog, null)
-        val dialogBuild = AlertDialog.Builder(context).apply {
-            setView(dialogLayout)
-        }
-        val dialog = dialogBuild.create().apply { show() }
-
-        val cameraAddBtn = dialogLayout.findViewById<Button>(R.id.btn_camera)
-        val fileAddBtn = dialogLayout.findViewById<Button>(R.id.btn_file)
-
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-        intent.type = "image/*"
-
-        cameraAddBtn.setOnClickListener {
-            uriInfo = createImageFile()
-            getTakePicture.launch(uriInfo)
-            dialog.dismiss()
-        }
-        fileAddBtn.setOnClickListener {
-            readImage.launch(intent)
-            dialog.dismiss()
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWriteProfileBinding.inflate(layoutInflater)
@@ -139,10 +106,12 @@ class ProfileActivity : AppCompatActivity() {
             if (!nickNameCheckResult) {
                 Toast.makeText(this, "닉네임이 중복됐는지 확인해주세요!", Toast.LENGTH_SHORT).show()
             } else {
-                profileViewModel.uploadImageTOFirebase(
-                    uriInfo,
-                    binding.editWriteProfileNickname.text.toString()
-                )
+                if (uriInfo != null) {
+                    profileViewModel.uploadImageToFirebase(
+                        uriInfo,
+                        binding.editWriteProfileNickname.text.toString()
+                    )
+                }
 
                 if (binding.spinnerAge.selectedItem.toString() == "남자") {
                     profileViewModel.createProfile(
@@ -181,5 +150,38 @@ class ProfileActivity : AppCompatActivity() {
         })
 
         this.onBackPressedDispatcher.addCallback(this, callBack)
+    }
+
+    private fun createImageFile(): Uri? {
+        val now = SimpleDateFormat("yyMMdd_HHmm ss", Locale.KOREA).format(Date())
+        val content = ContentValues().apply {
+            put(MediaStore.Images.Media.DISPLAY_NAME, "img_$now.jpg")
+            put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
+        }
+        return contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, content)
+    }
+
+    private fun openDialog(context: Context) {
+        val dialogLayout = layoutInflater.inflate(R.layout.dialog, null)
+        val dialogBuild = AlertDialog.Builder(context).apply {
+            setView(dialogLayout)
+        }
+        val dialog = dialogBuild.create().apply { show() }
+
+        val cameraAddBtn = dialogLayout.findViewById<Button>(R.id.btn_camera)
+        val fileAddBtn = dialogLayout.findViewById<Button>(R.id.btn_file)
+
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intent.type = "image/*"
+
+        cameraAddBtn.setOnClickListener {
+            uriInfo = createImageFile()
+            getTakePicture.launch(uriInfo)
+            dialog.dismiss()
+        }
+        fileAddBtn.setOnClickListener {
+            readImage.launch(intent)
+            dialog.dismiss()
+        }
     }
 }

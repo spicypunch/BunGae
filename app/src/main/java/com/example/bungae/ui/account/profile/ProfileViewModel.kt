@@ -66,7 +66,7 @@ class ProfileViewModel(private val auth: FirebaseAuth,
 
     }
 
-    fun uploadImageTOFirebase(uriInfo: Uri?, nickName: String) {
+    fun uploadImageToFirebase(uriInfo: Uri?, nickName: String) {
         imageStorage = FirebaseStorage.getInstance()
         val fileName = "image_${nickName}.jpg"
         val imagesRef = imageStorage.reference.child("profile/").child(fileName)
