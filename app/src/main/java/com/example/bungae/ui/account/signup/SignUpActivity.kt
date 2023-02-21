@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.bungae.databinding.ActivitySignupBinding
 import com.example.bungae.ui.account.profile.ProfileActivity
+import com.example.bungae.ui.account.signup.SignUpViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 class SignUpActivity : AppCompatActivity() {

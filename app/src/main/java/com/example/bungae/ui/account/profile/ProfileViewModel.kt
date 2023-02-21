@@ -1,4 +1,4 @@
-package com.example.bungae.ui.account
+package com.example.bungae.ui.account.profile
 
 import android.net.Uri
 import android.util.Log
@@ -13,10 +13,11 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
-class ProfileViewModel(private val auth: FirebaseAuth,
-                       private val db: FirebaseFirestore,
-                       private var imageStorage: FirebaseStorage
-                       ) : ViewModel() {
+class ProfileViewModel(
+    private val auth: FirebaseAuth,
+    private val db: FirebaseFirestore,
+    private var imageStorage: FirebaseStorage
+) : ViewModel() {
 
     private var _message = MutableLiveData<String>()
     val message: LiveData<String>
@@ -58,7 +59,7 @@ class ProfileViewModel(private val auth: FirebaseAuth,
                 _message.value = "프로필 등록에 성공하였습니다."
                 _checkFirestore.value = true
             }
-            docRef.addOnFailureListener {e ->
+            docRef.addOnFailureListener { e ->
                 Log.e("프로필 등록 실패", "$e")
                 _message.value = "프로필 등록에 실패하였습니다."
             }
@@ -69,8 +70,8 @@ class ProfileViewModel(private val auth: FirebaseAuth,
     fun uploadImageToFirebase(uriInfo: Uri?, nickName: String) {
         imageStorage = FirebaseStorage.getInstance()
         val fileName = "image_${nickName}.jpg"
-        val imagesRef = imageStorage.reference.child("profile/").child(fileName)
-        imagesRef.putFile(uriInfo!!).addOnSuccessListener {
+        val imageRef = imageStorage.reference.child("profile/").child(fileName)
+        imageRef.putFile(uriInfo!!).addOnSuccessListener {
 
         }.addOnFailureListener {
 

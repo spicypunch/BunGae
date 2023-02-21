@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat
 class PostViewModel(private val auth: FirebaseAuth, private var db: FirebaseFirestore, private var imageStorage: FirebaseStorage) : ViewModel() {
 
     private val currentTime: Long = System.currentTimeMillis()
-    private val dateFormat = SimpleDateFormat("yy-MM-dd hh:mm:ss")
+    private val dateFormat = SimpleDateFormat("yy-MM-dd HH:mm")
 
     private var _success = MutableLiveData<Boolean>()
     val success: LiveData<Boolean>

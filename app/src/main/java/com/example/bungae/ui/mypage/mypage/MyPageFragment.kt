@@ -3,6 +3,7 @@ package com.example.bungae.ui.mypage.mypage
 import android.Manifest
 import android.content.ContentValues
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -23,6 +24,9 @@ import com.example.bungae.ui.account.login.LoginActivity
 import com.example.bungae.ui.mypage.mypost.MyPostActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -34,11 +38,12 @@ class MyPageFragment : Fragment() {
 
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val imageStorage: FirebaseStorage = Firebase.storage
 
     private var uriInfo: Uri? = null
 
     private val  myPageViewModel by lazy {
-        MyPageViewModel(auth, db)
+        MyPageViewModel(auth, db, imageStorage)
     }
 
     private val permissionList = arrayOf(
@@ -54,7 +59,6 @@ class MyPageFragment : Fragment() {
                         .show()
                 }
             }
-            openDialog(requireContext())
         }
 
     private val readImage =
@@ -88,7 +92,8 @@ class MyPageFragment : Fragment() {
 
         binding.imageMypageProfile.setOnClickListener {
             requestMultiplePermission.launch(permissionList)
-
+            openQuestionDialog()
+            myPageViewModel.getProfileImage()
         }
 
         myPageViewModel.task.observe(viewLifecycleOwner, Observer {
@@ -99,8 +104,8 @@ class MyPageFragment : Fragment() {
             Toast.makeText(context, "프로필 사진을 등록해주세요", Toast.LENGTH_SHORT).show()
         })
 
-        myPageViewModel.nickname.observe(viewLifecycleOwner, Observer {
-            binding.tvMypageNickname.text = it
+        myPageViewModel.lisProfile.observe(viewLifecycleOwner, Observer {
+            binding.data = it
         })
 
         binding.btnGetMyitem.setOnClickListener {
@@ -116,7 +121,7 @@ class MyPageFragment : Fragment() {
     }
 
     private fun createImageFile(): Uri? {
-        val now = SimpleDateFormat("yyMMdd_HHmm ss", Locale.KOREA).format(Date())
+        val now = SimpleDateFormat("yy_MM_dd_HH_mm", Locale.KOREA).format(Date())
         val content = ContentValues().apply {
             put(MediaStore.Images.Media.DISPLAY_NAME, "img_$now.jpg")
             put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
@@ -124,8 +129,21 @@ class MyPageFragment : Fragment() {
         return activity?.contentResolver?.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, content)
     }
 
-    private fun openDialog(context: Context) {
-        val dialogLayout = layoutInflater.inflate(R.layout.dialog, null)
+    private fun openQuestionDialog() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("사진 수정")
+        builder.setMessage("프로필 사진을 수정하시겠습니까?")
+        builder.setNegativeButton("아니요", null)
+        builder.setPositiveButton("네", object: DialogInterface.OnClickListener {
+            override fun onClick(p0: DialogInterface?, p1: Int) {
+                openLoadImageDialog(requireContext())
+            }
+        })
+        builder.show()
+    }
+
+    private fun openLoadImageDialog(context: Context) {
+        val dialogLayout = layoutInflater.inflate(R.layout.dialog_choose_image, null)
         val dialogBuild = AlertDialog.Builder(context).apply {
             setView(dialogLayout)
         }
@@ -140,12 +158,27 @@ class MyPageFragment : Fragment() {
         cameraAddBtn.setOnClickListener {
             uriInfo = createImageFile()
             getTakePicture.launch(uriInfo)
+            openUpdateImageDialog()
             dialog.dismiss()
         }
         fileAddBtn.setOnClickListener {
             readImage.launch(intent)
+            openUpdateImageDialog()
             dialog.dismiss()
         }
+    }
+
+    private fun openUpdateImageDialog() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("사진 수정")
+        builder.setMessage("선택한 사진으로 수정하시겠습니까?")
+        builder.setNegativeButton("아니요", null)
+        builder.setPositiveButton("네", object: DialogInterface.OnClickListener {
+            override fun onClick(p0: DialogInterface?, p1: Int) {
+                uriInfo?.let { myPageViewModel.updateImageToFirebase(it) }
+            }
+        })
+        builder.show()
     }
 
     override fun onDestroyView() {

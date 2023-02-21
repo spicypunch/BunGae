@@ -17,7 +17,6 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.bungae.R
 import com.example.bungae.databinding.ActivityWriteProfileBinding
-import com.example.bungae.ui.account.ProfileViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
@@ -153,7 +152,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun createImageFile(): Uri? {
-        val now = SimpleDateFormat("yyMMdd_HHmm ss", Locale.KOREA).format(Date())
+        val now = SimpleDateFormat("yy_MM_dd_HH_mm", Locale.KOREA).format(Date())
         val content = ContentValues().apply {
             put(MediaStore.Images.Media.DISPLAY_NAME, "img_$now.jpg")
             put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
@@ -162,7 +161,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun openDialog(context: Context) {
-        val dialogLayout = layoutInflater.inflate(R.layout.dialog, null)
+        val dialogLayout = layoutInflater.inflate(R.layout.dialog_choose_image, null)
         val dialogBuild = AlertDialog.Builder(context).apply {
             setView(dialogLayout)
         }

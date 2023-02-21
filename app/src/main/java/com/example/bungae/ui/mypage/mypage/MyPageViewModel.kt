@@ -10,8 +10,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
-class MyPageViewModel(private val auth: FirebaseAuth, private val db: FirebaseFirestore) :
-    ViewModel() {
+class MyPageViewModel(
+    private val auth: FirebaseAuth,
+    private val db: FirebaseFirestore,
+    private var imageStorage: FirebaseStorage
+) : ViewModel() {
 
     private var _task = MutableLiveData<Uri>()
     val task: LiveData<Uri>
@@ -21,9 +24,9 @@ class MyPageViewModel(private val auth: FirebaseAuth, private val db: FirebaseFi
     val loadImageSuccess: LiveData<Boolean>
         get() = _loadImageSuccess
 
-    private var _nickName = MutableLiveData<String>()
-    val nickname: LiveData<String>
-        get() = _nickName
+    private var _listProfile = MutableLiveData<Profile>()
+    val lisProfile: LiveData<Profile>
+        get() = _listProfile
 
     fun getNickname() {
         db.collection("Profile")
@@ -38,16 +41,15 @@ class MyPageViewModel(private val auth: FirebaseAuth, private val db: FirebaseFi
                  * 더 좋은 방법을 생각해보겠습니다.
                  */
                 if (item.size != 0) {
-                    Log.e("asdlf,.kjasdklf", item.get(0).nickname)
-                    _nickName.value = item.get(0).nickname
-                    getProfileImage(_nickName.value!!)
+                    _listProfile.value = item.get(0)
+                    getProfileImage()
                 }
 
             }
     }
 
-    private fun getProfileImage(nickname: String) {
-        val imgRef = FirebaseStorage.getInstance().reference.child("profile/image_${nickname}.jpg")
+    fun getProfileImage() {
+        val imgRef = FirebaseStorage.getInstance().reference.child("profile/image_${_listProfile.value?.nickname}.jpg")
         imgRef.downloadUrl.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 _task.value = task.result
@@ -57,7 +59,14 @@ class MyPageViewModel(private val auth: FirebaseAuth, private val db: FirebaseFi
         }
     }
 
-    fun updateImageToFirebase() {
+    fun updateImageToFirebase(uriInfo: Uri) {
+        imageStorage = FirebaseStorage.getInstance()
+        val fileName = "image_${_listProfile.value?.nickname}.jpg"
+        val imageRef = imageStorage.reference.child("profile/").child(fileName)
+        imageRef.putFile(uriInfo).addOnSuccessListener {
 
+        }.addOnFailureListener {
+
+        }
     }
 }
