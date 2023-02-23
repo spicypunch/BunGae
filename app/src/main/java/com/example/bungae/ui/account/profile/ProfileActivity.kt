@@ -29,12 +29,11 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWriteProfileBinding
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
-    private val imageStorage: FirebaseStorage = Firebase.storage
     private var uriInfo: Uri? = null
     private var nickNameCheckResult: Boolean = false
 
     private val profileViewModel by lazy {
-        ProfileViewModel(auth, db, imageStorage)
+        ProfileViewModel(auth, db)
     }
 
     private var time: Long = 0
@@ -108,7 +107,6 @@ class ProfileActivity : AppCompatActivity() {
                 if (uriInfo != null) {
                     profileViewModel.uploadImageToFirebase(
                         uriInfo,
-                        binding.editWriteProfileNickname.text.toString()
                     )
                 }
 

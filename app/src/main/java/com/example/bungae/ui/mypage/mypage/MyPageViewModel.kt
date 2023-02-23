@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.bungae.database.Profile
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
@@ -25,8 +26,12 @@ class MyPageViewModel(
         get() = _loadImageSuccess
 
     private var _listProfile = MutableLiveData<Profile>()
-    val lisProfile: LiveData<Profile>
+    val listProfile: LiveData<Profile>
         get() = _listProfile
+
+    private var _checkNickname = MutableLiveData<Boolean>()
+    val checkNickname: LiveData<Boolean>
+        get() = _checkNickname
 
     fun getNickname() {
         db.collection("Profile")
@@ -49,7 +54,7 @@ class MyPageViewModel(
     }
 
     fun getProfileImage() {
-        val imgRef = FirebaseStorage.getInstance().reference.child("profile/image_${_listProfile.value?.nickname}.jpg")
+        val imgRef = FirebaseStorage.getInstance().reference.child("profile/image_${auth.currentUser!!.uid}.jpg")
         imgRef.downloadUrl.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 _task.value = task.result
@@ -61,12 +66,36 @@ class MyPageViewModel(
 
     fun updateImageToFirebase(uriInfo: Uri) {
         imageStorage = FirebaseStorage.getInstance()
-        val fileName = "image_${_listProfile.value?.nickname}.jpg"
+        val fileName = "image_${auth.currentUser!!.uid}.jpg"
         val imageRef = imageStorage.reference.child("profile/").child(fileName)
         imageRef.putFile(uriInfo).addOnSuccessListener {
 
         }.addOnFailureListener {
 
         }
+    }
+
+    fun checkNickName(nickName: String) {
+        db.collection("Profile")
+            .whereEqualTo("nickname", nickName)
+            .get()
+            .addOnSuccessListener { results ->
+                _checkNickname.value = results.documents.isEmpty()
+            }
+            .addOnFailureListener {
+
+            }
+    }
+
+    fun updateNickName(nickName: String) {
+        db.collection("Profile")
+            .document(auth.currentUser!!.uid)
+            .update("nickname", nickName)
+            .addOnSuccessListener {
+
+            }
+            .addOnFailureListener {
+
+            }
     }
 }

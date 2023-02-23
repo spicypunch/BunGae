@@ -8,6 +8,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -88,7 +89,20 @@ class MyPageFragment : Fragment() {
         _binding = FragmentMypageBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        binding.editUpdateProfileNickname.visibility = View.GONE
+        binding.btnUpdateProfileNickname.visibility = View.GONE
+
         myPageViewModel.getNickname()
+
+        binding.btnEditNickname.setOnClickListener {
+            binding.btnEditNickname.visibility = View.GONE
+            binding.editUpdateProfileNickname.visibility = View.VISIBLE
+            binding.btnUpdateProfileNickname.visibility = View.VISIBLE
+        }
+
+        binding.btnUpdateProfileNickname.setOnClickListener {
+            myPageViewModel.checkNickName(binding.editUpdateProfileNickname.text.toString())
+        }
 
         binding.imageMypageProfile.setOnClickListener {
             requestMultiplePermission.launch(permissionList)
@@ -97,14 +111,35 @@ class MyPageFragment : Fragment() {
         }
 
         myPageViewModel.task.observe(viewLifecycleOwner, Observer {
-            Glide.with(this).load(it).into(binding.imageMypageProfile)
+            Glide.with(this).load(it).circleCrop().into(binding.imageMypageProfile)
         })
+
+        myPageViewModel.checkNickname.observe(viewLifecycleOwner, Observer {
+            if (!it) {
+                Toast.makeText(context, "중복된 값이 있습니다.", Toast.LENGTH_SHORT).show()
+            } else {
+                myPageViewModel.updateNickName(binding.editUpdateProfileNickname.text.toString())
+                Toast.makeText(context, "닉네임이 성공적으로 변경되었습니다.", Toast.LENGTH_SHORT).show()
+
+                // 닉네임이 수정된 후 visibility 변경
+                binding.btnEditNickname.visibility = View.VISIBLE
+                binding.editUpdateProfileNickname.visibility = View.GONE
+                binding.btnUpdateProfileNickname.visibility = View.GONE
+
+                // 변경된 닉네임 뷰에 적용
+                myPageViewModel.getNickname()
+            }
+        })
+
+
 
         myPageViewModel.loadImageSuccess.observe(viewLifecycleOwner, Observer {
-            Toast.makeText(context, "프로필 사진을 등록해주세요", Toast.LENGTH_SHORT).show()
+            if (!it) {
+                Toast.makeText(context, "프로필 사진을 등록해주세요", Toast.LENGTH_SHORT).show()
+            }
         })
 
-        myPageViewModel.lisProfile.observe(viewLifecycleOwner, Observer {
+        myPageViewModel.listProfile.observe(viewLifecycleOwner, Observer {
             binding.data = it
         })
 

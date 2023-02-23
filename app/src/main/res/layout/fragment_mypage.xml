@@ -45,8 +45,8 @@
             android:id="@+id/btn_edit_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/image_mypage_profile"
-            app:layout_constraintBottom_toTopOf="@+id/btn_logout"
+            app:layout_constraintTop_toBottomOf="@+id/tv_mypage_nickname"
+            app:layout_constraintBottom_toTopOf="@+id/edit_update_profile_nickname"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="닉네임 변경하기" />
@@ -56,29 +56,27 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/image_mypage_profile"
-            app:layout_constraintTop_toBottomOf="@+id/image_write_profile"
-            android:layout_marginTop="35dp"
+            app:layout_constraintEnd_toStartOf="@+id/btn_update_profile_nickname"
+            app:layout_constraintTop_toBottomOf="@+id/btn_edit_nickname"
             android:layout_marginStart="25dp"
             android:hint="닉네임" />
 
         <Button
-            android:id="@+id/btn_update_profile_check"
+            android:id="@+id/btn_update_profile_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/image_mypage_profile"
-            app:layout_constraintStart_toEndOf="@+id/edit_write_profile_nickname"
+            app:layout_constraintTop_toBottomOf="@+id/btn_edit_nickname"
+            app:layout_constraintStart_toEndOf="@+id/edit_update_profile_nickname"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="35dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:text="중복 체크" />
+            android:text="변경" />
 
         <Button
             android:id="@+id/btn_get_myitem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/btn_edit_nickname"
+            app:layout_constraintTop_toBottomOf="@+id/edit_update_profile_nickname"
             app:layout_constraintBottom_toTopOf="@+id/btn_logout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

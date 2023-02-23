@@ -22,6 +22,9 @@
         android:theme="@style/Theme.BunGae"
         tools:targetApi="31">
         <activity
+            android:name=".ui.update.UpdatePostActivity"
+            android:label="글 수정"/>
+        <activity
             android:name=".ui.mypage.mypost.MyPostActivity"
             android:label="내가 쓴 글"/>
         <activity

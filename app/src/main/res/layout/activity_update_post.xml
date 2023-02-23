@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="55dp"
     tools:context=".ui.post.PostFragment">
 
     <TextView
-        android:id="@+id/tv_post_title"
+        android:id="@+id/tv_update_post_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,12 +16,12 @@
         android:layout_marginStart="20dp"
         android:gravity="center"
         android:minHeight="?actionBarSize"
-        android:text="글 작성"
+        android:text="글 수정"
         android:textStyle="bold"
         android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"/>
 
     <EditText
-        android:id="@+id/edit_post_title"
+        android:id="@+id/edit_update_post_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -34,22 +33,22 @@
         android:textSize="14sp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/spinner_category"
-        app:layout_constraintTop_toBottomOf="@+id/tv_post_title" />
+        app:layout_constraintEnd_toStartOf="@+id/spinner_update_category"
+        app:layout_constraintTop_toBottomOf="@+id/tv_update_post_title" />
 
     <Spinner
-        android:id="@+id/spinner_category"
+        android:id="@+id/spinner_update_category"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:entries="@array/spinner_category"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/edit_post_title"
-        app:layout_constraintTop_toBottomOf="@+id/tv_post_title" />
+        app:layout_constraintStart_toEndOf="@+id/edit_update_post_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_update_post_title" />
 
     <EditText
-        android:id="@+id/edit_post_content"
+        android:id="@+id/edit_update_post_content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -62,34 +61,34 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/edit_post_title"/>
+        app:layout_constraintTop_toTopOf="@+id/edit_update_post_title"/>
 
     <Button
-        android:id="@+id/btn_post_addImage"
+        android:id="@+id/btn_update_addImage"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="12dp"
         android:drawableBottom="@drawable/ic_baseline_photo_camera_24"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_post_content" />
+        app:layout_constraintTop_toBottomOf="@id/edit_update_post_content" />
 
     <ImageView
-        android:id="@+id/img_post_load"
+        android:id="@+id/img_update_load"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        app:layout_constraintStart_toEndOf="@+id/btn_post_addImage"
-        app:layout_constraintTop_toBottomOf="@+id/edit_post_content"
+        app:layout_constraintStart_toEndOf="@+id/btn_update_addImage"
+        app:layout_constraintTop_toBottomOf="@+id/edit_update_post_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/frame"/>
 
     <TextView
-        android:id="@+id/tv_map"
+        android:id="@+id/tv_update_map"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_post_addImage"
+        app:layout_constraintTop_toBottomOf="@+id/btn_update_addImage"
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         android:text="위치를 정해주세요!"
@@ -98,7 +97,7 @@
         android:drawableRight="@drawable/icon_post_map"/>
 
     <Button
-        android:id="@+id/btn_completion"
+        android:id="@+id/btn_update_completion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
