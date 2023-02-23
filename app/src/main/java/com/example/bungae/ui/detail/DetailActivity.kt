@@ -1,12 +1,15 @@
 package com.example.bungae.ui.detail
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isInvisible
 import androidx.lifecycle.Observer
@@ -64,9 +67,36 @@ class DetailActivity : AppCompatActivity() {
             Glide.with(this).load(it).circleCrop().into(binding.imageDetailProfile)
         })
 
+        detailViewModel.deleteResult.observe(this, Observer {
+            if (it) {
+                Toast.makeText(this, "성공적으로 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                finish()
+            } else {
+                Toast.makeText(this, "아이템 삭제에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+
         binding.btnDetailItemUpdate.setOnClickListener {
 //            startActivity(Intent(this, UpdatePostActivity::class.java))
             getList.launch(item)
         }
+
+        binding.btnDetailItemDelete.setOnClickListener {
+            askToDeleteItem()
+        }
+    }
+
+    private fun askToDeleteItem() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setTitle("게시글 삭제")
+        builder.setMessage("게시글을 삭제하시겠습니까?")
+        builder.setNegativeButton("아니요", null)
+        builder.setPositiveButton("네", object: DialogInterface.OnClickListener {
+            override fun onClick(p0: DialogInterface?, p1: Int) {
+                detailViewModel.deleteItem(item)
+            }
+        })
+        builder.show()
     }
 }

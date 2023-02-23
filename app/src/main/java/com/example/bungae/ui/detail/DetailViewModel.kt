@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.bungae.database.ItemSample
 import com.example.bungae.database.Profile
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -21,6 +22,10 @@ class DetailViewModel(
     private var _porfileImage = MutableLiveData<Uri>()
     val porfileImage: LiveData<Uri>
         get() = _porfileImage
+
+    private var _deleteResult = MutableLiveData<Boolean>()
+    val deleteResult: LiveData<Boolean>
+        get() = _deleteResult
 
     fun getProfileData(user: String) {
         db.collection("Profile")
@@ -44,5 +49,17 @@ class DetailViewModel(
 
             }
         }
+    }
+
+    fun deleteItem(item: ItemSample) {
+        db.collection("ItemInfo")
+            .document("${item.uid}_${item.date}")
+            .delete()
+            .addOnSuccessListener {
+                _deleteResult.value = true
+            }
+            .addOnFailureListener {
+                _deleteResult.value = false
+            }
     }
 }
