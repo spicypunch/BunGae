@@ -1,4 +1,4 @@
-package com.example.bungae.ui.account
+package com.example.bungae.ui.account.profile
 
 import android.Manifest
 import android.content.ContentValues
@@ -17,6 +17,7 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.bungae.R
 import com.example.bungae.databinding.ActivityWriteProfileBinding
+import com.example.bungae.ui.account.ProfileViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
@@ -28,8 +29,8 @@ import java.util.*
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWriteProfileBinding
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
-    private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
-    private var imageStorage: FirebaseStorage = Firebase.storage
+    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val imageStorage: FirebaseStorage = Firebase.storage
     private var uriInfo: Uri? = null
     private var nickNameCheckResult: Boolean = false
 

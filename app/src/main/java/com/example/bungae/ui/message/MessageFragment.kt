@@ -4,18 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bungae.database.MessageSample
 import com.example.bungae.databinding.FragmentMessageBinding
-import com.example.bungae.ui.message.adapter.MessageRecyclerViewAdapter
+import com.example.bungae.ui.message.adapter.MessageAdapter
 
 class MessageFragment : Fragment() {
 
     private var _binding: FragmentMessageBinding? = null
-    private val adapter by lazy { MessageRecyclerViewAdapter() }
+    private val adapter by lazy { MessageAdapter() }
     private val list: MutableList<MessageSample> = mutableListOf(MessageSample("김종민", "저 참여할게요!"))
 
     private val binding

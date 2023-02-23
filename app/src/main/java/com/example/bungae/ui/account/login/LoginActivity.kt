@@ -1,4 +1,4 @@
-package com.example.bungae.ui.account
+package com.example.bungae.ui.account.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,8 +6,8 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.example.bungae.database.Profile
 import com.example.bungae.databinding.ActivityLoginBinding
+import com.example.bungae.ui.account.SignUpActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {

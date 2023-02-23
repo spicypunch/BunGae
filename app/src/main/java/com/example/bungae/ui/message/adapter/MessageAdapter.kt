@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bungae.database.MessageSample
 import com.example.bungae.databinding.ItemMessageBinding
 
-class MessageRecyclerViewAdapter() : RecyclerView.Adapter<MessageRecyclerViewAdapter.MyViewHolder>() {
+class MessageAdapter() : RecyclerView.Adapter<MessageAdapter.MyViewHolder>() {
 
     private val messageList = mutableListOf<MessageSample>()
 

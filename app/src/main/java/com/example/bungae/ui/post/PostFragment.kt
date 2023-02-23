@@ -39,9 +39,9 @@ class PostFragment : Fragment() {
     private val binding
         get() = _binding!!
 
-    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
-    private var imageStorage: FirebaseStorage = Firebase.storage
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val imageStorage: FirebaseStorage = Firebase.storage
 
     private val postViewModel by lazy {
         PostViewModel(auth, db, imageStorage)

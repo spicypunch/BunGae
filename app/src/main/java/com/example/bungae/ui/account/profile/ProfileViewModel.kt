@@ -14,7 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
 class ProfileViewModel(private val auth: FirebaseAuth,
-                       private var db: FirebaseFirestore,
+                       private val db: FirebaseFirestore,
                        private var imageStorage: FirebaseStorage
                        ) : ViewModel() {
 
