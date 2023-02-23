@@ -2,10 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
-    <uses-feature android:name="android.hardware.camera"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -18,11 +22,19 @@
         android:theme="@style/Theme.BunGae"
         tools:targetApi="31">
         <activity
-            android:name=".ui.login.LoginActivity"
-            android:label="@string/title_activity_login" />
+            android:name=".UpdateProfileActivity"
+            android:exported="false"
+            android:label="@string/title_activity_update_profile"
+            android:theme="@style/Theme.BunGae.NoActionBar" />
         <activity
-            android:name=".ui.signup.SignUpActivity"
-            android:label="@string/title_activity_login" />
+            android:name=".ui.account.LoginActivity"
+            android:label="로그인" />
+        <activity
+            android:name=".ui.account.ProfileActivity"
+            android:label="프로필 등록" />
+        <activity
+            android:name=".ui.account.SignUpActivity"
+            android:label="회원가입" />
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"

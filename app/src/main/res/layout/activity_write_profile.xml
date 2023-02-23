@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/image_write_profile"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/edit_write_profile_nickname"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/icon_user" />
+
+    <TextView
+        android:id="@+id/tv_mypage_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/image_write_profile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="이미지를 눌러 사진을 등록해주세요!"/>
+
+    <EditText
+        android:id="@+id/edit_write_profile_nickname"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_write_profile_check"
+        app:layout_constraintTop_toBottomOf="@+id/image_write_profile"
+        android:layout_marginTop="35dp"
+        android:layout_marginStart="25dp"
+        android:hint="닉네임" />
+
+    <Button
+        android:id="@+id/btn_write_profile_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/image_write_profile"
+        app:layout_constraintStart_toEndOf="@+id/edit_write_profile_nickname"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="35dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:text="중복 체크" />
+
+    <EditText
+        android:id="@+id/edit_write_profile_age"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv_write_profile_age"
+        app:layout_constraintTop_toBottomOf="@+id/btn_write_profile_check"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="20dp"
+        android:inputType="number"
+        android:maxLength="2"
+        android:hint="나이는" />
+
+    <TextView
+        android:id="@+id/tv_write_profile_age"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/edit_write_profile_age"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_write_profile_check"
+        android:layout_marginTop="18dp"
+        android:layout_marginStart="10dp"
+        android:text="살이고,"
+        android:textSize="25dp" />
+
+    <Spinner
+        android:id="@+id/spinner_age"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:entries="@array/spinner_gender"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tv_write_profile_gender"
+        app:layout_constraintTop_toBottomOf="@+id/edit_write_profile_age"
+        android:layout_marginTop="18dp"
+        android:layout_marginStart="15dp" />
+
+    <TextView
+        android:id="@+id/tv_write_profile_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/spinner_age"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_write_profile_age"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="20dp"
+        android:text="입니다."
+        android:textSize="25dp" />
+
+    <Button
+        android:id="@+id/btn_write_profile_complete"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="완료"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
