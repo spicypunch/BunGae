@@ -3,9 +3,9 @@
     <string-array name="spinner_category">
         <item>아무거나!</item>
         <item>카페 투어</item>
-        <item>러닝</item>
+        <item>운동</item>
         <item>맛집 탐방</item>
-        <item>등산</item>
+        <item>안주와 술</item>
         <item>영화</item>
     </string-array>
 </resources>
