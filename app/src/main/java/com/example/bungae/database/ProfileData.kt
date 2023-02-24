@@ -1,6 +1,6 @@
 package com.example.bungae.database
 
-data class Profile(
+data class ProfileData(
     var uid: String = "",
     var nickname: String = "",
     var age: Int = 0,

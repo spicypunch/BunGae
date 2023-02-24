@@ -5,11 +5,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.bungae.database.Profile
-import com.google.android.gms.tasks.Task
+import com.example.bungae.database.ProfileData
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
@@ -46,7 +43,7 @@ class ProfileViewModel(
         if (nickName.isEmpty()) {
             _message.value = "사용할 닉네임을 입력해주세요."
         } else {
-            val profile = Profile(
+            val profileData = ProfileData(
                 uid = auth.currentUser!!.uid,
                 nickname = nickName,
                 age = age,
@@ -54,7 +51,7 @@ class ProfileViewModel(
             )
 
             db.collection("Profile").document(auth.currentUser!!.uid)
-                .set(profile)
+                .set(profileData)
                 .addOnSuccessListener {
                     _message.value = "프로필 등록에 성공하였습니다."
                     _checkFirestore.value = true

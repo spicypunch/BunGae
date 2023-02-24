@@ -1,29 +1,23 @@
 package com.example.bungae.ui.detail
 
 import android.content.DialogInterface
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isInvisible
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
-import com.example.bungae.database.ItemSample
+import com.example.bungae.database.ItemData
 import com.example.bungae.databinding.ActivityDetailBinding
-import com.example.bungae.ui.update.UpdatePostActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
-    private lateinit var item: ItemSample
+    private lateinit var item: ItemData
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
@@ -31,7 +25,7 @@ class DetailActivity : AppCompatActivity() {
         DetailViewModel( db)
     }
 
-    private val getList: ActivityResultLauncher<ItemSample> =
+    private val getList: ActivityResultLauncher<ItemData> =
         registerForActivityResult(ActivityContract()) { result: HashMap<String, String>? ->
             result?.let {
                 binding.tvDetailTitle.text = it.get("title")
@@ -46,14 +40,14 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        item = intent.getSerializableExtra("data") as ItemSample
+        item = intent.getSerializableExtra("data") as ItemData
         binding.itemData = item
 
         detailViewModel.getProfileData(item.uid)
 
         detailViewModel.getProfileImage(item.uid)
 
-        detailViewModel.profileList.observe(this, Observer {
+        detailViewModel.profileDataList.observe(this, Observer {
             binding.profileData = it
             if (item.uid != auth.currentUser!!.uid) {
                 binding.btnDetailItemUpdate.visibility = View.INVISIBLE

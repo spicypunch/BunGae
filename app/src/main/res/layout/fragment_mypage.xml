@@ -6,7 +6,7 @@
     <data>
         <variable
             name="data"
-            type="com.example.bungae.database.Profile" />
+            type="com.example.bungae.database.ProfileData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

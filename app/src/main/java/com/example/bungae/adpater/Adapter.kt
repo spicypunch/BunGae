@@ -8,15 +8,15 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.bungae.R
-import com.example.bungae.database.ItemSample
+import com.example.bungae.database.ItemData
 import com.example.bungae.databinding.ItemHomeBinding
 import com.example.bungae.ui.detail.DetailActivity
 
-class Adapter() : ListAdapter<ItemSample, Adapter.MyViewHolder>(diffUtil){
+class Adapter() : ListAdapter<ItemData, Adapter.MyViewHolder>(diffUtil){
 
     class MyViewHolder(private val binding: ItemHomeBinding) : RecyclerView.ViewHolder(binding.root) {
         val root = binding.root
-        fun bind(item: ItemSample) {
+        fun bind(item: ItemData) {
             binding.data = item
 
             when (binding.data!!.category) {
@@ -46,13 +46,13 @@ class Adapter() : ListAdapter<ItemSample, Adapter.MyViewHolder>(diffUtil){
     }
 
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<ItemSample>() {
+        val diffUtil = object : DiffUtil.ItemCallback<ItemData>() {
 
-            override fun areItemsTheSame(oldItem: ItemSample, newItem: ItemSample): Boolean {
+            override fun areItemsTheSame(oldItem: ItemData, newItem: ItemData): Boolean {
                 return oldItem.date == newItem.date
             }
 
-            override fun areContentsTheSame(oldItem: ItemSample, newItem: ItemSample): Boolean {
+            override fun areContentsTheSame(oldItem: ItemData, newItem: ItemData): Boolean {
                 return oldItem == newItem
             }
         }
