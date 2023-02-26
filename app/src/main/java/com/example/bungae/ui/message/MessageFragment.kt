@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.bungae.database.MessageData
+import com.example.bungae.data.ChatListData
 import com.example.bungae.databinding.FragmentMessageBinding
 import com.example.bungae.ui.message.adapter.MessageAdapter
 
@@ -15,7 +15,7 @@ class MessageFragment : Fragment() {
 
     private var _binding: FragmentMessageBinding? = null
     private val adapter by lazy { MessageAdapter() }
-    private val list: MutableList<MessageData> = mutableListOf()
+    private val list: MutableList<ChatListData> = mutableListOf()
 
     private val binding
         get() = _binding!!
@@ -31,7 +31,7 @@ class MessageFragment : Fragment() {
         _binding = FragmentMessageBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        list.add(MessageData(uid = "123", nickname = "123", message = "123", timeStamp = "2023-02-24"))
+        list.add(ChatListData(uid = "123", nickname = "123", message = "123", timeStamp = "2023-02-24"))
 
         binding.recyclerviewMessage.adapter = adapter
         binding.recyclerviewMessage.layoutManager = LinearLayoutManager(activity)

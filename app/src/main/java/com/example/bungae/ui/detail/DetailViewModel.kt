@@ -5,8 +5,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.bungae.database.ItemData
-import com.example.bungae.database.ProfileData
+import com.example.bungae.data.ItemData
+import com.example.bungae.data.ProfileData
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 

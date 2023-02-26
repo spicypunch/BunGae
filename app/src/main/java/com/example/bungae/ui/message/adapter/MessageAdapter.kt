@@ -8,20 +8,21 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.bungae.R
-import com.example.bungae.database.MessageData
+import com.example.bungae.data.ChatListData
 import com.example.bungae.databinding.ItemMessageBinding
+import com.example.bungae.ui.message.ChattingRoomActivity
 
-class MessageAdapter() : ListAdapter<MessageData, MessageAdapter.MyViewHolder>(diffUtil) {
+class MessageAdapter() : ListAdapter<ChatListData, MessageAdapter.MyViewHolder>(diffUtil) {
 
     class MyViewHolder(private val binding: ItemMessageBinding) : RecyclerView.ViewHolder(binding.root){
         val root = binding.root
-        fun bind(item: MessageData) {
+        fun bind(item: ChatListData) {
             binding.tvMessageNickname.text = item.nickname
             binding.tvMessage.text = item.message
             Glide.with(itemView).load(R.drawable.ic_baseline_person_24).into(binding.imageProfile)
 
             itemView.setOnClickListener {
-//                Intent(root.context, )
+                root.context.startActivity(Intent(root.context, ChattingRoomActivity::class.java))
             }
         }
     }
@@ -36,13 +37,13 @@ class MessageAdapter() : ListAdapter<MessageData, MessageAdapter.MyViewHolder>(d
     }
 
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<MessageData>() {
+        val diffUtil = object : DiffUtil.ItemCallback<ChatListData>() {
 
-            override fun areItemsTheSame(oldItem: MessageData, newItem: MessageData): Boolean {
+            override fun areItemsTheSame(oldItem: ChatListData, newItem: ChatListData): Boolean {
                 return oldItem.timeStamp == newItem.timeStamp
             }
 
-            override fun areContentsTheSame(oldItem: MessageData, newItem: MessageData): Boolean {
+            override fun areContentsTheSame(oldItem: ChatListData, newItem: ChatListData): Boolean {
                 return oldItem == newItem
             }
         }

@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
-import com.example.bungae.database.ItemData
+import com.example.bungae.data.ItemData
 import com.example.bungae.ui.update.UpdatePostActivity
 
 

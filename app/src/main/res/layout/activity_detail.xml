@@ -5,10 +5,10 @@
     <data>
         <variable
             name="itemData"
-            type="com.example.bungae.database.ItemData" />
+            type="com.example.bungae.data.ItemData" />
         <variable
             name="profileData"
-            type="com.example.bungae.database.ProfileData" />
+            type="com.example.bungae.data.ProfileData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

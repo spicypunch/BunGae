@@ -1,6 +1,6 @@
-package com.example.bungae.database
+package com.example.bungae.data
 
-data class MessageData(
+data class ChatListData(
     val uid: String,
     val nickname: String,
     val message: String,

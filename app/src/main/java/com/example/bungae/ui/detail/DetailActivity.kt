@@ -1,6 +1,7 @@
 package com.example.bungae.ui.detail
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -9,8 +10,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
-import com.example.bungae.database.ItemData
+import com.example.bungae.data.ItemData
+import com.example.bungae.data.ProfileData
 import com.example.bungae.databinding.ActivityDetailBinding
+import com.example.bungae.ui.message.ChattingRoomActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -20,6 +23,8 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var item: ItemData
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+
+    private lateinit var profileData: ProfileData
 
     private val detailViewModel by lazy {
         DetailViewModel( db)
@@ -55,6 +60,7 @@ class DetailActivity : AppCompatActivity() {
             } else {
                 binding.btnSendMessage.visibility = View.INVISIBLE
             }
+            profileData = it
         })
 
         detailViewModel.porfileImage.observe(this, Observer {
@@ -72,12 +78,19 @@ class DetailActivity : AppCompatActivity() {
         })
 
         binding.btnDetailItemUpdate.setOnClickListener {
-//            startActivity(Intent(this, UpdatePostActivity::class.java))
             getList.launch(item)
         }
 
         binding.btnDetailItemDelete.setOnClickListener {
             askToDeleteItem()
+        }
+
+        binding.btnSendMessage.setOnClickListener {
+
+            Intent(this, ChattingRoomActivity::class.java).apply {
+                putExtra("item data", item)
+                putExtra("profile data", profileData)
+            }.run { startActivity(this) }
         }
     }
 

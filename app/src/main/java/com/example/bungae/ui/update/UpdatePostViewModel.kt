@@ -3,7 +3,7 @@ package com.example.bungae.ui.update
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.bungae.database.ItemData
+import com.example.bungae.data.ItemData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
