@@ -8,21 +8,29 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.bungae.R
+import com.example.bungae.data.ChatInfoData
 import com.example.bungae.data.ChatListData
 import com.example.bungae.databinding.ItemMessageBinding
 import com.example.bungae.ui.message.ChattingRoomActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class MessageAdapter() : ListAdapter<ChatListData, MessageAdapter.MyViewHolder>(diffUtil) {
 
     class MyViewHolder(private val binding: ItemMessageBinding) : RecyclerView.ViewHolder(binding.root){
         val root = binding.root
+        val auth: FirebaseAuth = FirebaseAuth.getInstance()
         fun bind(item: ChatListData) {
-            binding.tvMessageNickname.text = item.nickname
-            binding.tvMessage.text = item.message
-            Glide.with(itemView).load(R.drawable.ic_baseline_person_24).into(binding.imageProfile)
+//            if (item.uid != auth.currentUser!!.uid) {
+                binding.tvMessageNickname.text = item.nickname
+                binding.tvMessage.text = item.message
+                Glide.with(itemView).load(R.drawable.ic_baseline_person_24).into(binding.imageProfile)
+//            }
 
             itemView.setOnClickListener {
-                root.context.startActivity(Intent(root.context, ChattingRoomActivity::class.java))
+                val chatInfoData = ChatInfoData(item.uid, item.nickname)
+                Intent(root.context, ChattingRoomActivity::class.java).apply {
+                    putExtra("profile data", chatInfoData)
+                }.run { root.context.startActivity(this) }
             }
         }
     }

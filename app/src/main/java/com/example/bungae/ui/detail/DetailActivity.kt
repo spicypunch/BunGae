@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
+import com.example.bungae.data.ChatInfoData
 import com.example.bungae.data.ItemData
 import com.example.bungae.data.ProfileData
 import com.example.bungae.databinding.ActivityDetailBinding
@@ -86,10 +87,10 @@ class DetailActivity : AppCompatActivity() {
         }
 
         binding.btnSendMessage.setOnClickListener {
-
+            val chatInfoData = ChatInfoData(profileData.uid, profileData.nickname)
             Intent(this, ChattingRoomActivity::class.java).apply {
-                putExtra("item data", item)
-                putExtra("profile data", profileData)
+//                putExtra("item data", item)
+                putExtra("profile data", chatInfoData)
             }.run { startActivity(this) }
         }
     }

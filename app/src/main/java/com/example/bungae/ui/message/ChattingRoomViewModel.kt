@@ -30,7 +30,7 @@ class ChattingRoomViewModel(
         val comment = ChatModel.Comment(uid = uid, nickname = nickname, message = message, timestamp = dateFormat.format(currentTime))
 
         val chatModel = ChatModel()
-        var chatListData = ChatListData(uid = uid, nickname = nickname, message = message, timestamp = dateFormat.format(currentTime))
+//        val chatListData = ChatListData(uid = uid, nickname = nickname, message = message, timestamp = dateFormat.format(currentTime))
 
         chatModel.users.put(uid, true)
         chatModel.users.put(destinationUid, true)
@@ -46,16 +46,16 @@ class ChattingRoomViewModel(
             .addOnFailureListener { e ->
                 Log.e("addOnFailureListener", e.toString())
             }
-
-        db.collection("ChatList")
-            .document()
-            .set(chatListData)
-            .addOnSuccessListener {
-                Log.e("addOnSuccessListener", "메세지 보내기 성공")
-            }
-            .addOnFailureListener { e ->
-                Log.e("addOnFailureListener", e.toString())
-            }
+//
+//        db.collection("ChatList")
+//            .document()
+//            .set(chatListData)
+//            .addOnSuccessListener {
+//                Log.e("addOnSuccessListener", "메세지 보내기 성공")
+//            }
+//            .addOnFailureListener { e ->
+//                Log.e("addOnFailureListener", e.toString())
+//            }
     }
 
     fun getChatData(destinationUid: String) {

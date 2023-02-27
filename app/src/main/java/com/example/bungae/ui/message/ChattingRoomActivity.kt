@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bungae.R
 import com.example.bungae.adpater.Adapter
+import com.example.bungae.data.ChatInfoData
 import com.example.bungae.data.ProfileData
 import com.example.bungae.databinding.ActivityChattingRoomDetailBinding
 import com.example.bungae.ui.message.adapter.ChattingRoomAdapter
@@ -17,7 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 class ChattingRoomActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChattingRoomDetailBinding
-    private lateinit var profileData: ProfileData
+    private lateinit var chatInfoData: ChatInfoData
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
@@ -32,24 +33,24 @@ class ChattingRoomActivity : AppCompatActivity() {
         binding = ActivityChattingRoomDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        profileData = intent.getSerializableExtra("profile data") as ProfileData
+        chatInfoData = intent.getSerializableExtra("profile data") as ChatInfoData
 
         adapter = ChattingRoomAdapter()
 
         binding.recyclerviewChatting.adapter = adapter
         binding.recyclerviewChatting.layoutManager = LinearLayoutManager(this)
 
-        binding.textViewNickname.text = profileData.nickname
+        binding.textViewNickname.text = chatInfoData.nickname
 
-        chattingRoomViewModel.getChatData(profileData.uid)
+        chattingRoomViewModel.getChatData(chatInfoData.uid)
 
         binding.imageMessageSend.setOnClickListener {
             chattingRoomViewModel.setChatData(
-                profileData.uid,
-                profileData.nickname,
+                chatInfoData.uid,
+                chatInfoData.nickname,
                 binding.editMessageText.text.toString()
             )
-            binding.editMessageText.setText(null)
+            binding.editMessageText.text = null
         }
 
         chattingRoomViewModel.chatData.observe(this, Observer {

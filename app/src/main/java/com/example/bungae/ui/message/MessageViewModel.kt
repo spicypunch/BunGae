@@ -1,5 +1,6 @@
 package com.example.bungae.ui.message
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,7 +14,7 @@ class MessageViewModel(
     private val db: FirebaseFirestore
 ) {
 
-    private val list: MutableList<ChatModel> = mutableListOf()
+    private var list: MutableList<ChatModel> = mutableListOf()
 
     private var _chatList = MutableLiveData<MutableList<ChatModel>>()
     val chatList: LiveData<MutableList<ChatModel>>
@@ -21,8 +22,28 @@ class MessageViewModel(
 
     fun getMyChatList() {
         db.collection("ChatRoom")
-            .whereEqualTo("comemnts.comment.uid", auth.currentUser!!.uid)
-            .orderBy("comemnts.comment.timestamp", Query.Direction.DESCENDING).limit(1)
+            .whereEqualTo("users.${auth.currentUser!!.uid}", true)
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    Log.e("Listen failed.", e.toString())
+                    return@addSnapshotListener
+                }
+
+                if (snapshot != null) {
+                    list.clear()
+                    for (result in snapshot) {
+                        val item = result.toObject(ChatModel::class.java)
+                        list.add(item)
+                    }
+
+                    list.sortByDescending { it.comments.get("comment")!!.timestamp }
+
+
+                    _chatList.value = list
+                } else {
+                    Log.e("Current data: null", "Current data: null")
+                }
+            }
     }
 
 }

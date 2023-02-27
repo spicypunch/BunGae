@@ -5,4 +5,4 @@ data class ChatListData(
     val nickname: String,
     val message: String,
     val timestamp: String
-)
+):java.io.Serializable
