@@ -1,4 +1,4 @@
-package com.example.bungae.ui.account
+package com.example.bungae.ui.account.profile
 
 import android.net.Uri
 import android.util.Log
@@ -13,10 +13,10 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
-class ProfileViewModel(private val auth: FirebaseAuth,
-                       private val db: FirebaseFirestore,
-                       private var imageStorage: FirebaseStorage
-                       ) : ViewModel() {
+class ProfileViewModel(
+    private val auth: FirebaseAuth,
+    private val db: FirebaseFirestore,
+) : ViewModel() {
 
     private var _message = MutableLiveData<String>()
     val message: LiveData<String>
@@ -50,30 +50,31 @@ class ProfileViewModel(private val auth: FirebaseAuth,
                 uid = auth.currentUser!!.uid,
                 nickname = nickName,
                 age = age,
-                gender = gender
+                gender = gender,
             )
-            val colRef: CollectionReference = db.collection("Profile")
-            val docRef: Task<DocumentReference> = colRef.add(profile)
-            docRef.addOnSuccessListener { results ->
-                _message.value = "프로필 등록에 성공하였습니다."
-                _checkFirestore.value = true
-            }
-            docRef.addOnFailureListener {e ->
-                Log.e("프로필 등록 실패", "$e")
-                _message.value = "프로필 등록에 실패하였습니다."
-            }
-        }
 
-    }
-
-    fun uploadImageTOFirebase(uriInfo: Uri?, nickName: String) {
-        imageStorage = FirebaseStorage.getInstance()
-        val fileName = "image_${nickName}.jpg"
-        val imagesRef = imageStorage.reference.child("profile/").child(fileName)
-        imagesRef.putFile(uriInfo!!).addOnSuccessListener {
-
-        }.addOnFailureListener {
-
+            db.collection("Profile").document(auth.currentUser!!.uid)
+                .set(profile)
+                .addOnSuccessListener {
+                    _message.value = "프로필 등록에 성공하였습니다."
+                    _checkFirestore.value = true
+                }
+                .addOnFailureListener { e ->
+                    Log.e("프로필 등록 실패", "$e")
+                    _message.value = "프로필 등록에 실패하였습니다."
+                }
         }
     }
+
+    fun uploadImageToFirebase(uriInfo: Uri?) {
+        val imageRef =
+            FirebaseStorage.getInstance().reference.child("profile/")
+                .child("image_${auth.currentUser!!.uid}.jpg")
+        imageRef.putFile(uriInfo!!)
+            .addOnSuccessListener {
+            }
+            .addOnFailureListener {
+            }
+    }
+
 }

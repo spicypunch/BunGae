@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.bungae.adpater.Adapter
 import com.example.bungae.databinding.ActivityMypostBinding
-import com.example.bungae.ui.mypage.adapter.MyPostAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -13,7 +13,7 @@ class MyPostActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMypostBinding
 
-    private val adapter by lazy { MyPostAdapter() }
+    private val adapter by lazy { Adapter() }
 
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()

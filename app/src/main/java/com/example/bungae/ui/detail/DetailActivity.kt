@@ -1,13 +1,22 @@
 package com.example.bungae.ui.detail
 
+import android.content.DialogInterface
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isInvisible
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.example.bungae.database.ItemSample
 import com.example.bungae.databinding.ActivityDetailBinding
+import com.example.bungae.ui.update.UpdatePostActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -19,8 +28,18 @@ class DetailActivity : AppCompatActivity() {
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     private val detailViewModel by lazy {
-        DetailViewModel(db)
+        DetailViewModel( db)
     }
+
+    private val getList: ActivityResultLauncher<ItemSample> =
+        registerForActivityResult(ActivityContract()) { result: HashMap<String, String>? ->
+            result?.let {
+                binding.tvDetailTitle.text = it.get("title")
+                binding.tvDetailContent.text = it.get("content")
+                binding.tvDetailAddress.text = it.get("address")
+                Glide.with(this).load(it.get("imageUrl")).into(binding.imageDetail)
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +51,8 @@ class DetailActivity : AppCompatActivity() {
 
         detailViewModel.getProfileData(item.uid)
 
+        detailViewModel.getProfileImage(item.uid)
+
         detailViewModel.profileList.observe(this, Observer {
             binding.profileData = it
             if (item.uid != auth.currentUser!!.uid) {
@@ -41,5 +62,41 @@ class DetailActivity : AppCompatActivity() {
                 binding.btnSendMessage.visibility = View.INVISIBLE
             }
         })
+
+        detailViewModel.porfileImage.observe(this, Observer {
+            Glide.with(this).load(it).circleCrop().into(binding.imageDetailProfile)
+        })
+
+        detailViewModel.deleteResult.observe(this, Observer {
+            if (it) {
+                Toast.makeText(this, "성공적으로 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                finish()
+            } else {
+                Toast.makeText(this, "아이템 삭제에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+
+        binding.btnDetailItemUpdate.setOnClickListener {
+//            startActivity(Intent(this, UpdatePostActivity::class.java))
+            getList.launch(item)
+        }
+
+        binding.btnDetailItemDelete.setOnClickListener {
+            askToDeleteItem()
+        }
+    }
+
+    private fun askToDeleteItem() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setTitle("게시글 삭제")
+        builder.setMessage("게시글을 삭제하시겠습니까?")
+        builder.setNegativeButton("아니요", null)
+        builder.setPositiveButton("네", object: DialogInterface.OnClickListener {
+            override fun onClick(p0: DialogInterface?, p1: Int) {
+                detailViewModel.deleteItem(item)
+            }
+        })
+        builder.show()
     }
 }

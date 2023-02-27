@@ -7,5 +7,6 @@ data class ItemSample (
     var content: String = "",
     var address: String = "",
     var category: String = "",
-    var date: String = ""
+    var date: String = "",
+    var imageUrl: String = ""
 ): java.io.Serializable

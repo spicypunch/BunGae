@@ -1,4 +1,4 @@
-package com.example.bungae.ui.home.adapter
+package com.example.bungae.adpater
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -12,7 +12,7 @@ import com.example.bungae.database.ItemSample
 import com.example.bungae.databinding.ItemHomeBinding
 import com.example.bungae.ui.detail.DetailActivity
 
-class HomeAdapter() : ListAdapter<ItemSample, HomeAdapter.MyViewHolder>(diffUtil){
+class Adapter() : ListAdapter<ItemSample, Adapter.MyViewHolder>(diffUtil){
 
     class MyViewHolder(private val binding: ItemHomeBinding) : RecyclerView.ViewHolder(binding.root) {
         val root = binding.root
