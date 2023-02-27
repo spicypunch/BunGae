@@ -46,6 +46,7 @@ class ChattingRoomActivity : AppCompatActivity() {
         binding.imageMessageSend.setOnClickListener {
             chattingRoomViewModel.setChatData(
                 profileData.uid,
+                profileData.nickname,
                 binding.editMessageText.text.toString()
             )
             binding.editMessageText.setText(null)

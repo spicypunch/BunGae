@@ -40,7 +40,7 @@ class MessageAdapter() : ListAdapter<ChatListData, MessageAdapter.MyViewHolder>(
         val diffUtil = object : DiffUtil.ItemCallback<ChatListData>() {
 
             override fun areItemsTheSame(oldItem: ChatListData, newItem: ChatListData): Boolean {
-                return oldItem.timeStamp == newItem.timeStamp
+                return oldItem.timestamp == newItem.timestamp
             }
 
             override fun areContentsTheSame(oldItem: ChatListData, newItem: ChatListData): Boolean {
