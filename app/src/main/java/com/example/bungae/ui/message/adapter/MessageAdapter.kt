@@ -19,18 +19,30 @@ class MessageAdapter() : ListAdapter<ChatListData, MessageAdapter.MyViewHolder>(
     class MyViewHolder(private val binding: ItemMessageBinding) : RecyclerView.ViewHolder(binding.root){
         val root = binding.root
         val auth: FirebaseAuth = FirebaseAuth.getInstance()
+
         fun bind(item: ChatListData) {
-//            if (item.uid != auth.currentUser!!.uid) {
-                binding.tvMessageNickname.text = item.nickname
+            if (item.uid == auth.currentUser!!.uid) {
+                binding.tvMessageNickname.text = item.senderNickname
                 binding.tvMessage.text = item.message
                 Glide.with(itemView).load(R.drawable.ic_baseline_person_24).into(binding.imageProfile)
-//            }
+            } else {
+                binding.tvMessageNickname.text = item.receiverNickname1
+                binding.tvMessage.text = item.message
+                Glide.with(itemView).load(R.drawable.ic_baseline_person_24).into(binding.imageProfile)
+            }
 
             itemView.setOnClickListener {
-                val chatInfoData = ChatInfoData(item.uid, item.nickname)
-                Intent(root.context, ChattingRoomActivity::class.java).apply {
-                    putExtra("profile data", chatInfoData)
-                }.run { root.context.startActivity(this) }
+                if (item.uid != auth.currentUser!!.uid) {
+                    val chatInfoData = ChatInfoData(item.uid, item.senderNickname)
+                    Intent(root.context, ChattingRoomActivity::class.java).apply {
+                        putExtra("profile data", chatInfoData)
+                    }.run { root.context.startActivity(this) }
+                } else {
+                    val chatInfoData = ChatInfoData(item.uid, item.receiverNickname1)
+                    Intent(root.context, ChattingRoomActivity::class.java).apply {
+                        putExtra("profile data", chatInfoData)
+                    }.run { root.context.startActivity(this) }
+                }
             }
         }
     }

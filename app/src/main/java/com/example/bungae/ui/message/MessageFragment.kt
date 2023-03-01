@@ -46,31 +46,25 @@ class MessageFragment : Fragment() {
         messageViewModel.getMyChatList()
 
         messageViewModel.chatList.observe(viewLifecycleOwner, Observer {
-            map = it.groupBy { it.comments.get("comment")!!.nickname }
-            Log.e(
-                "groupBy",
-                map.toString()
-            )
+            // 닉네임 기준으로 묶음
+            map = it.groupBy { it.comments.get("comment")!!.senderNickname }
 
+            // 내림차순으로 정렬된 날짜를
             for (i in map) {
                 var cnt = 0
-                Log.e(i.key, i.value.get(cnt).comments.get("comment")!!.timestamp)
-                list.add(ChatListData(uid = i.value.get(cnt).comments.get("comment")!!.uid, nickname = i.key, message = i.value.get(cnt).comments.get("comment")!!.message, timestamp = i.value.get(cnt).comments.get("comment")!!.timestamp))
+                list.add(
+                    ChatListData(
+                        senderNickname = i.key,
+                        uid = i.value.get(cnt).comments.get("comment")!!.uid,
+                        receiverNickname1 = i.value.get(cnt).comments.get("comment")!!.receiverNickname1 ,
+                        message = i.value.get(cnt).comments.get("comment")!!.message,
+                        timestamp = i.value.get(cnt).comments.get("comment")!!.timestamp
+                    )
+                )
                 cnt++
             }
-
-//            Log.e(
-//                "maxBy",
-//                it.maxBy { it.comments.get("comment")!!.timestamp }.toString()
-//            )
-//            for (i in it) {
-//                Log.e("chatlist4", i.comments.get("comment")!!.timestamp)
-//            }
-
             adapter.submitList(list)
-
         })
-
         return root
     }
 

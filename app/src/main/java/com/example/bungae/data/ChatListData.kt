@@ -1,8 +1,9 @@
 package com.example.bungae.data
 
 data class ChatListData(
-    val uid: String,
-    val nickname: String,
+    val uid: String ,
+    val senderNickname: String,
+    val receiverNickname1: String,
     val message: String,
     val timestamp: String
 ):java.io.Serializable

@@ -28,17 +28,13 @@ class MessageViewModel(
                     Log.e("Listen failed.", e.toString())
                     return@addSnapshotListener
                 }
-
                 if (snapshot != null) {
                     list.clear()
                     for (result in snapshot) {
                         val item = result.toObject(ChatModel::class.java)
                         list.add(item)
                     }
-
                     list.sortByDescending { it.comments.get("comment")!!.timestamp }
-
-
                     _chatList.value = list
                 } else {
                     Log.e("Current data: null", "Current data: null")

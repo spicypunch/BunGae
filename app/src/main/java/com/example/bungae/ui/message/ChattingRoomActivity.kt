@@ -11,14 +11,20 @@ import com.example.bungae.adpater.Adapter
 import com.example.bungae.data.ChatInfoData
 import com.example.bungae.data.ProfileData
 import com.example.bungae.databinding.ActivityChattingRoomDetailBinding
+import com.example.bungae.singletone.GetMyProfile
 import com.example.bungae.ui.message.adapter.ChattingRoomAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class ChattingRoomActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChattingRoomDetailBinding
     private lateinit var chatInfoData: ChatInfoData
+    private var myProfileData: ProfileData? = null
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
@@ -35,6 +41,11 @@ class ChattingRoomActivity : AppCompatActivity() {
 
         chatInfoData = intent.getSerializableExtra("profile data") as ChatInfoData
 
+        if (myProfileData == null) {
+            GetMyProfile.getMyProfile()
+        }
+
+
         adapter = ChattingRoomAdapter()
 
         binding.recyclerviewChatting.adapter = adapter
@@ -48,6 +59,7 @@ class ChattingRoomActivity : AppCompatActivity() {
             chattingRoomViewModel.setChatData(
                 chatInfoData.uid,
                 chatInfoData.nickname,
+                myProfileData?.nickname,
                 binding.editMessageText.text.toString()
             )
             binding.editMessageText.text = null
@@ -56,7 +68,11 @@ class ChattingRoomActivity : AppCompatActivity() {
         chattingRoomViewModel.chatData.observe(this, Observer {
             Log.e("chatData", it.toString())
             adapter.submitList(it)
-            binding.recyclerviewChatting.scrollToPosition(it.size -1)
+            binding.recyclerviewChatting.scrollToPosition(it.size - 1)
+        })
+
+        GetMyProfile.myProfile.observe(this, Observer {
+            myProfileData = it
         })
 
     }

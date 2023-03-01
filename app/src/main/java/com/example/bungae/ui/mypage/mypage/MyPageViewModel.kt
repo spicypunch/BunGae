@@ -38,16 +38,10 @@ class MyPageViewModel(
             .addOnSuccessListener { result ->
                 val item = result.toObjects(ProfileData::class.java)
 
-                /**
-                 * 각 계정당 프로필 정보는 하나밖에 없기 때문에
-                 * 이렇게 닉네임을 가져오는데
-                 * 더 좋은 방법을 생각해보겠습니다.
-                 */
                 if (item.size != 0) {
                     _listProfileData.value = item.get(0)
                     getProfileImage()
                 }
-
             }
     }
 

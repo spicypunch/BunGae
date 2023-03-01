@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.bungae.data.ChatListData
 import com.example.bungae.data.ChatModel
+import com.example.bungae.data.ProfileData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
@@ -23,19 +24,16 @@ class ChattingRoomViewModel(
     val chatData: LiveData<MutableList<ChatModel>>
         get() = _chatData
 
-
-    fun setChatData(destinationUid: String, nickname: String, message: String) {
+    fun setChatData(destinationUid: String, nickname1: String, nickname2: String?, message: String) {
         val currentTime: Long = System.currentTimeMillis()
         val dateFormat = SimpleDateFormat("yy-MM-dd_HH:mm:ss")
-        val comment = ChatModel.Comment(uid = uid, nickname = nickname, message = message, timestamp = dateFormat.format(currentTime))
+        val comment = ChatModel.Comment(uid = auth.currentUser!!.uid, senderNickname = nickname1, receiverNickname1 = nickname2 ?: "user", message = message, timestamp = dateFormat.format(currentTime))
 
         val chatModel = ChatModel()
-//        val chatListData = ChatListData(uid = uid, nickname = nickname, message = message, timestamp = dateFormat.format(currentTime))
 
         chatModel.users.put(uid, true)
         chatModel.users.put(destinationUid, true)
         chatModel.comments.put("comment", comment)
-
 
         db.collection("ChatRoom")
             .document()
@@ -46,16 +44,6 @@ class ChattingRoomViewModel(
             .addOnFailureListener { e ->
                 Log.e("addOnFailureListener", e.toString())
             }
-//
-//        db.collection("ChatList")
-//            .document()
-//            .set(chatListData)
-//            .addOnSuccessListener {
-//                Log.e("addOnSuccessListener", "메세지 보내기 성공")
-//            }
-//            .addOnFailureListener { e ->
-//                Log.e("addOnFailureListener", e.toString())
-//            }
     }
 
     fun getChatData(destinationUid: String) {
@@ -67,7 +55,6 @@ class ChattingRoomViewModel(
                     Log.e("Listen failed.", e.toString())
                     return@addSnapshotListener
                 }
-
                 if (snapshot != null) {
                     list.clear()
                     for (result in snapshot) {

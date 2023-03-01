@@ -8,7 +8,8 @@ class ChatModel(
 ) {
     class Comment(
         val uid: String = "",
-        val nickname: String = "",
+        val senderNickname: String = "",
+        val receiverNickname1: String = "",
         val message: String = "",
         val timestamp: String = ""
     )

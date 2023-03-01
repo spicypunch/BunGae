@@ -10,7 +10,7 @@ import com.example.bungae.data.ProfileData
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
-class DetailViewModel(
+class  DetailViewModel(
     private val db: FirebaseFirestore
 ) : ViewModel() {
 
