@@ -105,11 +105,13 @@ class PostFragment : Fragment() {
             } else {
                 postViewModel.uploadImageToFirebase(uriInfo)
             }
-
         }
 
         binding.btnPostAddImage.setOnClickListener {
             requestMultiplePermission.launch(permissionList)
+        }
+
+        binding.tvMap.setOnClickListener {
         }
 
         // 이미지를 등록할 시

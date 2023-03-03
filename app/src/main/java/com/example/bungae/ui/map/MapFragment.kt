@@ -1,17 +1,14 @@
 package com.example.bungae.ui.map
 
-import android.location.LocationManager
-import android.location.LocationProvider
+import android.location.Geocoder
+import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.example.bungae.R
 import com.example.bungae.databinding.FragmentMapBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -19,8 +16,9 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import java.util.*
 
-class MapFragment : Fragment(), OnMapReadyCallback  {
+class MapFragment : Fragment(), OnMapReadyCallback {
 
     private var _binding: FragmentMapBinding? = null
     private val binding get() = _binding!!
@@ -60,33 +58,6 @@ class MapFragment : Fragment(), OnMapReadyCallback  {
         return root
     }
 
-    override fun onStart() {
-        super.onStart()
-        mapFragment?.onStart()
-    }
-    override fun onStop() {
-        super.onStop()
-        mapFragment?.onStop()
-    }
-    override fun onResume() {
-        super.onResume()
-        mapFragment?.onResume()
-    }
-    override fun onPause() {
-        super.onPause()
-        mapFragment?.onPause()
-    }
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapFragment?.onLowMemory()
-    }
-
-    override fun onDestroyView() {
-        mapFragment?.onDestroy()
-        super.onDestroyView()
-        _binding = null
-    }
-
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
@@ -94,6 +65,15 @@ class MapFragment : Fragment(), OnMapReadyCallback  {
 
         binding.fabCurrentLocation.setOnClickListener {
             getMyLocation()
+        }
+
+        binding.imageSearchMap.setOnClickListener {
+            if (binding.editSearchMap.text.toString().isBlank()) {
+                Toast.makeText(context, "주소를 입력해주세요", Toast.LENGTH_SHORT).show()
+            } else {
+               val location = searchLocation(binding.editSearchMap.text.toString())
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(location.latitude, location.longitude), 16f))
+            }
         }
     }
 
@@ -103,6 +83,23 @@ class MapFragment : Fragment(), OnMapReadyCallback  {
         val longitude = locationProvider.getLocationLongitude()
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longitude), 16f))
         setMarker()
+    }
+
+    private fun searchLocation(address: String) : Location {
+        return try {
+            Geocoder(requireContext(), Locale.KOREA).getFromLocationName(address, 1)?.let {
+                Location("").apply {
+                    latitude = it[0].latitude
+                    longitude = it[0].longitude
+                }
+            } ?: Location("").apply {
+                latitude = 0.0
+                longitude = 0.0
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            searchLocation(address)
+        }
     }
 
     private fun setMarker() {
@@ -119,5 +116,36 @@ class MapFragment : Fragment(), OnMapReadyCallback  {
                 }
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mapFragment?.onStart()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mapFragment?.onStop()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapFragment?.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapFragment?.onPause()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapFragment?.onLowMemory()
+    }
+
+    override fun onDestroyView() {
+        mapFragment?.onDestroy()
+        super.onDestroyView()
+        _binding = null
     }
 }
