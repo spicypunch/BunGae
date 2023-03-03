@@ -57,7 +57,6 @@ class MapFragment : Fragment(), OnMapReadyCallback  {
         mapFragment?.getMapAsync(this)
 
         requestMultiplePermission.launch(permissionList)
-        Log.e("zz", "zz")
         return root
     }
 
@@ -89,22 +88,24 @@ class MapFragment : Fragment(), OnMapReadyCallback  {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        Log.e("11", "11")
         mMap = googleMap
 
+        getMyLocation()
+
         binding.fabCurrentLocation.setOnClickListener {
-            Log.e("22", "22")
-            val locationProvider = LocationProvider(requireContext())
-            // 위도와 경도 정보를 가져옵니다.
-            val latitude = locationProvider.getLocationLatitude()
-            val longitude = locationProvider.getLocationLongitude()
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longitude), 16f))
-            setMarker()
+            getMyLocation()
         }
     }
 
+    private fun getMyLocation() {
+        val locationProvider = LocationProvider(requireContext())
+        val latitude = locationProvider.getLocationLatitude()
+        val longitude = locationProvider.getLocationLongitude()
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longitude), 16f))
+        setMarker()
+    }
+
     private fun setMarker() {
-        Log.e("33", "33")
         mMap.let {
             it.clear()
             val markerOptions = MarkerOptions()
@@ -113,7 +114,6 @@ class MapFragment : Fragment(), OnMapReadyCallback  {
             val marker = it.addMarker(markerOptions)
 
             it.setOnCameraMoveListener {
-                Log.e("44", "44")
                 marker?.let { marker ->
                     marker.position = it.cameraPosition.target
                 }
