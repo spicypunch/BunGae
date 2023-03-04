@@ -7,6 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,12 +15,22 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.example.bungae.R
 import com.example.bungae.databinding.FragmentPostBinding
+import com.example.bungae.ui.main.MainActivity
+import com.example.bungae.ui.map.MapFragment
+import com.example.bungae.ui.post.map.PostMapFragment
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
@@ -40,6 +51,9 @@ class PostFragment : Fragment() {
     private val postViewModel by lazy {
         PostViewModel(auth, db)
     }
+
+    // 다른 fragment 접근
+//    private val otherView = layoutInflater.inflate(R.layout.fragment_post_map, null)
 
     private lateinit var navController: NavController
 
@@ -78,19 +92,26 @@ class PostFragment : Fragment() {
             }
         }
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPostBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
+
+        setFragmentResultListener("requestKey") { requestKey, bundle ->
+            val result1 = bundle.getString("latitude")
+//            val result2 = bundle.getString("longitude")
+            Log.e("result1", result1!!)
+//            Log.e("result2", result2!!)
+        }
 
         binding.btnCompletion.setOnClickListener {
             // 이미지를 등록 안 했을 시
@@ -111,8 +132,10 @@ class PostFragment : Fragment() {
             requestMultiplePermission.launch(permissionList)
         }
 
-        binding.tvMap.setOnClickListener {
-        }
+        // 텍스트를 누를 시 지도 등장
+//        binding.tvMap.setOnClickListener {
+//            addMapFragment()
+//        }
 
         // 이미지를 등록할 시
         postViewModel.imageUrl.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
@@ -141,13 +164,25 @@ class PostFragment : Fragment() {
         })
     }
 
+    // 프레그먼트에 프레그먼트 얹기
+//    private fun addMapFragment() {
+//        childFragmentManager.beginTransaction()
+//            .replace(R.id.fragment_post, PostMapFragment())
+//            .setReorderingAllowed(true)
+//            .addToBackStack(null)
+//            .commit()
+//    }
+
     private fun createImageFile(): Uri? {
         val now = SimpleDateFormat("yy_MM_dd_HH_mm", Locale.KOREA).format(Date())
         val content = ContentValues().apply {
             put(MediaStore.Images.Media.DISPLAY_NAME, "img_$now.jpg")
             put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
         }
-        return activity?.contentResolver?.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, content)
+        return activity?.contentResolver?.insert(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            content
+        )
     }
 
     private fun openDialog(context: Context) {
@@ -173,6 +208,7 @@ class PostFragment : Fragment() {
             dialog.dismiss()
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

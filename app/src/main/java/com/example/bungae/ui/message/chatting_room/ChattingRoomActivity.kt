@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bungae.data.ChatInfoData
 import com.example.bungae.data.ProfileData
 import com.example.bungae.databinding.ActivityChattingRoomDetailBinding
-import com.example.bungae.singletone.GetMyProfile
+import com.example.bungae.singleton.GetMyProfile
 import com.example.bungae.ui.message.adapter.ChattingRoomAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore

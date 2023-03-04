@@ -1,15 +1,21 @@
-package com.example.bungae.ui.map
+package com.example.bungae.ui.post.map
 
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import com.example.bungae.databinding.FragmentMapBinding
+import androidx.fragment.app.setFragmentResult
+import com.example.bungae.R
+import com.example.bungae.databinding.FragmentPostMapBinding
+import com.example.bungae.ui.map.LocationProvider
+import com.example.bungae.ui.post.PostFragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -18,9 +24,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import java.util.*
 
-class MapFragment : Fragment(), OnMapReadyCallback {
-
-    private var _binding: FragmentMapBinding? = null
+class PostMapFragment : Fragment(), OnMapReadyCallback {
+    private var _binding: FragmentPostMapBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var mMap: GoogleMap
@@ -47,7 +52,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentMapBinding.inflate(inflater, container, false)
+        _binding = FragmentPostMapBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         requestMultiplePermission.launch(permissionList)
@@ -56,6 +61,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         mapFragment?.getMapAsync(this)
 
+        binding.linearlayoutSelectAddress.setOnClickListener {
+            mMap.let {
+                setFragmentResult("requestKey", bundleOf("latitude" to it.cameraPosition.target.latitude))
+//                setFragmentResult("requestKey", bundleOf("longitude" to it.cameraPosition.target.longitude))
+                Log.e("latitude", it.cameraPosition.target.latitude.toString())
+//                Log.e("longitude", it.cameraPosition.target.longitude.toString())
+            }
+        }
         return root
     }
 
@@ -72,7 +85,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             if (binding.editSearchMap.text.toString().isBlank()) {
                 Toast.makeText(context, "주소를 입력해주세요", Toast.LENGTH_SHORT).show()
             } else {
-               val location = searchLocation(binding.editSearchMap.text.toString())
+                val location = searchLocation(binding.editSearchMap.text.toString())
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(location.latitude, location.longitude), 16f))
             }
         }
@@ -118,6 +131,4 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
         }
     }
-
-
 }
