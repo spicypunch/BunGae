@@ -27,7 +27,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBHTWt8J0f-sYI7lfBWV5U3VWMLPKWVprw" />
         <activity
-            android:name=".ui.message.ChattingRoomActivity"
+            android:name=".ui.message.chatting_room.ChattingRoomActivity"
             android:label="채팅방"/>
         <activity
             android:name=".ui.update.UpdatePostActivity"
