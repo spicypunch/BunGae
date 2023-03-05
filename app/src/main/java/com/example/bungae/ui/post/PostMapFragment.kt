@@ -1,5 +1,6 @@
-package com.example.bungae.ui.post.map
+package com.example.bungae.ui.post
 
+import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
@@ -9,19 +10,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
-import com.example.bungae.R
+import androidx.lifecycle.ViewModelProvider
 import com.example.bungae.databinding.FragmentPostMapBinding
 import com.example.bungae.ui.map.LocationProvider
-import com.example.bungae.ui.post.PostFragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import java.io.IOException
 import java.util.*
 
 class PostMapFragment : Fragment(), OnMapReadyCallback {
@@ -62,12 +61,23 @@ class PostMapFragment : Fragment(), OnMapReadyCallback {
         mapFragment?.getMapAsync(this)
 
         binding.linearlayoutSelectAddress.setOnClickListener {
+            val address: Address?
             mMap.let {
-                setFragmentResult("requestKey", bundleOf("latitude" to it.cameraPosition.target.latitude))
-//                setFragmentResult("requestKey", bundleOf("longitude" to it.cameraPosition.target.longitude))
-                Log.e("latitude", it.cameraPosition.target.latitude.toString())
+//                setFragmentResult("requestKey", bundleOf(
+//                    "latitude" to it.cameraPosition.target.latitude,
+//                    "longitude" to it.cameraPosition.target.longitude
+//                ))
+//                Log.e("latitude", it.cameraPosition.target.latitude.toString())
 //                Log.e("longitude", it.cameraPosition.target.longitude.toString())
+
+                address = getAddress(
+                    it.cameraPosition.target.latitude,
+                    it.cameraPosition.target.longitude
+                )
             }
+            Log.e("getAddress", address.toString())
+            val viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+            viewModel.sendCoordinates(address)
         }
         return root
     }
@@ -86,7 +96,14 @@ class PostMapFragment : Fragment(), OnMapReadyCallback {
                 Toast.makeText(context, "주소를 입력해주세요", Toast.LENGTH_SHORT).show()
             } else {
                 val location = searchLocation(binding.editSearchMap.text.toString())
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(location.latitude, location.longitude), 16f))
+                mMap.moveCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        LatLng(
+                            location.latitude,
+                            location.longitude
+                        ), 16f
+                    )
+                )
             }
         }
     }
@@ -99,9 +116,9 @@ class PostMapFragment : Fragment(), OnMapReadyCallback {
         setMarker()
     }
 
-    private fun searchLocation(address: String) : Location {
+    private fun searchLocation(address: String): Location {
         return try {
-            Geocoder(requireContext(), Locale.KOREA).getFromLocationName(address, 1)?.let {
+            Geocoder(requireContext(), Locale.getDefault()).getFromLocationName(address, 1)?.let {
                 Location("").apply {
                     latitude = it[0].latitude
                     longitude = it[0].longitude
@@ -114,6 +131,28 @@ class PostMapFragment : Fragment(), OnMapReadyCallback {
             e.printStackTrace()
             searchLocation(address)
         }
+    }
+
+    private fun getAddress(latitude: Double, longitude: Double): Address? {
+        val geocoder = Geocoder(requireContext(), Locale.getDefault())
+
+        val addresses: List<Address>? = try {
+            //Geocoder 객체를 이용하여 위도와 경도로부터 리스트를 가져옴
+            geocoder.getFromLocation(latitude, longitude, 7)
+        } catch (ioException: IOException) {
+            Toast.makeText(context, "지오코더 서비스 사용불가합니다.", Toast.LENGTH_LONG).show()
+            return null
+        } catch (illegalArgumentException: IllegalArgumentException) {
+            Toast.makeText(context, "잘못된 위도, 경도 입니다.", Toast.LENGTH_LONG).show()
+            return null
+        }
+
+        //에러는 아니지만 주소가 발견되지 않은 경우
+        if (addresses == null || addresses.size == 0) {
+            Toast.makeText(context, "주소과 발견되지 않았습니다.", Toast.LENGTH_LONG).show()
+            return null
+        }
+        return addresses[0]
     }
 
     private fun setMarker() {

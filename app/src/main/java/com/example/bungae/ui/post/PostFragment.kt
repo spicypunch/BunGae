@@ -15,24 +15,13 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.example.bungae.R
 import com.example.bungae.databinding.FragmentPostBinding
-import com.example.bungae.ui.main.MainActivity
-import com.example.bungae.ui.map.MapFragment
-import com.example.bungae.ui.post.map.PostMapFragment
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -42,14 +31,10 @@ class PostFragment : Fragment() {
     private val binding
         get() = _binding!!
 
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
-
     private var uriInfo: Uri? = null
 
-
     private val postViewModel by lazy {
-        PostViewModel(auth, db)
+        PostViewModel()
     }
 
     // 다른 fragment 접근
@@ -106,12 +91,14 @@ class PostFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 
-        setFragmentResultListener("requestKey") { requestKey, bundle ->
-            val result1 = bundle.getString("latitude")
-//            val result2 = bundle.getString("longitude")
-            Log.e("result1", result1!!)
-//            Log.e("result2", result2!!)
-        }
+//        setFragmentResultListener("requestKey") { requestKey, bundle ->
+//            val latitude = bundle.getString("latitude")
+//            val longitude = bundle.getString("longitude")
+//
+//            Log.e("latitude", latitude!!)
+//            Log.e("longitude", longitude!!)
+//        }
+        val viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 
         binding.btnCompletion.setOnClickListener {
             // 이미지를 등록 안 했을 시
@@ -120,7 +107,7 @@ class PostFragment : Fragment() {
                     title = binding.editPostTitle.text.toString(),
                     content = binding.editPostContent.text.toString(),
                     category = binding.spinnerCategory.selectedItem.toString(),
-                    address = "경기도 성남시 분당구 야탑동",
+                    address = binding.tvMap.text.toString(),
                     imageUrl = "null"
                 )
             } else {
@@ -143,7 +130,7 @@ class PostFragment : Fragment() {
                 title = binding.editPostTitle.text.toString(),
                 content = binding.editPostContent.text.toString(),
                 category = binding.spinnerCategory.selectedItem.toString(),
-                address = "경기도 성남시 분당구 야탑동",
+                address = binding.tvMap.text.toString(),
                 imageUrl = it
             )
         })
@@ -160,6 +147,14 @@ class PostFragment : Fragment() {
         postViewModel.blankCheck.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if (!it) {
                 Toast.makeText(context, "빈칸을 전부 채워주세요.", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        viewModel.coordinates.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if (it != null) {
+                binding.tvMap.text = it.getAddressLine(0)
+            } else {
+                Toast.makeText(context, "주소 적용에 실패하였습니다.", Toast.LENGTH_SHORT).show()
             }
         })
     }
