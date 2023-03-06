@@ -16,7 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.bungae.R
-import com.example.bungae.database.ItemSample
+import com.example.bungae.data.ItemData
 import com.example.bungae.databinding.ActivityUpdatePostBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -78,7 +78,7 @@ class UpdatePostActivity : AppCompatActivity() {
         binding = ActivityUpdatePostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val item = intent.getSerializableExtra("item") as ItemSample
+        val item = intent.getSerializableExtra("item") as ItemData
 
         updatePostViewModel.sendItem(item)
 

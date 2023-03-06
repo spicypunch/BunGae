@@ -3,7 +3,7 @@ package com.example.bungae.ui.update
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.bungae.database.ItemSample
+import com.example.bungae.data.ItemData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -13,8 +13,8 @@ class UpdatePostViewModel(
     private var db: FirebaseFirestore,
 ) {
 
-    private var _item = MutableLiveData<ItemSample>()
-    val item: LiveData<ItemSample>
+    private var _item = MutableLiveData<ItemData>()
+    val item: LiveData<ItemData>
         get() = _item
 
     private var _imageUrl = MutableLiveData<String>()
@@ -33,7 +33,7 @@ class UpdatePostViewModel(
     val map: LiveData<HashMap<String, String>>
         get() = _map
 
-    fun sendItem(item: ItemSample) {
+    fun sendItem(item: ItemData) {
         _item.value = item
     }
 

@@ -5,11 +5,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.bungae.database.ItemSample
-import com.google.android.gms.tasks.Task
+import com.example.bungae.data.ItemData
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import java.text.SimpleDateFormat
@@ -70,7 +67,7 @@ class PostViewModel(
             _blankCheck.value = false
         } else {
 
-            val itemSample = ItemSample(
+            val itemData = ItemData(
                 uid = auth.currentUser!!.uid,
                 title = title,
                 content = content,
@@ -82,7 +79,7 @@ class PostViewModel(
 
             db.collection("ItemInfo")
                 .document("${auth.currentUser!!.uid}_${dateFormat.format(currentTime)}")
-                .set(itemSample)
+                .set(itemData)
                 .addOnSuccessListener { result ->
                     Log.d("게시글 등록 성공", "$result")
                     _success.value = true

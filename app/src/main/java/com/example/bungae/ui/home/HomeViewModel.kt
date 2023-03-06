@@ -4,18 +4,15 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.bungae.database.ItemSample
-import com.google.firebase.auth.FirebaseAuth
+import com.example.bungae.data.ItemData
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.storage.FirebaseStorage
 
 class HomeViewModel(private val db: FirebaseFirestore) : ViewModel() {
 
-    private val list: MutableList<ItemSample> = mutableListOf()
+    private val list: MutableList<ItemData> = mutableListOf()
 
-    private val _itemList = MutableLiveData<MutableList<ItemSample>>(mutableListOf())
-    val itemList: LiveData<MutableList<ItemSample>>
+    private val _itemList = MutableLiveData<MutableList<ItemData>>(mutableListOf())
+    val itemList: LiveData<MutableList<ItemData>>
         get() = _itemList
 
     private val _message = MutableLiveData<String>()
@@ -28,7 +25,7 @@ class HomeViewModel(private val db: FirebaseFirestore) : ViewModel() {
             .addOnSuccessListener { results ->
                 list.clear()
                 for (result in results) {
-                    val item = result.toObject(ItemSample::class.java)
+                    val item = result.toObject(ItemData::class.java)
                     list.add(item)
                 }
 

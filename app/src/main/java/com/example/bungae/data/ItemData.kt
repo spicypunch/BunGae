@@ -1,7 +1,7 @@
-package com.example.bungae.database
+package com.example.bungae.data
 
 // 테스트용
-data class ItemSample (
+data class ItemData (
     var uid: String = "",
     var title: String = "",
     var content: String = "",

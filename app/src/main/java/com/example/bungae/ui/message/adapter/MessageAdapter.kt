@@ -1,33 +1,50 @@
 package com.example.bungae.ui.message.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bungae.database.MessageSample
+import com.bumptech.glide.Glide
+import com.example.bungae.R
+import com.example.bungae.data.ChatInfoData
+import com.example.bungae.data.ChatListData
 import com.example.bungae.databinding.ItemMessageBinding
+import com.example.bungae.ui.message.ChattingRoomActivity
+import com.google.firebase.auth.FirebaseAuth
 
-class MessageAdapter() : RecyclerView.Adapter<MessageAdapter.MyViewHolder>() {
-
-    private val messageList = mutableListOf<MessageSample>()
-
-    fun updateList(items: MutableList<MessageSample>) {
-        val diffCallback = MessageDiffUtilCallback(messageList, items)
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
-
-        messageList.clear()
-        messageList.addAll(items)
-        diffResult.dispatchUpdatesTo(this)
-    }
+class MessageAdapter() : ListAdapter<ChatListData, MessageAdapter.MyViewHolder>(diffUtil) {
 
     class MyViewHolder(private val binding: ItemMessageBinding) : RecyclerView.ViewHolder(binding.root){
         val root = binding.root
+        val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
-//        fun bind(item: DataSample) {
-//        }
+        fun bind(item: ChatListData) {
+            if (item.uid == auth.currentUser!!.uid) {
+                binding.tvMessageNickname.text = item.senderNickname
+                binding.tvMessage.text = item.message
+                Glide.with(itemView).load(R.drawable.ic_baseline_person_24).into(binding.imageProfile)
+            } else {
+                binding.tvMessageNickname.text = item.receiverNickname1
+                binding.tvMessage.text = item.message
+                Glide.with(itemView).load(R.drawable.ic_baseline_person_24).into(binding.imageProfile)
+            }
 
-        val tv_message = binding.tvMessage
-
+            itemView.setOnClickListener {
+                if (item.uid != auth.currentUser!!.uid) {
+                    val chatInfoData = ChatInfoData(item.uid, item.senderNickname)
+                    Intent(root.context, ChattingRoomActivity::class.java).apply {
+                        putExtra("profile data", chatInfoData)
+                    }.run { root.context.startActivity(this) }
+                } else {
+                    val chatInfoData = ChatInfoData(item.uid, item.receiverNickname1)
+                    Intent(root.context, ChattingRoomActivity::class.java).apply {
+                        putExtra("profile data", chatInfoData)
+                    }.run { root.context.startActivity(this) }
+                }
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -36,11 +53,19 @@ class MessageAdapter() : RecyclerView.Adapter<MessageAdapter.MyViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val messageData = messageList[position]
-        holder.tv_message.text = messageData.message
+        holder.bind(currentList[position])
     }
 
-    override fun getItemCount(): Int {
-        return messageList.size
+    companion object {
+        val diffUtil = object : DiffUtil.ItemCallback<ChatListData>() {
+
+            override fun areItemsTheSame(oldItem: ChatListData, newItem: ChatListData): Boolean {
+                return oldItem.timestamp == newItem.timestamp
+            }
+
+            override fun areContentsTheSame(oldItem: ChatListData, newItem: ChatListData): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 }
