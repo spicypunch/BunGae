@@ -155,7 +155,7 @@ class PostMapFragment : Fragment(), OnMapReadyCallback {
             it.clear()
             val markerOptions = MarkerOptions()
             markerOptions.position(it.cameraPosition.target)
-            markerOptions.title("마커 위치")
+            markerOptions.title("현재 위치")
             val marker = it.addMarker(markerOptions)
 
             it.setOnCameraMoveListener {

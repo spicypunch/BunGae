@@ -21,7 +21,7 @@ class MapViewModel() : ViewModel() {
     val message: LiveData<String>
         get() = _message
 
-    fun getFireStorage() {
+    fun getItemList() {
         db.collection("ItemInfo")
             .get()
             .addOnSuccessListener { results ->
@@ -31,7 +31,6 @@ class MapViewModel() : ViewModel() {
                     list.add(item)
                 }
 
-                // firebase order by로 수정할 것
                 list.sortByDescending { it.date }
                 _itemList.value = list
             }

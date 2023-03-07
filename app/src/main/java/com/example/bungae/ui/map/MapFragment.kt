@@ -3,12 +3,14 @@ package com.example.bungae.ui.map
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.bungae.databinding.FragmentMapBinding
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -25,7 +27,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
 
-
+    private val mapViewModel by lazy {
+        ViewModelProvider(this).get(MapViewModel::class.java)
+    }
 
     private var mapFragment: SupportMapFragment? = null
 
@@ -58,17 +62,27 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         mapFragment?.getMapAsync(this)
 
+        mapViewModel.getItemList()
+
         return root
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        getMyLocation()
-
         binding.fabCurrentLocation.setOnClickListener {
             getMyLocation()
         }
+
+        mapViewModel.itemList.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            var location: Location
+            for (i in it) {
+                Log.e("location", i.address.toString())
+                location = searchLocation(i.address)
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(location.latitude, location.longitude), 16f))
+                setMarker(i.title)
+            }
+        })
 
         binding.imageSearchMap.setOnClickListener {
             if (binding.editSearchMap.text.toString().isBlank()) {
@@ -76,8 +90,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             } else {
                val location = searchLocation(binding.editSearchMap.text.toString())
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(location.latitude, location.longitude), 16f))
+                setMarker(binding.editSearchMap.text.toString())
             }
         }
+
+        getMyLocation()
     }
 
     private fun getMyLocation() {
@@ -85,7 +102,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         val latitude = locationProvider.getLocationLatitude()
         val longitude = locationProvider.getLocationLongitude()
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longitude), 16f))
-        setMarker()
     }
 
     private fun searchLocation(address: String) : Location {
@@ -105,12 +121,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun setMarker() {
+    private fun setMarker(title: String) {
         mMap.let {
-            it.clear()
+//            it.clear()
             val markerOptions = MarkerOptions()
             markerOptions.position(it.cameraPosition.target)
-            markerOptions.title("마커 위치")
+            markerOptions.title(title)
             val marker = it.addMarker(markerOptions)
 
             it.setOnCameraMoveListener {
@@ -120,6 +136,4 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
         }
     }
-
-
 }
