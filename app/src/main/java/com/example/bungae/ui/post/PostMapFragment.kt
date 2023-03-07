@@ -16,6 +16,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
 import com.example.bungae.databinding.FragmentPostMapBinding
 import com.example.bungae.ui.map.LocationProvider
+import com.example.bungae.ui.map.MapViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -32,6 +33,10 @@ class PostMapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
 
     private var mapFragment: SupportMapFragment? = null
+
+    private val sharedViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+    }
 
     private val permissionList = arrayOf(
         android.Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -70,7 +75,8 @@ class PostMapFragment : Fragment(), OnMapReadyCallback {
                     it.cameraPosition.target.longitude
                 )
             }
-            setFragmentResult("requestKey", bundleOf("address" to address?.getAddressLine(0)))
+//            setFragmentResult("requestKey", bundleOf("address" to address?.getAddressLine(0)))
+                sharedViewModel.sendCoordinates(address)
         }
 
         return root

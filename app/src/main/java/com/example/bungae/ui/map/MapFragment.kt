@@ -77,10 +77,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mapViewModel.itemList.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             var location: Location
             for (i in it) {
-                Log.e("location", i.address.toString())
                 location = searchLocation(i.address)
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(location.latitude, location.longitude), 16f))
                 setMarker(i.title)
+                getMyLocation()
             }
         })
 
@@ -94,7 +94,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
         }
 
-        getMyLocation()
+
     }
 
     private fun getMyLocation() {
@@ -102,6 +102,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         val latitude = locationProvider.getLocationLatitude()
         val longitude = locationProvider.getLocationLongitude()
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longitude), 16f))
+        setMarker("현재 위치")
     }
 
     private fun searchLocation(address: String) : Location {
@@ -123,7 +124,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private fun setMarker(title: String) {
         mMap.let {
-//            it.clear()
             val markerOptions = MarkerOptions()
             markerOptions.position(it.cameraPosition.target)
             markerOptions.title(title)

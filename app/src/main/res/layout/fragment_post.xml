@@ -95,8 +95,7 @@
         android:layout_marginStart="20dp"
         android:text="위치를 정해주세요!"
         android:textSize="14sp"
-        android:background="@drawable/frame" />
-<!--        android:drawableRight="@drawable/icon_post_map"/>-->
+        android:background="@drawable/frame"/>
 
     <fragment
         android:id="@+id/fragment_mapview"

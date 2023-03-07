@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
@@ -34,6 +35,10 @@ class PostFragment : Fragment() {
 
     private val postViewModel by lazy {
         PostViewModel()
+    }
+
+    private val sharedViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
     }
 
     // 다른 fragment 접근
@@ -91,10 +96,10 @@ class PostFragment : Fragment() {
         navController = Navigation.findNavController(view)
 
         // 주소값 받아온 후 텍스트 뷰 변경
-        childFragmentManager.setFragmentResultListener("requestKey", viewLifecycleOwner) { requestKey, bundle ->
-            val address = bundle.getString("address")
-            binding.tvMap.text = address
-        }
+//        childFragmentManager.setFragmentResultListener("requestKey", viewLifecycleOwner) { requestKey, bundle ->
+//            val address = bundle.getString("address")
+//            binding.tvMap.text = address
+//        }
 
         binding.btnCompletion.setOnClickListener {
             // 이미지를 등록 안 했을 시
@@ -143,6 +148,12 @@ class PostFragment : Fragment() {
         postViewModel.blankCheck.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if (!it) {
                 Toast.makeText(context, "빈칸을 전부 채워주세요.", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        sharedViewModel.coordinates.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if (it != null) {
+                binding.tvMap.text = it.getAddressLine(0)
             }
         })
     }
