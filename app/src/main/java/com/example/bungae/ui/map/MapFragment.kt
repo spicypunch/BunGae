@@ -25,6 +25,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
 
+
+
     private var mapFragment: SupportMapFragment? = null
 
     private val permissionList = arrayOf(

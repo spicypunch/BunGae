@@ -1,4 +1,4 @@
-package com.example.bungae.ui.home
+package com.example.bungae.ui.map
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.example.bungae.data.ItemData
 import com.google.firebase.firestore.FirebaseFirestore
 
-class HomeViewModel() : ViewModel() {
+class MapViewModel() : ViewModel() {
 
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
@@ -40,5 +40,4 @@ class HomeViewModel() : ViewModel() {
                 _message.value = "데이터를 가져오는데 실패했습니다."
             }
     }
-
 }

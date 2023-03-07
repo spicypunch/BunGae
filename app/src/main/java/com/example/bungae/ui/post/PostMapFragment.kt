@@ -10,7 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
 import com.example.bungae.databinding.FragmentPostMapBinding
 import com.example.bungae.ui.map.LocationProvider
@@ -63,22 +65,14 @@ class PostMapFragment : Fragment(), OnMapReadyCallback {
         binding.linearlayoutSelectAddress.setOnClickListener {
             val address: Address?
             mMap.let {
-//                setFragmentResult("requestKey", bundleOf(
-//                    "latitude" to it.cameraPosition.target.latitude,
-//                    "longitude" to it.cameraPosition.target.longitude
-//                ))
-//                Log.e("latitude", it.cameraPosition.target.latitude.toString())
-//                Log.e("longitude", it.cameraPosition.target.longitude.toString())
-
                 address = getAddress(
                     it.cameraPosition.target.latitude,
                     it.cameraPosition.target.longitude
                 )
             }
-            Log.e("getAddress", address.toString())
-            val viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-            viewModel.sendCoordinates(address)
+            setFragmentResult("requestKey", bundleOf("address" to address?.getAddressLine(0)))
         }
+
         return root
     }
 
@@ -104,6 +98,7 @@ class PostMapFragment : Fragment(), OnMapReadyCallback {
                         ), 16f
                     )
                 )
+                setMarker()
             }
         }
     }

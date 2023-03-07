@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -91,14 +92,10 @@ class PostFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
 
-//        setFragmentResultListener("requestKey") { requestKey, bundle ->
-//            val latitude = bundle.getString("latitude")
-//            val longitude = bundle.getString("longitude")
-//
-//            Log.e("latitude", latitude!!)
-//            Log.e("longitude", longitude!!)
-//        }
-        val viewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        childFragmentManager.setFragmentResultListener("requestKey", viewLifecycleOwner) { requestKey, bundle ->
+            val address = bundle.getString("address")
+            binding.tvMap.text = address
+        }
 
         binding.btnCompletion.setOnClickListener {
             // 이미지를 등록 안 했을 시
@@ -147,14 +144,6 @@ class PostFragment : Fragment() {
         postViewModel.blankCheck.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if (!it) {
                 Toast.makeText(context, "빈칸을 전부 채워주세요.", Toast.LENGTH_SHORT).show()
-            }
-        })
-
-        viewModel.coordinates.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            if (it != null) {
-                binding.tvMap.text = it.getAddressLine(0)
-            } else {
-                Toast.makeText(context, "주소 적용에 실패하였습니다.", Toast.LENGTH_SHORT).show()
             }
         })
     }
