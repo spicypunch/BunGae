@@ -1,6 +1,7 @@
 package com.example.bungae.ui.message.adapter
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -21,7 +22,12 @@ class MessageAdapter() : ListAdapter<ChatListData, MessageAdapter.MyViewHolder>(
         val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
         fun bind(item: ChatListData) {
-            if (item.uid == auth.currentUser!!.uid) {
+            Log.e("item.uid", item.uid)
+            Log.e("auth.currentUser!!.uid", auth.currentUser!!.uid)
+            Log.e("item.senderNickname", item.senderNickname)
+            Log.e("item.receiverNickname", item.receiverNickname)
+            Log.e("item.message", item.message)
+            if (item.uid != auth.currentUser!!.uid) {
                 binding.tvMessageNickname.text = item.senderNickname
                 binding.tvMessage.text = item.message
                 Glide.with(itemView).load(R.drawable.ic_baseline_person_24).into(binding.imageProfile)

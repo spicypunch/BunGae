@@ -40,7 +40,6 @@ class MessageFragment : Fragment() {
 
         binding.recyclerviewMessage.adapter = adapter
         binding.recyclerviewMessage.layoutManager = LinearLayoutManager(activity)
-//        adapter.submitList(list)
 
         messageViewModel.getMyChatList()
 
