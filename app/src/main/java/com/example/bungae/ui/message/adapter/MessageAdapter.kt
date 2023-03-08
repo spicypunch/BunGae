@@ -26,7 +26,7 @@ class MessageAdapter() : ListAdapter<ChatListData, MessageAdapter.MyViewHolder>(
                 binding.tvMessage.text = item.message
                 Glide.with(itemView).load(R.drawable.ic_baseline_person_24).into(binding.imageProfile)
             } else {
-                binding.tvMessageNickname.text = item.receiverNickname1
+                binding.tvMessageNickname.text = item.receiverNickname
                 binding.tvMessage.text = item.message
                 Glide.with(itemView).load(R.drawable.ic_baseline_person_24).into(binding.imageProfile)
             }
@@ -38,7 +38,7 @@ class MessageAdapter() : ListAdapter<ChatListData, MessageAdapter.MyViewHolder>(
                         putExtra("profile data", chatInfoData)
                     }.run { root.context.startActivity(this) }
                 } else {
-                    val chatInfoData = ChatInfoData(item.uid, item.receiverNickname1)
+                    val chatInfoData = ChatInfoData(item.uid, item.receiverNickname)
                     Intent(root.context, ChattingRoomActivity::class.java).apply {
                         putExtra("profile data", chatInfoData)
                     }.run { root.context.startActivity(this) }

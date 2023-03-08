@@ -22,10 +22,10 @@ class ChattingRoomViewModel(
     val chatData: LiveData<MutableList<ChatModel>>
         get() = _chatData
 
-    fun setChatData(destinationUid: String, nickname1: String, nickname2: String?, message: String) {
+    fun setChatData(destinationUid: String, senderNickname: String, receiverNickname: String?, message: String) {
         val currentTime: Long = System.currentTimeMillis()
         val dateFormat = SimpleDateFormat("yy-MM-dd_HH:mm:ss")
-        val comment = ChatModel.Comment(uid = auth.currentUser!!.uid, senderNickname = nickname1, receiverNickname1 = nickname2 ?: "user", message = message, timestamp = dateFormat.format(currentTime))
+        val comment = ChatModel.Comment(uid = auth.currentUser!!.uid, senderNickname = senderNickname, receiverNickname = receiverNickname ?: "user", message = message, timestamp = dateFormat.format(currentTime))
 
         val chatModel = ChatModel()
 

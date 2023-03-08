@@ -55,7 +55,7 @@ class MessageFragment : Fragment() {
                     ChatListData(
                         senderNickname = i.key,
                         uid = i.value.get(cnt).comments.get("comment")!!.uid,
-                        receiverNickname1 = i.value.get(cnt).comments.get("comment")!!.receiverNickname1 ,
+                        receiverNickname = i.value.get(cnt).comments.get("comment")!!.receiverNickname ,
                         message = i.value.get(cnt).comments.get("comment")!!.message,
                         timestamp = i.value.get(cnt).comments.get("comment")!!.timestamp
                     )

@@ -38,7 +38,6 @@ class ChattingRoomActivity : AppCompatActivity() {
             GetMyProfile.getMyProfile()
         }
 
-
         adapter = ChattingRoomAdapter()
 
         binding.recyclerviewChatting.adapter = adapter
@@ -49,13 +48,15 @@ class ChattingRoomActivity : AppCompatActivity() {
         chattingRoomViewModel.getChatData(chatInfoData.uid)
 
         binding.imageMessageSend.setOnClickListener {
-            chattingRoomViewModel.setChatData(
-                chatInfoData.uid,
-                chatInfoData.nickname,
-                myProfileData?.nickname,
-                binding.editMessageText.text.toString()
-            )
-            binding.editMessageText.text = null
+            if (myProfileData != null) {
+                chattingRoomViewModel.setChatData(
+                    destinationUid = chatInfoData.uid,
+                    receiverNickname = chatInfoData.nickname,
+                    senderNickname = myProfileData!!.nickname,
+                    message = binding.editMessageText.text.toString()
+                )
+                binding.editMessageText.text = null
+            }
         }
 
         chattingRoomViewModel.chatData.observe(this, Observer {
