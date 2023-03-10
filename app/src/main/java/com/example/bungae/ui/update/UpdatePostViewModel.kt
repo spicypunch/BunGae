@@ -4,14 +4,12 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.bungae.data.ItemData
+import com.example.bungae.singleton.FireBaseAuth
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
-class UpdatePostViewModel(
-    private val auth: FirebaseAuth,
-    private var db: FirebaseFirestore,
-) {
+class UpdatePostViewModel() {
 
     private var _item = MutableLiveData<ItemData>()
     val item: LiveData<ItemData>
@@ -38,7 +36,7 @@ class UpdatePostViewModel(
     }
 
     fun updateImageToFirebase(uriInfo: Uri, date: String) {
-        val fileName = "image_${auth.currentUser!!.uid}_${date}.jpg"
+        val fileName = "image_${FireBaseAuth.auth.currentUser!!.uid}_${date}.jpg"
         val imageRef = FirebaseStorage.getInstance().reference.child("ItemInfo/").child(fileName)
         imageRef.putFile(uriInfo).addOnSuccessListener {
             getItemUrl(date)
@@ -49,7 +47,7 @@ class UpdatePostViewModel(
 
     private fun getItemUrl(date: String) {
         val imgRef = FirebaseStorage.getInstance().reference.child(
-            "ItemInfo/image_${auth.currentUser!!.uid}_${date}.jpg"
+            "ItemInfo/image_${FireBaseAuth.auth.currentUser!!.uid}_${date}.jpg"
         )
         imgRef.downloadUrl.addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -79,8 +77,8 @@ class UpdatePostViewModel(
                 "category" to category,
                 "address" to address
             )
-            db.collection("ItemInfo")
-                .document("${auth.currentUser!!.uid}_${date}")
+            FireBaseAuth.db.collection("ItemInfo")
+                .document("${FireBaseAuth.auth.currentUser!!.uid}_${date}")
                 .update(map as Map<String, Any>)
                 .addOnSuccessListener {
                     _success.value = true

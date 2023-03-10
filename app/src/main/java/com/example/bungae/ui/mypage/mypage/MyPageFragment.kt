@@ -20,6 +20,7 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.bungae.R
 import com.example.bungae.databinding.FragmentMypageBinding
+import com.example.bungae.singleton.FireBaseAuth
 import com.example.bungae.ui.account.login.LoginActivity
 import com.example.bungae.ui.mypage.mypost.MyPostActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -36,14 +37,10 @@ class MyPageFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
-    private val imageStorage: FirebaseStorage = Firebase.storage
-
     private var uriInfo: Uri? = null
 
     private val  myPageViewModel by lazy {
-        MyPageViewModel(auth, db, imageStorage)
+        MyPageViewModel()
     }
 
     private val permissionList = arrayOf(
@@ -147,7 +144,7 @@ class MyPageFragment : Fragment() {
         }
 
         binding.btnLogout.setOnClickListener {
-            auth.signOut()
+            FireBaseAuth.auth.signOut()
             startActivity(Intent(activity, LoginActivity::class.java))
         }
 

@@ -4,12 +4,13 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.bumptech.glide.Glide
+import com.example.bungae.R
 import com.example.bungae.data.ItemData
+import com.example.bungae.singleton.FireBaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class HomeViewModel() : ViewModel() {
-
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     private val list: MutableList<ItemData> = mutableListOf()
 
@@ -22,7 +23,7 @@ class HomeViewModel() : ViewModel() {
         get() = _message
 
     fun getFireStorage() {
-        db.collection("ItemInfo")
+        FireBaseAuth.db.collection("ItemInfo")
             .get()
             .addOnSuccessListener { results ->
                 list.clear()
@@ -31,14 +32,28 @@ class HomeViewModel() : ViewModel() {
                     list.add(item)
                 }
 
-                // firebase order by로 수정할 것
                 list.sortByDescending { it.date }
-                _itemList.value = list
+                categoryCheck()
+//                _itemList.value = list
             }
             .addOnFailureListener { e ->
                 Log.e("Failed to get data", e.toString())
                 _message.value = "데이터를 가져오는데 실패했습니다."
             }
+    }
+
+    private fun categoryCheck() {
+        for (i in list) {
+            when (i.category) {
+                "아무거나!" -> i.category = R.drawable.img_everything.toString()
+                "카페 투어" -> i.category = R.drawable.img_coffee.toString()
+                "운동" -> i.category = R.drawable.img_running.toString()
+                "맛집 탐방" -> i.category = R.drawable.img_dinner.toString()
+                "안주와 술" -> i.category =  R.drawable.img_beer.toString()
+                "영화" ->i.category =  R.drawable.img_movie.toString()
+            }
+        }
+        _itemList.value = list
     }
 
 }

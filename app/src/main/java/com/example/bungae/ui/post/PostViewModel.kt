@@ -6,15 +6,13 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.bungae.data.ItemData
+import com.example.bungae.singleton.FireBaseAuth
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import java.text.SimpleDateFormat
 
 class PostViewModel() {
-
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     private val currentTime: Long = System.currentTimeMillis()
     private val dateFormat = SimpleDateFormat("yy-MM-dd_HH:mm:ss")
@@ -34,7 +32,7 @@ class PostViewModel() {
     fun uploadImageToFirebase(uriInfo: Uri?) {
         val imageRef =
             FirebaseStorage.getInstance().reference.child("ItemInfo/")
-                .child("image_${auth.currentUser!!.uid}_${dateFormat.format(currentTime)}.jpg")
+                .child("image_${FireBaseAuth.auth.currentUser!!.uid}_${dateFormat.format(currentTime)}.jpg")
         imageRef.putFile(uriInfo!!)
             .addOnSuccessListener {
                 getItemUrl()
@@ -45,7 +43,7 @@ class PostViewModel() {
 
     private fun getItemUrl() {
         val imgRef = FirebaseStorage.getInstance().reference.child(
-            "ItemInfo/image_${auth.currentUser!!.uid}_${dateFormat.format(currentTime)}.jpg"
+            "ItemInfo/image_${FireBaseAuth.auth.currentUser!!.uid}_${dateFormat.format(currentTime)}.jpg"
         )
         imgRef.downloadUrl.addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -68,7 +66,7 @@ class PostViewModel() {
         } else {
 
             val itemData = ItemData(
-                uid = auth.currentUser!!.uid,
+                uid = FireBaseAuth.auth.currentUser!!.uid,
                 title = title,
                 content = content,
                 category = category,
@@ -77,8 +75,8 @@ class PostViewModel() {
                 imageUrl = imageUrl
             )
 
-            db.collection("ItemInfo")
-                .document("${auth.currentUser!!.uid}_${dateFormat.format(currentTime)}")
+            FireBaseAuth.db.collection("ItemInfo")
+                .document("${FireBaseAuth.auth.currentUser!!.uid}_${dateFormat.format(currentTime)}")
                 .set(itemData)
                 .addOnSuccessListener { result ->
                     Log.d("게시글 등록 성공", "$result")

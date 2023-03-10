@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.bungae.data.ChatModel
 import com.example.bungae.databinding.ItemChattingBinding
+import com.example.bungae.singleton.FireBaseAuth
 import com.google.firebase.auth.FirebaseAuth
 
 class ChattingRoomAdapter() : ListAdapter<ChatModel, ChattingRoomAdapter.MyViewHolder>(diffUtil) {
@@ -21,10 +22,9 @@ class ChattingRoomAdapter() : ListAdapter<ChatModel, ChattingRoomAdapter.MyViewH
     class MyViewHolder(private val binding: ItemChattingBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val root = binding.root
-        private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
         fun bind(item: ChatModel) {
-            if (item.comments.get("comment")!!.uid == auth.currentUser!!.uid) {
+            if (item.comments.get("comment")!!.uid == FireBaseAuth.auth.currentUser!!.uid) {
                 binding.tvChattingNickname.text = "나"
                 binding.tvChattingMessage.text = item.comments.get("comment")!!.message
                 binding.tvChattingTimestamp.text = item.comments.get("comment")!!.timestamp

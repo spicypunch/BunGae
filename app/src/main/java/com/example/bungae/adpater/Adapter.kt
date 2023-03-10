@@ -19,15 +19,6 @@ class Adapter() : ListAdapter<ItemData, Adapter.MyViewHolder>(diffUtil){
         fun bind(item: ItemData) {
             binding.data = item
 
-            when (binding.data!!.category) {
-                "아무거나!" -> Glide.with(root).load(R.drawable.img_everything).into(binding.imageCategory)
-                "카페 투어" -> Glide.with(root).load(R.drawable.img_coffee).into(binding.imageCategory)
-                "운동" -> Glide.with(root).load(R.drawable.img_running).into(binding.imageCategory)
-                "맛집 탐방" -> Glide.with(root).load(R.drawable.img_dinner).into(binding.imageCategory)
-                "안주와 술" -> Glide.with(root).load(R.drawable.img_beer).into(binding.imageCategory)
-                "영화" -> Glide.with(root).load(R.drawable.img_movie).into(binding.imageCategory)
-            }
-
             itemView.setOnClickListener {
                 Intent(root.context, DetailActivity::class.java).apply {
                     putExtra("data", item)

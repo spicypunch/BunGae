@@ -15,11 +15,8 @@ class MyPostActivity : AppCompatActivity() {
 
     private val adapter by lazy { Adapter() }
 
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
-
     private val myPostViewModel by lazy {
-        MyPostViewModel(auth, db)
+        MyPostViewModel()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

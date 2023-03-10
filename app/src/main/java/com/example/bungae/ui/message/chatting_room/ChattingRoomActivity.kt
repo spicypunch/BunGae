@@ -18,13 +18,11 @@ class ChattingRoomActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChattingRoomDetailBinding
     private lateinit var chatInfoData: ChatInfoData
     private var myProfileData: ProfileData? = null
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     private lateinit var adapter: ChattingRoomAdapter
 
     private val chattingRoomViewModel by lazy {
-        ChattingRoomViewModel(auth, db)
+        ChattingRoomViewModel()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

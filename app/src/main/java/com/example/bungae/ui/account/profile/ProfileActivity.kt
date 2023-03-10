@@ -27,13 +27,11 @@ import java.util.*
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWriteProfileBinding
-    private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private var uriInfo: Uri? = null
     private var nickNameCheckResult: Boolean = false
 
     private val profileViewModel by lazy {
-        ProfileViewModel(auth, db)
+        ProfileViewModel()
     }
 
     private var time: Long = 0

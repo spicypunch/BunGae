@@ -3,9 +3,10 @@ package com.example.bungae.ui.account.signup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.bungae.singleton.FireBaseAuth
 import com.google.firebase.auth.FirebaseAuth
 
-class SignUpViewModel(private val auth: FirebaseAuth?) : ViewModel() {
+class SignUpViewModel() : ViewModel() {
 
     private var _message = MutableLiveData<String>()
     val message: LiveData<String>
@@ -21,7 +22,7 @@ class SignUpViewModel(private val auth: FirebaseAuth?) : ViewModel() {
 
     private fun createAccount(email: String, passwd: String) {
         if (email.isNotEmpty() && passwd.isNotEmpty()) {
-            auth?.createUserWithEmailAndPassword(email, passwd)
+            FireBaseAuth.auth?.createUserWithEmailAndPassword(email, passwd)
                 ?.addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         _message.value = "계정 생성을 완료했습니다."

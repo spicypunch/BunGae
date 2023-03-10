@@ -20,14 +20,12 @@ class MessageFragment : Fragment() {
     private val adapter by lazy { MessageAdapter() }
     private lateinit var map: Map<String, List<ChatModel>>
     private var list: MutableList<ChatListData> = mutableListOf()
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     private val binding
         get() = _binding!!
 
     private val messageViewModel by lazy {
-        MessageViewModel(auth, db)
+        MessageViewModel()
     }
 
     override fun onCreateView(

@@ -12,6 +12,7 @@ import com.example.bungae.R
 import com.example.bungae.data.ChatInfoData
 import com.example.bungae.data.ChatListData
 import com.example.bungae.databinding.ItemMessageBinding
+import com.example.bungae.singleton.FireBaseAuth
 import com.example.bungae.ui.message.chatting_room.ChattingRoomActivity
 import com.google.firebase.auth.FirebaseAuth
 
@@ -19,15 +20,14 @@ class MessageAdapter() : ListAdapter<ChatListData, MessageAdapter.MyViewHolder>(
 
     class MyViewHolder(private val binding: ItemMessageBinding) : RecyclerView.ViewHolder(binding.root){
         val root = binding.root
-        val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
         fun bind(item: ChatListData) {
             Log.e("item.uid", item.uid)
-            Log.e("auth.currentUser!!.uid", auth.currentUser!!.uid)
+            Log.e("auth.currentUser!!.uid", FireBaseAuth.auth.currentUser!!.uid)
             Log.e("item.senderNickname", item.senderNickname)
             Log.e("item.receiverNickname", item.receiverNickname)
             Log.e("item.message", item.message)
-            if (item.uid != auth.currentUser!!.uid) {
+            if (item.uid != FireBaseAuth.auth.currentUser!!.uid) {
                 binding.tvMessageNickname.text = item.senderNickname
                 binding.tvMessage.text = item.message
                 Glide.with(itemView).load(R.drawable.ic_baseline_person_24).into(binding.imageProfile)
@@ -38,7 +38,7 @@ class MessageAdapter() : ListAdapter<ChatListData, MessageAdapter.MyViewHolder>(
             }
 
             itemView.setOnClickListener {
-                if (item.uid != auth.currentUser!!.uid) {
+                if (item.uid != FireBaseAuth.auth.currentUser!!.uid) {
                     val chatInfoData = ChatInfoData(item.uid, item.senderNickname)
                     Intent(root.context, ChattingRoomActivity::class.java).apply {
                         putExtra("profile data", chatInfoData)

@@ -7,14 +7,12 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.bungae.databinding.ActivityLoginBinding
-import com.example.bungae.ui.account.SignUpActivity
-import com.google.firebase.auth.FirebaseAuth
+import com.example.bungae.ui.account.signup.SignUpActivity
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val loginViewModel by lazy {
-        LoginViewModel(auth)
+        LoginViewModel()
     }
     private var time: Long = 0
 

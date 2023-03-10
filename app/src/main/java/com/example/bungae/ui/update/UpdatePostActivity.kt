@@ -31,13 +31,11 @@ import java.util.*
 
 class UpdatePostActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUpdatePostBinding
-    private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
-    private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     private var uriInfo: Uri? = null
 
     private val updatePostViewModel by lazy {
-        UpdatePostViewModel(auth, db)
+        UpdatePostViewModel()
     }
 
     private val sharedViewModel by lazy {

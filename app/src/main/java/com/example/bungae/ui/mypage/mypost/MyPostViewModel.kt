@@ -5,11 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.bungae.data.ItemData
+import com.example.bungae.singleton.FireBaseAuth
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-class MyPostViewModel(private val auth: FirebaseAuth,
-    private val db: FirebaseFirestore) : ViewModel() {
+class MyPostViewModel() : ViewModel() {
 
     private val list: MutableList<ItemData> = mutableListOf()
 
@@ -22,8 +22,8 @@ class MyPostViewModel(private val auth: FirebaseAuth,
         get() = _message
 
     fun getMyPostList() {
-        db.collection("ItemInfo")
-            .whereEqualTo("uid", auth.currentUser!!.uid)
+        FireBaseAuth.db.collection("ItemInfo")
+            .whereEqualTo("uid", FireBaseAuth.auth.currentUser!!.uid)
             .get()
             .addOnSuccessListener { results ->
 //                list.clear()

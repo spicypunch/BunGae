@@ -11,12 +11,8 @@ object GetMyProfile {
     val myProfile: LiveData<ProfileData>
         get() = _myProfile
     fun getMyProfile() {
-        val auth: FirebaseAuth = FirebaseAuth.getInstance()
-        val db: FirebaseFirestore = FirebaseFirestore.getInstance()
-
-
-        db.collection("Profile")
-            .whereEqualTo("uid", auth.currentUser?.uid)
+        FireBaseAuth.db.collection("Profile")
+            .whereEqualTo("uid", FireBaseAuth.auth.currentUser?.uid)
             .get()
             .addOnSuccessListener { result ->
                 val item = result.toObjects(ProfileData::class.java)
