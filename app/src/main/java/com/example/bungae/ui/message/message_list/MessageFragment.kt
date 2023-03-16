@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bungae.data.ChatListData
 import com.example.bungae.data.ChatModel
@@ -25,7 +26,7 @@ class MessageFragment : Fragment() {
         get() = _binding!!
 
     private val messageViewModel by lazy {
-        MessageViewModel()
+        ViewModelProvider(requireActivity()).get(MessageViewModel::class.java)
     }
 
     override fun onCreateView(

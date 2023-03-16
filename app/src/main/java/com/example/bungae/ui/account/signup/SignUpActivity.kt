@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.bungae.databinding.ActivitySignupBinding
 import com.example.bungae.ui.account.profile.ProfileActivity
 
@@ -12,7 +13,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignupBinding
     private val signUpActivity by lazy {
-        SignUpViewModel()
+        ViewModelProvider(this).get(SignUpViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

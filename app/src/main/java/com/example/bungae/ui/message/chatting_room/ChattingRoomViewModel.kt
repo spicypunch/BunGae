@@ -3,13 +3,14 @@ package com.example.bungae.ui.message.chatting_room
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.bungae.data.ChatModel
 import com.example.bungae.singleton.FireBaseAuth
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 
-class ChattingRoomViewModel() {
+class ChattingRoomViewModel() : ViewModel() {
 
     private val list: MutableList<ChatModel> = mutableListOf()
 

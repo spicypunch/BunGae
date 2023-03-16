@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bungae.data.ChatInfoData
 import com.example.bungae.data.ProfileData
@@ -22,7 +23,7 @@ class ChattingRoomActivity : AppCompatActivity() {
     private lateinit var adapter: ChattingRoomAdapter
 
     private val chattingRoomViewModel by lazy {
-        ChattingRoomViewModel()
+        ViewModelProvider(this).get(ChattingRoomViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

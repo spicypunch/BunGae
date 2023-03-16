@@ -6,13 +6,15 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.bungae.databinding.ActivityLoginBinding
 import com.example.bungae.ui.account.signup.SignUpActivity
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
+
     private val loginViewModel by lazy {
-        LoginViewModel()
+            ViewModelProvider(this).get(LoginViewModel::class.java)
     }
     private var time: Long = 0
 

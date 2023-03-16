@@ -1,16 +1,14 @@
-package com.example.bungae.ui.home
+package com.example.bungae.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.bumptech.glide.Glide
 import com.example.bungae.R
 import com.example.bungae.data.ItemData
 import com.example.bungae.singleton.FireBaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 
-class HomeViewModel() : ViewModel() {
+class PostListViewModel() : ViewModel() {
 
     private val list: MutableList<ItemData> = mutableListOf()
 
@@ -34,7 +32,26 @@ class HomeViewModel() : ViewModel() {
 
                 list.sortByDescending { it.date }
                 categoryCheck()
-//                _itemList.value = list
+            }
+            .addOnFailureListener { e ->
+                Log.e("Failed to get data", e.toString())
+                _message.value = "데이터를 가져오는데 실패했습니다."
+            }
+    }
+
+    fun getMyPostList() {
+        FireBaseAuth.db.collection("ItemInfo")
+            .whereEqualTo("uid", FireBaseAuth.auth.currentUser!!.uid)
+            .get()
+            .addOnSuccessListener { results ->
+                list.clear()
+                for (result in results) {
+                    val item = result.toObject(ItemData::class.java)
+                    list.add(item)
+                }
+
+                list.sortByDescending { it.date }
+                categoryCheck()
             }
             .addOnFailureListener { e ->
                 Log.e("Failed to get data", e.toString())

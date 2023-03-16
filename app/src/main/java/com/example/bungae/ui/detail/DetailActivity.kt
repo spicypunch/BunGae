@@ -9,6 +9,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.bungae.data.ChatInfoData
 import com.example.bungae.data.ItemData
@@ -27,7 +28,7 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var profileData: ProfileData
 
     private val detailViewModel by lazy {
-        DetailViewModel()
+        ViewModelProvider(this).get(DetailViewModel::class.java)
     }
 
     private val getList: ActivityResultLauncher<ItemData> =

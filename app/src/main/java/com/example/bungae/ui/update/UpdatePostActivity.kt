@@ -20,12 +20,7 @@ import com.bumptech.glide.Glide
 import com.example.bungae.R
 import com.example.bungae.data.ItemData
 import com.example.bungae.databinding.ActivityUpdatePostBinding
-import com.example.bungae.ui.post.SharedViewModel
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.ktx.storage
+import com.example.bungae.ui.post.PostViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -35,11 +30,7 @@ class UpdatePostActivity : AppCompatActivity() {
     private var uriInfo: Uri? = null
 
     private val updatePostViewModel by lazy {
-        UpdatePostViewModel()
-    }
-
-    private val sharedViewModel by lazy {
-        ViewModelProvider(this).get(SharedViewModel::class.java)
+        ViewModelProvider(this).get(PostViewModel::class.java)
     }
 
     private val permissionList = arrayOf(
@@ -144,7 +135,7 @@ class UpdatePostActivity : AppCompatActivity() {
             finish()
         })
 
-        sharedViewModel.coordinates.observe(this, androidx.lifecycle.Observer {
+        updatePostViewModel.coordinates.observe(this, androidx.lifecycle.Observer {
             if (it != null) {
                 binding.tvUpdateMap.text = it.getAddressLine(0)
             }

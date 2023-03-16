@@ -14,14 +14,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.bungae.R
 import com.example.bungae.databinding.ActivityWriteProfileBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.ktx.storage
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -31,7 +27,7 @@ class ProfileActivity : AppCompatActivity() {
     private var nickNameCheckResult: Boolean = false
 
     private val profileViewModel by lazy {
-        ProfileViewModel()
+        ViewModelProvider(this).get(ProfileViewModel::class.java)
     }
 
     private var time: Long = 0

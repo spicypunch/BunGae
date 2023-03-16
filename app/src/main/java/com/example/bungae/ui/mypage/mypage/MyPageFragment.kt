@@ -17,6 +17,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.bungae.R
 import com.example.bungae.databinding.FragmentMypageBinding
@@ -40,7 +41,7 @@ class MyPageFragment : Fragment() {
     private var uriInfo: Uri? = null
 
     private val  myPageViewModel by lazy {
-        MyPageViewModel()
+        ViewModelProvider(requireActivity()).get(MyPageViewModel::class.java)
     }
 
     private val permissionList = arrayOf(

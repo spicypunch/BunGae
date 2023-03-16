@@ -3,9 +3,11 @@ package com.example.bungae.ui.mypage.mypost
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bungae.adpater.Adapter
 import com.example.bungae.databinding.ActivityMypostBinding
+import com.example.bungae.viewmodel.PostListViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -15,8 +17,8 @@ class MyPostActivity : AppCompatActivity() {
 
     private val adapter by lazy { Adapter() }
 
-    private val myPostViewModel by lazy {
-        MyPostViewModel()
+    private val postListViewModel by lazy {
+        ViewModelProvider(this).get(PostListViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,9 +30,9 @@ class MyPostActivity : AppCompatActivity() {
         binding.recyclerviewMypost.adapter = adapter
         binding.recyclerviewMypost.layoutManager = LinearLayoutManager(this)
 
-        myPostViewModel.getMyPostList()
+        postListViewModel.getMyPostList()
 
-        myPostViewModel.itemList.observe(this, Observer {
+        postListViewModel.itemList.observe(this, Observer {
             adapter.submitList(it)
         })
     }
