@@ -128,8 +128,6 @@ class MyPageFragment : Fragment() {
             }
         })
 
-
-
         myPageViewModel.loadImageSuccess.observe(viewLifecycleOwner, Observer {
             if (!it) {
                 Toast.makeText(context, "프로필 사진을 등록해주세요", Toast.LENGTH_SHORT).show()

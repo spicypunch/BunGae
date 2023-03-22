@@ -16,7 +16,9 @@ object GetMyProfile {
             .get()
             .addOnSuccessListener { result ->
                 val item = result.toObjects(ProfileData::class.java)
-                _myProfile.value = item.get(0)
+                if (item.size != 0) {
+                    _myProfile.value = item.get(0)
+                }
             }
             .addOnFailureListener { e ->
             }

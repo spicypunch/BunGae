@@ -22,11 +22,6 @@ class MessageAdapter() : ListAdapter<ChatListData, MessageAdapter.MyViewHolder>(
         val root = binding.root
 
         fun bind(item: ChatListData) {
-            Log.e("item.uid", item.uid)
-            Log.e("auth.currentUser!!.uid", FireBaseAuth.auth.currentUser!!.uid)
-            Log.e("item.senderNickname", item.senderNickname)
-            Log.e("item.receiverNickname", item.receiverNickname)
-            Log.e("item.message", item.message)
             if (item.uid != FireBaseAuth.auth.currentUser!!.uid) {
                 binding.tvMessageNickname.text = item.senderNickname
                 binding.tvMessage.text = item.message

@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.example.bungae.data.ChatModel
 import com.example.bungae.databinding.ItemChattingBinding
 import com.example.bungae.singleton.FireBaseAuth
+import com.example.bungae.singleton.GetProfileImage
 import com.google.firebase.auth.FirebaseAuth
 
 class ChattingRoomAdapter() : ListAdapter<ChatModel, ChattingRoomAdapter.MyViewHolder>(diffUtil) {
@@ -24,17 +25,17 @@ class ChattingRoomAdapter() : ListAdapter<ChatModel, ChattingRoomAdapter.MyViewH
         val root = binding.root
 
         fun bind(item: ChatModel) {
-            if (item.comments.get("comment")!!.uid == FireBaseAuth.auth.currentUser!!.uid) {
-                binding.tvChattingNickname.text = "나"
-                binding.tvChattingMessage.text = item.comments.get("comment")!!.message
-                binding.tvChattingTimestamp.text = item.comments.get("comment")!!.timestamp
+            if (item.comments.get("comment")?.uid == FireBaseAuth.auth.currentUser?.uid) {
+                binding.tvChattingNickname.text = item.comments.get("comment")?.senderNickname
+                binding.tvChattingMessage.text = item.comments.get("comment")?.message
+                binding.tvChattingTimestamp.text = item.comments.get("comment")?.timestamp
                 binding.linearLayoutChat1.visibility = View.INVISIBLE
                 binding.linearLayoutChat2.gravity = Gravity.RIGHT
             } else {
-                binding.tvChattingNickname.text = "상대"
+                binding.tvChattingNickname.text = item.comments.get("comment")?.senderNickname
 //                Glide.with(root).load()
-                binding.tvChattingMessage.text = item.comments.get("comment")!!.message
-                binding.tvChattingTimestamp.text = item.comments.get("comment")!!.timestamp
+                binding.tvChattingMessage.text = item.comments.get("comment")?.message
+                binding.tvChattingTimestamp.text = item.comments.get("comment")?.timestamp
             }
 
         }
@@ -52,6 +53,7 @@ class ChattingRoomAdapter() : ListAdapter<ChatModel, ChattingRoomAdapter.MyViewH
     }
 
     companion object {
+
         val diffUtil = object : DiffUtil.ItemCallback<ChatModel>() {
 
             override fun areItemsTheSame(oldItem: ChatModel, newItem: ChatModel): Boolean {

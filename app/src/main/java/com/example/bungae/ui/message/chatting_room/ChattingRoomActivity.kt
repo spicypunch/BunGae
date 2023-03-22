@@ -1,5 +1,6 @@
 package com.example.bungae.ui.message.chatting_room
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,7 @@ import com.example.bungae.data.ChatInfoData
 import com.example.bungae.data.ProfileData
 import com.example.bungae.databinding.ActivityChattingRoomDetailBinding
 import com.example.bungae.singleton.GetMyProfile
+import com.example.bungae.singleton.GetProfileImage
 import com.example.bungae.ui.message.adapter.ChattingRoomAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -46,6 +48,8 @@ class ChattingRoomActivity : AppCompatActivity() {
 
         chattingRoomViewModel.getChatData(chatInfoData.uid)
 
+        GetProfileImage.getProfileImage(chatInfoData.uid)
+
         binding.imageMessageSend.setOnClickListener {
             if (myProfileData != null) {
                 chattingRoomViewModel.setChatData(
@@ -59,7 +63,6 @@ class ChattingRoomActivity : AppCompatActivity() {
         }
 
         chattingRoomViewModel.chatData.observe(this, Observer {
-            Log.e("chatData", it.toString())
             adapter.submitList(it)
             binding.recyclerviewChatting.scrollToPosition(it.size - 1)
         })
@@ -67,6 +70,5 @@ class ChattingRoomActivity : AppCompatActivity() {
         GetMyProfile.myProfile.observe(this, Observer {
             myProfileData = it
         })
-
     }
 }

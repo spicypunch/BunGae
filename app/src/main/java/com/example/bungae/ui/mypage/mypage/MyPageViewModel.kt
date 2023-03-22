@@ -34,7 +34,6 @@ class MyPageViewModel : ViewModel() {
             .get()
             .addOnSuccessListener { result ->
                 val item = result.toObjects(ProfileData::class.java)
-
                 if (item.size != 0) {
                     _listProfileData.value = item.get(0)
                     getProfileImage()
