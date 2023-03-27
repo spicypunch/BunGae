@@ -1,4 +1,4 @@
-package com.example.bungae.adpater
+package com.example.bungae.ui.home.adpater
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -6,13 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.bungae.R
 import com.example.bungae.data.ItemData
 import com.example.bungae.databinding.ItemHomeBinding
 import com.example.bungae.ui.detail.DetailActivity
 
-class Adapter() : ListAdapter<ItemData, Adapter.MyViewHolder>(diffUtil){
+class PostListAdapter() : ListAdapter<ItemData, PostListAdapter.MyViewHolder>(diffUtil){
 
     class MyViewHolder(private val binding: ItemHomeBinding) : RecyclerView.ViewHolder(binding.root) {
         val root = binding.root

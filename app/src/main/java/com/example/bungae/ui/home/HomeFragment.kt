@@ -10,8 +10,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bungae.databinding.FragmentHomeBinding
-import com.example.bungae.adpater.Adapter
-import com.example.bungae.viewmodel.PostListViewModel
+import com.example.bungae.ui.home.adpater.PostListAdapter
+import com.example.bungae.ui.mypage.PostListViewModel
 
 class HomeFragment() : Fragment() {
 
@@ -19,7 +19,7 @@ class HomeFragment() : Fragment() {
     private val binding
         get() = _binding!!
 
-    private val adapter by lazy { Adapter() }
+    private val adapter by lazy { PostListAdapter() }
 
     private val postListViewModel by lazy {
         ViewModelProvider(this).get(PostListViewModel::class.java)
@@ -60,6 +60,4 @@ class HomeFragment() : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-
 }

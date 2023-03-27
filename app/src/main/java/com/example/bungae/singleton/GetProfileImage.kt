@@ -3,22 +3,19 @@ package com.example.bungae.singleton
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.tasks.await
 
 object GetProfileImage {
 
-    private var _profileImage = MutableLiveData<Uri>()
-    val profileImgae: LiveData<Uri>
-        get() = _profileImage
+    private var uri: Uri? = null
 
-    //코투린 적용
-    fun getProfileImage(uid: String){
+    suspend fun getProfileImage(uid: String) : Uri? {
         val imgRef = FireBaseAuth.imageStorage.reference.child("profile/image_${uid}.jpg")
         imgRef.downloadUrl.addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                _profileImage.value = task.result
-            } else {
-
+                uri = task.result
             }
-        }
+        }.await()
+        return uri
     }
 }

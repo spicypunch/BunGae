@@ -89,7 +89,6 @@ class DetailActivity : AppCompatActivity() {
         binding.btnSendMessage.setOnClickListener {
             val chatInfoData = ChatInfoData(profileData.uid, profileData.nickname)
             Intent(this, ChattingRoomActivity::class.java).apply {
-//                putExtra("item data", item)
                 putExtra("profile data", chatInfoData)
             }.run { startActivity(this) }
         }

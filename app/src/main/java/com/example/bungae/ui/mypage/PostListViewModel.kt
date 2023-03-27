@@ -1,4 +1,4 @@
-package com.example.bungae.viewmodel
+package com.example.bungae.ui.mypage
 
 import android.util.Log
 import androidx.lifecycle.LiveData

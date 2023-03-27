@@ -15,14 +15,20 @@ import com.example.bungae.singleton.GetProfileImage
 import com.example.bungae.ui.message.adapter.ChattingRoomAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ChattingRoomActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChattingRoomDetailBinding
     private lateinit var chatInfoData: ChatInfoData
     private var myProfileData: ProfileData? = null
+    private var profileImage: Uri? = null
 
-    private lateinit var adapter: ChattingRoomAdapter
+    private val adapter by lazy {
+        ChattingRoomAdapter(profileImage)
+    }
 
     private val chattingRoomViewModel by lazy {
         ViewModelProvider(this).get(ChattingRoomViewModel::class.java)
@@ -35,20 +41,21 @@ class ChattingRoomActivity : AppCompatActivity() {
 
         chatInfoData = intent.getSerializableExtra("profile data") as ChatInfoData
 
-        if (myProfileData == null) {
-            GetMyProfile.getMyProfile()
+        CoroutineScope(Dispatchers.IO).launch {
+            profileImage = GetProfileImage.getProfileImage(chatInfoData.uid)
+            Log.e("popular", profileImage.toString())
         }
 
-        adapter = ChattingRoomAdapter()
+        CoroutineScope(Dispatchers.IO).launch {
+            myProfileData = GetMyProfile.getMyProfile()
+        }
+
 
         binding.recyclerviewChatting.adapter = adapter
         binding.recyclerviewChatting.layoutManager = LinearLayoutManager(this)
-
         binding.textViewNickname.text = chatInfoData.nickname
 
         chattingRoomViewModel.getChatData(chatInfoData.uid)
-
-        GetProfileImage.getProfileImage(chatInfoData.uid)
 
         binding.imageMessageSend.setOnClickListener {
             if (myProfileData != null) {
@@ -65,10 +72,6 @@ class ChattingRoomActivity : AppCompatActivity() {
         chattingRoomViewModel.chatData.observe(this, Observer {
             adapter.submitList(it)
             binding.recyclerviewChatting.scrollToPosition(it.size - 1)
-        })
-
-        GetMyProfile.myProfile.observe(this, Observer {
-            myProfileData = it
         })
     }
 }
