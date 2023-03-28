@@ -36,7 +36,7 @@ class ChattingRoomAdapter(private val uri: Uri?) : ListAdapter<ChatModel, Chatti
             } else {
                 Log.e("song", uri.toString())
                 binding.tvChattingNickname.text = item.comments.get("comment")?.senderNickname
-                Glide.with(Activity()).load(uri).into(binding.imageChattingProfile)
+//                Glide.with(Activity()).load(uri).into(binding.imageChattingProfile)
                 binding.tvChattingMessage.text = item.comments.get("comment")?.message
                 binding.tvChattingTimestamp.text = item.comments.get("comment")?.timestamp
             }
