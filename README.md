@@ -5,7 +5,7 @@ BunGae 앱은 다양한 활동을 다양한 사람들과 급 번개 모임을 �
 <br>
 <br>
 
- #### 전체적인 흐름도
+#### 전체적인 흐름도
 ----------
 ![1](https://user-images.githubusercontent.com/72846127/225082721-b15b8f99-69de-463e-8500-31ac636ed7d5.png)
 <br>
@@ -18,7 +18,12 @@ BunGae 앱은 다양한 활동을 다양한 사람들과 급 번개 모임을 �
 ![5](https://user-images.githubusercontent.com/72846127/225082740-fc5497a3-4529-4e2e-9bf4-5589aeebe13b.png)
 <br> 
 
+<br>
+<br>
+<br>
+
 #### 주요 기술
+---------
 - 100% 코틀린으로 작성되었습니다.
 - ViewModel을 이용해 화면 회전에 대응했습니다.
 - DataBinding으로 UI와 데이터를 선언적 형식으로 결합하였습니다.
