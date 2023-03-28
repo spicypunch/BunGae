@@ -9,15 +9,18 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.bungae.R
 import com.example.bungae.data.ItemData
 import com.example.bungae.databinding.ActivityUpdatePostBinding
+import com.example.bungae.ui.post.SharedViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
@@ -30,12 +33,15 @@ class UpdatePostActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUpdatePostBinding
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
     private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
-    private var imageStorage: FirebaseStorage = Firebase.storage
 
     private var uriInfo: Uri? = null
 
     private val updatePostViewModel by lazy {
         UpdatePostViewModel(auth, db)
+    }
+
+    private val sharedViewModel by lazy {
+        ViewModelProvider(this).get(SharedViewModel::class.java)
     }
 
     private val permissionList = arrayOf(
@@ -93,7 +99,7 @@ class UpdatePostActivity : AppCompatActivity() {
                     title = binding.editUpdatePostTitle.text.toString(),
                     content = binding.editUpdatePostContent.text.toString(),
                     category = binding.spinnerUpdateCategory.selectedItem.toString(),
-                    address = "서울시 강남구",
+                    address = binding.tvUpdateMap.text.toString(),
                     date = item.date
                 )
             } else {
@@ -107,7 +113,7 @@ class UpdatePostActivity : AppCompatActivity() {
                 title = binding.editUpdatePostTitle.text.toString(),
                 content = binding.editUpdatePostContent.text.toString(),
                 category = binding.spinnerUpdateCategory.selectedItem.toString(),
-                address = "서울시 강남구",
+                address = binding.tvUpdateMap.text.toString(),
                 date = item.date
             )
         })
@@ -138,6 +144,12 @@ class UpdatePostActivity : AppCompatActivity() {
                 putExtra("result", it)
             })
             finish()
+        })
+
+        sharedViewModel.coordinates.observe(this, androidx.lifecycle.Observer {
+            if (it != null) {
+                binding.tvUpdateMap.text = it.getAddressLine(0)
+            }
         })
     }
 
