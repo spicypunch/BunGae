@@ -34,15 +34,8 @@ class PostFragment : Fragment() {
     private var uriInfo: Uri? = null
 
     private val postViewModel by lazy {
-        PostViewModel()
+        ViewModelProvider(requireActivity()).get(PostViewModel::class.java)
     }
-
-    private val sharedViewModel by lazy {
-        ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-    }
-
-    // 다른 fragment 접근
-//    private val otherView = layoutInflater.inflate(R.layout.fragment_post_map, null)
 
     private lateinit var navController: NavController
 
@@ -120,11 +113,6 @@ class PostFragment : Fragment() {
             requestMultiplePermission.launch(permissionList)
         }
 
-        // 텍스트를 누를 시 지도 등장
-//        binding.tvMap.setOnClickListener {
-//            addMapFragment()
-//        }
-
         // 이미지를 등록할 시
         postViewModel.imageUrl.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             postViewModel.insertFireStorage(
@@ -151,7 +139,7 @@ class PostFragment : Fragment() {
             }
         })
 
-        sharedViewModel.coordinates.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        postViewModel.coordinates.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if (it != null) {
                 binding.tvMap.text = it.getAddressLine(0)
             }

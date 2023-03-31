@@ -11,19 +11,19 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.bungae.R
 import com.example.bungae.databinding.ActivityMainBinding
+import com.example.bungae.singleton.FireBaseAuth
 import com.example.bungae.ui.account.login.LoginActivity
 import com.example.bungae.ui.map.MapFragment
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (auth.currentUser == null) {
+        if (FireBaseAuth.auth.currentUser == null) {
             startActivity(Intent(this, LoginActivity::class.java))
         }
 

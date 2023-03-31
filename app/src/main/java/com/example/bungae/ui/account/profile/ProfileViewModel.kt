@@ -6,14 +6,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.bungae.data.ProfileData
+import com.example.bungae.singleton.FireBaseAuth
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
-class ProfileViewModel(
-    private val auth: FirebaseAuth,
-    private val db: FirebaseFirestore,
-) : ViewModel() {
+class ProfileViewModel() : ViewModel() {
 
     private var _message = MutableLiveData<String>()
     val message: LiveData<String>
@@ -28,7 +26,7 @@ class ProfileViewModel(
         get() = _checkFirestore
 
     fun checkNickName(nickName: String) {
-        db.collection("Profile")
+        FireBaseAuth.db.collection("Profile")
             .whereEqualTo("nickname", nickName)
             .get()
             .addOnSuccessListener { results ->
@@ -44,13 +42,13 @@ class ProfileViewModel(
             _message.value = "사용할 닉네임을 입력해주세요."
         } else {
             val profileData = ProfileData(
-                uid = auth.currentUser!!.uid,
+                uid = FireBaseAuth.auth.currentUser!!.uid,
                 nickname = nickName,
                 age = age,
                 gender = gender,
             )
 
-            db.collection("Profile").document(auth.currentUser!!.uid)
+            FireBaseAuth.db.collection("Profile").document(FireBaseAuth.auth.currentUser!!.uid)
                 .set(profileData)
                 .addOnSuccessListener {
                     _message.value = "프로필 등록에 성공하였습니다."
@@ -66,7 +64,7 @@ class ProfileViewModel(
     fun uploadImageToFirebase(uriInfo: Uri?) {
         val imageRef =
             FirebaseStorage.getInstance().reference.child("profile/")
-                .child("image_${auth.currentUser!!.uid}.jpg")
+                .child("image_${FireBaseAuth.auth.currentUser!!.uid}.jpg")
         imageRef.putFile(uriInfo!!)
             .addOnSuccessListener {
             }

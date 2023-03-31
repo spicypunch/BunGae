@@ -45,7 +45,7 @@
             android:name=".ui.account.profile.ProfileActivity"
             android:label="프로필 등록" />
         <activity
-            android:name=".ui.account.SignUpActivity"
+            android:name=".ui.account.signup.SignUpActivity"
             android:label="회원가입" />
         <activity
             android:name=".ui.main.MainActivity"

@@ -17,9 +17,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.bungae.R
 import com.example.bungae.databinding.FragmentMypageBinding
+import com.example.bungae.singleton.FireBaseAuth
 import com.example.bungae.ui.account.login.LoginActivity
 import com.example.bungae.ui.mypage.mypost.MyPostActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -36,14 +38,10 @@ class MyPageFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
-    private val imageStorage: FirebaseStorage = Firebase.storage
-
     private var uriInfo: Uri? = null
 
     private val  myPageViewModel by lazy {
-        MyPageViewModel(auth, db, imageStorage)
+        ViewModelProvider(requireActivity()).get(MyPageViewModel::class.java)
     }
 
     private val permissionList = arrayOf(
@@ -130,8 +128,6 @@ class MyPageFragment : Fragment() {
             }
         })
 
-
-
         myPageViewModel.loadImageSuccess.observe(viewLifecycleOwner, Observer {
             if (!it) {
                 Toast.makeText(context, "프로필 사진을 등록해주세요", Toast.LENGTH_SHORT).show()
@@ -147,7 +143,7 @@ class MyPageFragment : Fragment() {
         }
 
         binding.btnLogout.setOnClickListener {
-            auth.signOut()
+            FireBaseAuth.auth.signOut()
             startActivity(Intent(activity, LoginActivity::class.java))
         }
 

@@ -3,29 +3,28 @@ package com.example.bungae.ui.message.chatting_room
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.bungae.data.ChatModel
+import com.example.bungae.singleton.FireBaseAuth
+import com.example.bungae.singleton.GetProfileImage
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 
-class ChattingRoomViewModel(
-    private val auth: FirebaseAuth,
-    private val db: FirebaseFirestore
-) {
+class ChattingRoomViewModel() : ViewModel() {
 
     private val list: MutableList<ChatModel> = mutableListOf()
 
-    private val uid = auth.currentUser!!.uid
-
+    private val uid = FireBaseAuth.auth.currentUser!!.uid
 
     private var _chatData = MutableLiveData<MutableList<ChatModel>>()
     val chatData: LiveData<MutableList<ChatModel>>
         get() = _chatData
 
-    fun setChatData(destinationUid: String, nickname1: String, nickname2: String?, message: String) {
+    fun setChatData(destinationUid: String, senderNickname: String, receiverNickname: String?, message: String) {
         val currentTime: Long = System.currentTimeMillis()
         val dateFormat = SimpleDateFormat("yy-MM-dd_HH:mm:ss")
-        val comment = ChatModel.Comment(uid = auth.currentUser!!.uid, senderNickname = nickname1, receiverNickname1 = nickname2 ?: "user", message = message, timestamp = dateFormat.format(currentTime))
+        val comment = ChatModel.Comment(uid = FireBaseAuth.auth.currentUser!!.uid, senderNickname = senderNickname, receiverNickname = receiverNickname ?: "user", message = message, timestamp = dateFormat.format(currentTime))
 
         val chatModel = ChatModel()
 
@@ -33,7 +32,7 @@ class ChattingRoomViewModel(
         chatModel.users.put(destinationUid, true)
         chatModel.comments.put("comment", comment)
 
-        db.collection("ChatRoom")
+        FireBaseAuth.db.collection("ChatRoom")
             .document()
             .set(chatModel)
             .addOnSuccessListener {
@@ -45,8 +44,8 @@ class ChattingRoomViewModel(
     }
 
     fun getChatData(destinationUid: String) {
-        db.collection("ChatRoom")
-            .whereEqualTo("users.${auth.currentUser!!.uid}", true)
+        FireBaseAuth.db.collection("ChatRoom")
+            .whereEqualTo("users.${FireBaseAuth.auth.currentUser!!.uid}", true)
             .whereEqualTo("users.${destinationUid}", true)
             .addSnapshotListener { snapshot, e ->
                 if (e != null) {

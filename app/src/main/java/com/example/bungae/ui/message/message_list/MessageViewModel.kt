@@ -3,14 +3,13 @@ package com.example.bungae.ui.message.message_list
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.bungae.data.ChatModel
+import com.example.bungae.singleton.FireBaseAuth
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-class MessageViewModel(
-    private val auth: FirebaseAuth,
-    private val db: FirebaseFirestore
-) {
+class MessageViewModel() : ViewModel() {
 
     private var list: MutableList<ChatModel> = mutableListOf()
 
@@ -19,8 +18,8 @@ class MessageViewModel(
         get() = _chatList
 
     fun getMyChatList() {
-        db.collection("ChatRoom")
-            .whereEqualTo("users.${auth.currentUser!!.uid}", true)
+        FireBaseAuth.db.collection("ChatRoom")
+            .whereEqualTo("users.${FireBaseAuth.auth.currentUser!!.uid}", true)
             .addSnapshotListener { snapshot, e ->
                 if (e != null) {
                     Log.e("Listen failed.", e.toString())
@@ -39,5 +38,4 @@ class MessageViewModel(
                 }
             }
     }
-
 }

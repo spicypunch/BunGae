@@ -6,13 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bungae.databinding.FragmentHomeBinding
-import com.example.bungae.adpater.Adapter
-import com.google.firebase.firestore.FirebaseFirestore
+import com.example.bungae.ui.home.adpater.PostListAdapter
+import com.example.bungae.ui.mypage.PostListViewModel
 
 class HomeFragment() : Fragment() {
 
@@ -20,10 +19,10 @@ class HomeFragment() : Fragment() {
     private val binding
         get() = _binding!!
 
-    private val adapter by lazy { Adapter() }
+    private val adapter by lazy { PostListAdapter() }
 
-    private val homeViewModel by lazy {
-        HomeViewModel()
+    private val postListViewModel by lazy {
+        ViewModelProvider(this).get(PostListViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -37,13 +36,13 @@ class HomeFragment() : Fragment() {
         binding.recyclerviewHome.adapter = adapter
         binding.recyclerviewHome.layoutManager = LinearLayoutManager(activity)
 
-        homeViewModel.getFireStorage()
+        postListViewModel.getFireStorage()
 
-        homeViewModel.itemList.observe(viewLifecycleOwner, Observer {
+        postListViewModel.itemList.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
         })
 
-        homeViewModel.message.observe(viewLifecycleOwner, Observer {
+        postListViewModel.message.observe(viewLifecycleOwner, Observer {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         })
         return root
@@ -51,8 +50,8 @@ class HomeFragment() : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        homeViewModel.getFireStorage()
-        homeViewModel.itemList.observe(viewLifecycleOwner, Observer {
+        postListViewModel.getFireStorage()
+        postListViewModel.itemList.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
         })
     }
@@ -61,6 +60,4 @@ class HomeFragment() : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-
 }

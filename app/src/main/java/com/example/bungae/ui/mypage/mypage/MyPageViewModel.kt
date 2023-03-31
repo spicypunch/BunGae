@@ -5,15 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.bungae.data.ProfileData
+import com.example.bungae.singleton.FireBaseAuth
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
-class MyPageViewModel(
-    private val auth: FirebaseAuth,
-    private val db: FirebaseFirestore,
-    private var imageStorage: FirebaseStorage
-) : ViewModel() {
+class MyPageViewModel : ViewModel() {
 
     private var _task = MutableLiveData<Uri>()
     val task: LiveData<Uri>
@@ -32,12 +29,11 @@ class MyPageViewModel(
         get() = _checkNickname
 
     fun getNickname() {
-        db.collection("Profile")
-            .whereEqualTo("uid", auth.currentUser!!.uid)
+        FireBaseAuth.db.collection("Profile")
+            .whereEqualTo("uid", FireBaseAuth.auth.currentUser!!.uid)
             .get()
             .addOnSuccessListener { result ->
                 val item = result.toObjects(ProfileData::class.java)
-
                 if (item.size != 0) {
                     _listProfileData.value = item.get(0)
                     getProfileImage()
@@ -46,7 +42,7 @@ class MyPageViewModel(
     }
 
     fun getProfileImage() {
-        val imgRef = FirebaseStorage.getInstance().reference.child("profile/image_${auth.currentUser!!.uid}.jpg")
+        val imgRef = FireBaseAuth.imageStorage.reference.child("profile/image_${FireBaseAuth.auth.currentUser!!.uid}.jpg")
         imgRef.downloadUrl.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 _task.value = task.result
@@ -57,9 +53,8 @@ class MyPageViewModel(
     }
 
     fun updateImageToFirebase(uriInfo: Uri) {
-        imageStorage = FirebaseStorage.getInstance()
-        val fileName = "image_${auth.currentUser!!.uid}.jpg"
-        val imageRef = imageStorage.reference.child("profile/").child(fileName)
+        val fileName = "image_${FireBaseAuth.auth.currentUser!!.uid}.jpg"
+        val imageRef = FireBaseAuth.imageStorage.reference.child("profile/").child(fileName)
         imageRef.putFile(uriInfo).addOnSuccessListener {
 
         }.addOnFailureListener {
@@ -68,7 +63,7 @@ class MyPageViewModel(
     }
 
     fun checkNickName(nickName: String) {
-        db.collection("Profile")
+        FireBaseAuth.db.collection("Profile")
             .whereEqualTo("nickname", nickName)
             .get()
             .addOnSuccessListener { results ->
@@ -80,8 +75,8 @@ class MyPageViewModel(
     }
 
     fun updateNickName(nickName: String) {
-        db.collection("Profile")
-            .document(auth.currentUser!!.uid)
+        FireBaseAuth.db.collection("Profile")
+            .document(FireBaseAuth.auth.currentUser!!.uid)
             .update("nickname", nickName)
             .addOnSuccessListener {
 

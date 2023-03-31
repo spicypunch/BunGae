@@ -34,8 +34,8 @@ class PostMapFragment : Fragment(), OnMapReadyCallback {
 
     private var mapFragment: SupportMapFragment? = null
 
-    private val sharedViewModel by lazy {
-        ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+    private val postViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(PostViewModel::class.java)
     }
 
     private val permissionList = arrayOf(
@@ -76,7 +76,7 @@ class PostMapFragment : Fragment(), OnMapReadyCallback {
                 )
             }
 //            setFragmentResult("requestKey", bundleOf("address" to address?.getAddressLine(0)))
-                sharedViewModel.sendCoordinates(address)
+            postViewModel.sendCoordinates(address)
         }
 
         return root

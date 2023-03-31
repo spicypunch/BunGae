@@ -3,23 +3,20 @@ package com.example.bungae.ui.mypage.mypost
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.bungae.adpater.Adapter
+import com.example.bungae.ui.home.adpater.PostListAdapter
 import com.example.bungae.databinding.ActivityMypostBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.example.bungae.ui.mypage.PostListViewModel
 
 class MyPostActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMypostBinding
 
-    private val adapter by lazy { Adapter() }
+    private val adapter by lazy { PostListAdapter() }
 
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
-
-    private val myPostViewModel by lazy {
-        MyPostViewModel(auth, db)
+    private val postListViewModel by lazy {
+        ViewModelProvider(this).get(PostListViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,9 +28,9 @@ class MyPostActivity : AppCompatActivity() {
         binding.recyclerviewMypost.adapter = adapter
         binding.recyclerviewMypost.layoutManager = LinearLayoutManager(this)
 
-        myPostViewModel.getMyPostList()
+        postListViewModel.getMyPostList()
 
-        myPostViewModel.itemList.observe(this, Observer {
+        postListViewModel.itemList.observe(this, Observer {
             adapter.submitList(it)
         })
     }

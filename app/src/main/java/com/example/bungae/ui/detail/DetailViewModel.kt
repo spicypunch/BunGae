@@ -7,12 +7,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.bungae.data.ItemData
 import com.example.bungae.data.ProfileData
+import com.example.bungae.singleton.FireBaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
-class  DetailViewModel(
-    private val db: FirebaseFirestore
-) : ViewModel() {
+class  DetailViewModel() : ViewModel() {
 
     private var _profileDataList = MutableLiveData<ProfileData>()
     val profileDataList: LiveData<ProfileData>
@@ -27,7 +26,7 @@ class  DetailViewModel(
         get() = _deleteResult
 
     fun getProfileData(user: String) {
-        db.collection("Profile")
+        FireBaseAuth.db.collection("Profile")
             .whereEqualTo("uid", user)
             .get()
             .addOnSuccessListener { result ->
@@ -51,7 +50,7 @@ class  DetailViewModel(
     }
 
     fun deleteItem(item: ItemData) {
-        db.collection("ItemInfo")
+        FireBaseAuth.db.collection("ItemInfo")
             .document("${item.uid}_${item.date}")
             .delete()
             .addOnSuccessListener {

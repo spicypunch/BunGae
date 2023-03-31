@@ -9,11 +9,13 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.bungae.data.ChatInfoData
 import com.example.bungae.data.ItemData
 import com.example.bungae.data.ProfileData
 import com.example.bungae.databinding.ActivityDetailBinding
+import com.example.bungae.singleton.FireBaseAuth
 import com.example.bungae.ui.message.chatting_room.ChattingRoomActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -22,13 +24,11 @@ class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
     private lateinit var item: ItemData
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     private lateinit var profileData: ProfileData
 
     private val detailViewModel by lazy {
-        DetailViewModel( db)
+        ViewModelProvider(this).get(DetailViewModel::class.java)
     }
 
     private val getList: ActivityResultLauncher<ItemData> =
@@ -55,7 +55,7 @@ class DetailActivity : AppCompatActivity() {
 
         detailViewModel.profileDataList.observe(this, Observer {
             binding.profileData = it
-            if (item.uid != auth.currentUser!!.uid) {
+            if (item.uid != FireBaseAuth.auth.currentUser!!.uid) {
                 binding.btnDetailItemUpdate.visibility = View.INVISIBLE
                 binding.btnDetailItemDelete.visibility = View.INVISIBLE
             } else {
@@ -89,7 +89,6 @@ class DetailActivity : AppCompatActivity() {
         binding.btnSendMessage.setOnClickListener {
             val chatInfoData = ChatInfoData(profileData.uid, profileData.nickname)
             Intent(this, ChattingRoomActivity::class.java).apply {
-//                putExtra("item data", item)
                 putExtra("profile data", chatInfoData)
             }.run { startActivity(this) }
         }

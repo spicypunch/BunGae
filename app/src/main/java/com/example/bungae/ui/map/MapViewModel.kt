@@ -5,11 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.bungae.data.ItemData
+import com.example.bungae.singleton.FireBaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class MapViewModel() : ViewModel() {
-
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     private val list: MutableList<ItemData> = mutableListOf()
 
@@ -22,7 +21,7 @@ class MapViewModel() : ViewModel() {
         get() = _message
 
     fun getItemList() {
-        db.collection("ItemInfo")
+        FireBaseAuth.db.collection("ItemInfo")
             .get()
             .addOnSuccessListener { results ->
                 list.clear()

@@ -1,6 +1,8 @@
 package com.example.bungae.ui.message.adapter
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.net.Uri
 import android.provider.ContactsContract.CommonDataKinds.Nickname
 import android.util.Log
 import android.view.Gravity
@@ -14,27 +16,29 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.bungae.data.ChatModel
 import com.example.bungae.databinding.ItemChattingBinding
+import com.example.bungae.singleton.FireBaseAuth
+import com.example.bungae.singleton.GetProfileImage
 import com.google.firebase.auth.FirebaseAuth
 
-class ChattingRoomAdapter() : ListAdapter<ChatModel, ChattingRoomAdapter.MyViewHolder>(diffUtil) {
+class ChattingRoomAdapter(private val uri: Uri?) : ListAdapter<ChatModel, ChattingRoomAdapter.MyViewHolder>(diffUtil) {
 
-    class MyViewHolder(private val binding: ItemChattingBinding) :
+    class MyViewHolder(private val binding: ItemChattingBinding, private var uri: Uri?) :
         RecyclerView.ViewHolder(binding.root) {
         val root = binding.root
-        private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
         fun bind(item: ChatModel) {
-            if (item.comments.get("comment")!!.uid == auth.currentUser!!.uid) {
-                binding.tvChattingNickname.text = "나"
-                binding.tvChattingMessage.text = item.comments.get("comment")!!.message
-                binding.tvChattingTimestamp.text = item.comments.get("comment")!!.timestamp
+            if (item.comments.get("comment")?.uid == FireBaseAuth.auth.currentUser?.uid) {
+                binding.tvChattingNickname.text = item.comments.get("comment")?.senderNickname
+                binding.tvChattingMessage.text = item.comments.get("comment")?.message
+                binding.tvChattingTimestamp.text = item.comments.get("comment")?.timestamp
                 binding.linearLayoutChat1.visibility = View.INVISIBLE
                 binding.linearLayoutChat2.gravity = Gravity.RIGHT
             } else {
-                binding.tvChattingNickname.text = "상대"
-//                Glide.with(root).load()
-                binding.tvChattingMessage.text = item.comments.get("comment")!!.message
-                binding.tvChattingTimestamp.text = item.comments.get("comment")!!.timestamp
+                Log.e("song", uri.toString())
+                binding.tvChattingNickname.text = item.comments.get("comment")?.senderNickname
+//                Glide.with(Activity()).load(uri).into(binding.imageChattingProfile)
+                binding.tvChattingMessage.text = item.comments.get("comment")?.message
+                binding.tvChattingTimestamp.text = item.comments.get("comment")?.timestamp
             }
 
         }
@@ -44,7 +48,7 @@ class ChattingRoomAdapter() : ListAdapter<ChatModel, ChattingRoomAdapter.MyViewH
         val binding: ItemChattingBinding = ItemChattingBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
-        return MyViewHolder(binding)
+        return MyViewHolder(binding, uri)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -52,6 +56,7 @@ class ChattingRoomAdapter() : ListAdapter<ChatModel, ChattingRoomAdapter.MyViewH
     }
 
     companion object {
+
         val diffUtil = object : DiffUtil.ItemCallback<ChatModel>() {
 
             override fun areItemsTheSame(oldItem: ChatModel, newItem: ChatModel): Boolean {
