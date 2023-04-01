@@ -108,7 +108,10 @@ BunGae 앱은 다양한 활동을 다양한 사람들과 급 번개 모임을 �
 
 #### 마이 페이지
 ![Screenshot_20230327_134821_Gallery](https://user-images.githubusercontent.com/72846127/229264608-99cee76e-e834-46a9-9b4c-886f17e8aa92.jpg) ![Screenshot_20230327_134826_Gallery](https://user-images.githubusercontent.com/72846127/229264609-59da4fd3-c66c-4f43-900a-e56aec39005a.jpg)
-![Screenshot_20230327_134837_Gallery](https://user-images.githubusercontent.com/72846127/229264611-9fe1f0b3-79db-4375-94c9-20d20588c255.jpg) ![Screenshot_20230327_134846_Gallery](https://user-images.githubusercontent.com/72846127/229264612-ba49b656-a44e-4767-b1d1-7fbe6f47bb54.jpg)
 
+![Screenshot_20230327_134837_Gallery](https://user-images.githubusercontent.com/72846127/229264611-9fe1f0b3-79db-4375-94c9-20d20588c255.jpg) ![Screenshot_20230327_134846_Gallery](https://user-images.githubusercontent.com/72846127/229264612-ba49b656-a44e-4767-b1d1-7fbe6f47bb54.jpg)
+- 마이 페이지에 내 프로필 사진을 누르면 사진을 변경할 수 있습니다.
+- 닉네임을 변경하면 닉네임 변경하기 버튼은 사라지고 내가 원하는 닉네임을 입력 후 중복 검사에 통과하면 닉네임이 변경됩니다.
+- 내가 쓴 글 보기를 누르면 내가 올린 글만 필터링 되어 보여집니다.
 
 
