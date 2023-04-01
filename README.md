@@ -93,6 +93,8 @@ BunGae 앱은 다양한 활동을 다양한 사람들과 급 번개 모임을 �
 ![KakaoTalk_20230328_021623463](https://user-images.githubusercontent.com/72846127/229263998-e512ec5c-799b-4d8a-9ede-6116103e0480.gif) ![KakaoTalk_20230328_021623463_06](https://user-images.githubusercontent.com/72846127/229264354-0180061c-ed14-4b6c-b4f8-907391e72f35.jpg)
 - 메시지를 받으면 대화방이 생기는 걸 볼 수 있습니다.
 
+<br><br>
+
 사용자: 굳건이 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 사용자: 너굴
 
 ![KakaoTalk_20230328_021623463_01](https://user-images.githubusercontent.com/72846127/229264484-89826696-6aec-492f-b048-099e8f07e9a1.gif) ![KakaoTalk_20230328_021623463_04](https://user-images.githubusercontent.com/72846127/229264415-60723ed4-f97a-4d92-9d65-85195ae7d3e0.gif) ![KakaoTalk_20230328_021623463_03](https://user-images.githubusercontent.com/72846127/229264444-90756003-7b65-41c7-a2a1-333206c8ed52.gif) ![KakaoTalk_20230328_021623463_05](https://user-images.githubusercontent.com/72846127/229264454-297096b2-e9d1-401f-a0f8-83860a75ac88.gif)
