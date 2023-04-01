@@ -69,6 +69,15 @@ BunGae 앱은 다양한 활동을 다양한 사람들과 급 번개 모임을 �
 ![Screenshot_20230327_134254_Gallery](https://user-images.githubusercontent.com/72846127/229263215-0c622036-b968-4c55-ae7e-f34a9aa6eee7.jpg)
 - 생성한 계정으로 로그인을 합니다.
 
+#### 글 작
+![Screenshot_20230327_134509_Gallery](https://user-images.githubusercontent.com/72846127/229263400-d158ceb7-179f-4b84-ba61-aa271f680fdf.jpg) 
+![Screenshot_20230327_134615_Gallery](https://user-images.githubusercontent.com/72846127/229263405-2e4c5da0-28f8-4f1c-82af-2d1557bd2297.jpg) 
+![Screenshot_20230327_134621_Gallery](https://user-images.githubusercontent.com/72846127/229263409-3d9024c8-b2bd-44af-867e-942ace985ad5.jpg) 
+![Screenshot_20230327_134631_Gallery](https://user-images.githubusercontent.com/72846127/229263415-08af24b4-e9bb-4c66-ab58-21ddf780e21d.jpg) 
+- 먼저 위치 접근 권한을 확인합니다.
+- 글 내용을 입력하고 모임 장소를 구글 맵으로 검색하면 해당 위치로 마커가 이동됩니다.
+- '여기에서 봐요!' 버튼을 누르면 해당 주소가 화면에 등록됩니다.
+
 
 
 
