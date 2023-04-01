@@ -56,16 +56,18 @@ BunGae 앱은 다양한 활동을 다양한 사람들과 급 번개 모임을 �
 - 이메일 형식으로 회원가입을 진행합니다.
 - 이메일 중복 확인과 비밀번호 일치 여부를 확인하고 값을 넘깁니다.
 
+#### 프로필 등록
 ![Screenshot_20230327_134147_Gallery](https://user-images.githubusercontent.com/72846127/229263150-449534c5-ee4f-4b86-8e87-1fe82b87155e.jpg) 
 ![Screenshot_20230327_134159_Gallery](https://user-images.githubusercontent.com/72846127/229263151-0616279f-b7c6-40c1-95db-76e76693b8d2.jpg) 
 ![Screenshot_20230327_134216_Gallery](https://user-images.githubusercontent.com/72846127/229263155-f5bc3d87-1470-44fc-b8bc-1155459d566d.jpg) 
+![Screenshot_20230327_134231_Gallery](https://user-images.githubusercontent.com/72846127/229263162-11ecbea4-3aaa-4631-b263-3c8522176618.jpg) 
 - 카메라와 내부 저장소의 접근 권한을 확인합니다.
 - 닉네임 중복 체크를 하면 Firebase와 통신하여 닉네임 중복 여부를 확인 후 결과를 반환합니다.
 
-![Screenshot_20230327_134231_Gallery](https://user-images.githubusercontent.com/72846127/229263162-11ecbea4-3aaa-4631-b263-3c8522176618.jpg) 
+#### 로그인
 ![Screenshot_20230327_134244_Gallery](https://user-images.githubusercontent.com/72846127/229263173-b4e57247-8ee7-4353-9f72-15dc6c20dde4.jpg) 
 ![Screenshot_20230327_134254_Gallery](https://user-images.githubusercontent.com/72846127/229263215-0c622036-b968-4c55-ae7e-f34a9aa6eee7.jpg)
-
+- 생성한 계정으로 로그인을 합니다.
 
 
 
