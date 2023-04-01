@@ -52,9 +52,12 @@ BunGae 앱은 다양한 활동을 다양한 사람들과 급 번개 모임을 �
 ### UI
 --------
 #### 회원가입
-![Screenshot_20230327_134129_Gallery](https://user-images.githubusercontent.com/72846127/229263145-0738e35a-f49c-4cce-ab47-d92d39a0c912.jpg)![Screenshot_20230327_134147_Gallery](https://user-images.githubusercontent.com/72846127/229263150-449534c5-ee4f-4b86-8e87-1fe82b87155e.jpg)
-![Screenshot_20230327_134159_Gallery](https://user-images.githubusercontent.com/72846127/229263151-0616279f-b7c6-40c1-95db-76e76693b8d2.jpg)![Screenshot_20230327_134216_Gallery](https://user-images.githubusercontent.com/72846127/229263155-f5bc3d87-1470-44fc-b8bc-1155459d566d.jpg)
-![Screenshot_20230327_134231_Gallery](https://user-images.githubusercontent.com/72846127/229263162-11ecbea4-3aaa-4631-b263-3c8522176618.jpg)![Screenshot_20230327_134244_Gallery](https://user-images.githubusercontent.com/72846127/229263173-b4e57247-8ee7-4353-9f72-15dc6c20dde4.jpg)
+![Screenshot_20230327_134129_Gallery](https://user-images.githubusercontent.com/72846127/229263145-0738e35a-f49c-4cce-ab47-d92d39a0c912.jpg) 
+![Screenshot_20230327_134147_Gallery](https://user-images.githubusercontent.com/72846127/229263150-449534c5-ee4f-4b86-8e87-1fe82b87155e.jpg) 
+![Screenshot_20230327_134159_Gallery](https://user-images.githubusercontent.com/72846127/229263151-0616279f-b7c6-40c1-95db-76e76693b8d2.jpg) 
+![Screenshot_20230327_134216_Gallery](https://user-images.githubusercontent.com/72846127/229263155-f5bc3d87-1470-44fc-b8bc-1155459d566d.jpg) 
+![Screenshot_20230327_134231_Gallery](https://user-images.githubusercontent.com/72846127/229263162-11ecbea4-3aaa-4631-b263-3c8522176618.jpg) 
+![Screenshot_20230327_134244_Gallery](https://user-images.githubusercontent.com/72846127/229263173-b4e57247-8ee7-4353-9f72-15dc6c20dde4.jpg) 
 
 
 
