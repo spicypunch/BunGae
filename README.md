@@ -90,4 +90,5 @@ BunGae 앱은 다양한 활동을 다양한 사람들과 급 번개 모임을 �
 #### 채팅
 사용자: 굳건이 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 사용자: 너굴
 
-![KakaoTalk_20230328_021623463](https://user-images.githubusercontent.com/72846127/229263998-e512ec5c-799b-4d8a-9ede-6116103e0480.gif) ![KakaoTalk_20230328_021623463_01](https://user-images.githubusercontent.com/72846127/229264022-f49e8503-71e9-476e-8e3d-834327341781.gif)
+![KakaoTalk_20230328_021623463](https://user-images.githubusercontent.com/72846127/229263998-e512ec5c-799b-4d8a-9ede-6116103e0480.gif) ![KakaoTalk_20230328_021623463_06](https://user-images.githubusercontent.com/72846127/229264240-6ecbe026-102d-4f31-bdbe-0ed1fafc41f4.jpg)
+ 
