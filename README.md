@@ -55,6 +55,7 @@ BunGae 앱은 다양한 활동을 다양한 사람들과 급 번개 모임을 �
 ![Screenshot_20230327_134129_Gallery](https://user-images.githubusercontent.com/72846127/229263145-0738e35a-f49c-4cce-ab47-d92d39a0c912.jpg) 
 - 이메일 형식으로 회원가입을 진행합니다.
 - 이메일 중복 확인과 비밀번호 일치 여부를 확인하고 값을 넘깁니다.
+
 ![Screenshot_20230327_134147_Gallery](https://user-images.githubusercontent.com/72846127/229263150-449534c5-ee4f-4b86-8e87-1fe82b87155e.jpg) 
 ![Screenshot_20230327_134159_Gallery](https://user-images.githubusercontent.com/72846127/229263151-0616279f-b7c6-40c1-95db-76e76693b8d2.jpg) 
 ![Screenshot_20230327_134216_Gallery](https://user-images.githubusercontent.com/72846127/229263155-f5bc3d87-1470-44fc-b8bc-1155459d566d.jpg) 
