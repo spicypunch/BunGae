@@ -101,5 +101,14 @@ BunGae 앱은 다양한 활동을 다양한 사람들과 급 번개 모임을 �
 
 - 대화를 주고 받을 때 메세지를 보내면 바로 대화방에 반영되는 걸 볼 수 있습니다.
 
+#### 구글 맵
+![KakaoTalk_20230327_162224466](https://user-images.githubusercontent.com/72846127/229264548-dc6df6f5-0b29-4fd7-a939-78d014bddda5.jpg) ![KakaoTalk_20230327_162224466_01](https://user-images.githubusercontent.com/72846127/229264553-6b63c672-7971-4573-a803-72e3a79fe2bc.jpg)
+- 맵 프래그먼트를 실행하면 현재 내 위치가 바로 표시됩니다.
+- 이전에 올린 게시글의 마커도 표시되어있는 걸 볼 수 있습니다.
+
+#### 마이 페이지
+![Screenshot_20230327_134821_Gallery](https://user-images.githubusercontent.com/72846127/229264608-99cee76e-e834-46a9-9b4c-886f17e8aa92.jpg) ![Screenshot_20230327_134826_Gallery](https://user-images.githubusercontent.com/72846127/229264609-59da4fd3-c66c-4f43-900a-e56aec39005a.jpg)
+![Screenshot_20230327_134837_Gallery](https://user-images.githubusercontent.com/72846127/229264611-9fe1f0b3-79db-4375-94c9-20d20588c255.jpg) ![Screenshot_20230327_134846_Gallery](https://user-images.githubusercontent.com/72846127/229264612-ba49b656-a44e-4767-b1d1-7fbe6f47bb54.jpg)
+
 
 
