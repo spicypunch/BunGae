@@ -18,7 +18,15 @@ BunGae 앱은 다양한 활동을 다양한 사람들과 급 번개 모임을 �
 ![5](https://user-images.githubusercontent.com/72846127/225082740-fc5497a3-4529-4e2e-9bf4-5589aeebe13b.png)
 <br>  -->
 #### 회원가입
-![image](https://user-images.githubusercontent.com/72846127/229262274-e7633718-60f2-41a6-9139-59d03e8d6d5f.png)
+![image](https://user-images.githubusercontent.com/72846127/229263000-0e919a7c-70dc-433e-a6b3-ba03a7f9d501.png)
+<br>
+#### 게시글 등록
+![image](https://user-images.githubusercontent.com/72846127/229263005-a2c80a1b-d5c4-4f08-ac7b-285608241162.png)
+<br>
+#### 채팅
+![image](https://user-images.githubusercontent.com/72846127/229262984-b5ddc00c-bf0d-4448-8d27-333e43600f9d.png)
+<br>
+
 
 
 <br>
