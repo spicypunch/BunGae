@@ -58,7 +58,8 @@ BunGae 앱은 다양한 활동을 다양한 사람들과 급 번개 모임을 �
 
 #### 프로필 등록
 ![Screenshot_20230327_134147_Gallery](https://user-images.githubusercontent.com/72846127/229263150-449534c5-ee4f-4b86-8e87-1fe82b87155e.jpg) 
-![Screenshot_20230327_134159_Gallery](https://user-images.githubusercontent.com/72846127/229263151-0616279f-b7c6-40c1-95db-76e76693b8d2.jpg) 
+![Screenshot_20230327_134159_Gallery](https://user-images.githubusercontent.com/72846127/229263151-0616279f-b7c6-40c1-95db-76e76693b8d2.jpg)
+
 ![Screenshot_20230327_134216_Gallery](https://user-images.githubusercontent.com/72846127/229263155-f5bc3d87-1470-44fc-b8bc-1155459d566d.jpg) 
 ![Screenshot_20230327_134231_Gallery](https://user-images.githubusercontent.com/72846127/229263162-11ecbea4-3aaa-4631-b263-3c8522176618.jpg) 
 - 카메라와 내부 저장소의 접근 권한을 확인합니다.
@@ -71,7 +72,8 @@ BunGae 앱은 다양한 활동을 다양한 사람들과 급 번개 모임을 �
 
 #### 글 작
 ![Screenshot_20230327_134509_Gallery](https://user-images.githubusercontent.com/72846127/229263400-d158ceb7-179f-4b84-ba61-aa271f680fdf.jpg) 
-![Screenshot_20230327_134615_Gallery](https://user-images.githubusercontent.com/72846127/229263405-2e4c5da0-28f8-4f1c-82af-2d1557bd2297.jpg) 
+![Screenshot_20230327_134615_Gallery](https://user-images.githubusercontent.com/72846127/229263405-2e4c5da0-28f8-4f1c-82af-2d1557bd2297.jpg)
+
 ![Screenshot_20230327_134621_Gallery](https://user-images.githubusercontent.com/72846127/229263409-3d9024c8-b2bd-44af-867e-942ace985ad5.jpg) 
 ![Screenshot_20230327_134631_Gallery](https://user-images.githubusercontent.com/72846127/229263415-08af24b4-e9bb-4c66-ab58-21ddf780e21d.jpg) 
 - 먼저 위치 접근 권한을 확인합니다.
