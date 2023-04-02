@@ -15,11 +15,17 @@ import com.example.bungae.singleton.GetProfileImage
 import com.example.bungae.ui.message.adapter.MessageAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MessageFragment : Fragment() {
 
+    @Inject
+    lateinit var auth: FirebaseAuth
+
     private var _binding: FragmentMessageBinding? = null
-    private val adapter by lazy { MessageAdapter() }
+    private val adapter by lazy { MessageAdapter(auth) }
     private lateinit var map: Map<String, List<ChatModel>>
     private var list: MutableList<ChatListData> = mutableListOf()
 

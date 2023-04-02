@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bungae.ui.home.adpater.PostListAdapter
 import com.example.bungae.databinding.ActivityMypostBinding
 import com.example.bungae.ui.mypage.PostListViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MyPostActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMypostBinding

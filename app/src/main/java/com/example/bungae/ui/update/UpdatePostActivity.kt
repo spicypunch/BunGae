@@ -21,9 +21,11 @@ import com.example.bungae.R
 import com.example.bungae.data.ItemData
 import com.example.bungae.databinding.ActivityUpdatePostBinding
 import com.example.bungae.ui.post.PostViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 
+@AndroidEntryPoint
 class UpdatePostActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUpdatePostBinding
 
