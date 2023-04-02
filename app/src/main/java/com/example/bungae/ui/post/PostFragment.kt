@@ -22,9 +22,11 @@ import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.example.bungae.R
 import com.example.bungae.databinding.FragmentPostBinding
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 
+@AndroidEntryPoint
 class PostFragment : Fragment() {
 
     private var _binding: FragmentPostBinding? = null

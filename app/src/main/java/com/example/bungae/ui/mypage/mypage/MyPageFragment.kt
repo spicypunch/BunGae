@@ -21,18 +21,19 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.bungae.R
 import com.example.bungae.databinding.FragmentMypageBinding
-import com.example.bungae.singleton.FireBaseAuth
 import com.example.bungae.ui.account.login.LoginActivity
 import com.example.bungae.ui.mypage.mypost.MyPostActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.ktx.storage
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MyPageFragment : Fragment() {
+
+    @Inject
+    lateinit var auth: FirebaseAuth
 
     private var _binding: FragmentMypageBinding? = null
 
@@ -143,7 +144,7 @@ class MyPageFragment : Fragment() {
         }
 
         binding.btnLogout.setOnClickListener {
-            FireBaseAuth.auth.signOut()
+            auth.signOut()
             startActivity(Intent(activity, LoginActivity::class.java))
         }
 

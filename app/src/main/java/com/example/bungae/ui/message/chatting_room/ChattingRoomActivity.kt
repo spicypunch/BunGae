@@ -15,10 +15,13 @@ import com.example.bungae.singleton.GetProfileImage
 import com.example.bungae.ui.message.adapter.ChattingRoomAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ChattingRoomActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChattingRoomDetailBinding
@@ -26,8 +29,11 @@ class ChattingRoomActivity : AppCompatActivity() {
     private var myProfileData: ProfileData? = null
     private var profileImage: Uri? = null
 
+    @Inject
+    lateinit var auth: FirebaseAuth
+
     private val adapter by lazy {
-        ChattingRoomAdapter(profileImage)
+        ChattingRoomAdapter(profileImage, auth)
     }
 
     private val chattingRoomViewModel by lazy {

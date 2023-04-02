@@ -15,12 +15,16 @@ import com.example.bungae.data.ChatInfoData
 import com.example.bungae.data.ItemData
 import com.example.bungae.data.ProfileData
 import com.example.bungae.databinding.ActivityDetailBinding
-import com.example.bungae.singleton.FireBaseAuth
 import com.example.bungae.ui.message.chatting_room.ChattingRoomActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var auth: FirebaseAuth
 
     private lateinit var binding: ActivityDetailBinding
     private lateinit var item: ItemData
@@ -55,7 +59,7 @@ class DetailActivity : AppCompatActivity() {
 
         detailViewModel.profileDataList.observe(this, Observer {
             binding.profileData = it
-            if (item.uid != FireBaseAuth.auth.currentUser!!.uid) {
+            if (item.uid != auth.currentUser!!.uid) {
                 binding.btnDetailItemUpdate.visibility = View.INVISIBLE
                 binding.btnDetailItemDelete.visibility = View.INVISIBLE
             } else {
