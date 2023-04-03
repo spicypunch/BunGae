@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,9 +16,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
 
-    private val loginViewModel by lazy {
-            ViewModelProvider(this).get(LoginViewModel::class.java)
-    }
+    private val loginViewModel: LoginViewModel by viewModels()
+
     private var time: Long = 0
 
     private val callBack = object : OnBackPressedCallback(true) {

@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -41,9 +42,7 @@ class MyPageFragment : Fragment() {
 
     private var uriInfo: Uri? = null
 
-    private val  myPageViewModel by lazy {
-        ViewModelProvider(requireActivity()).get(MyPageViewModel::class.java)
-    }
+    private val myPageViewModel: MyPageViewModel by viewModels()
 
     private val permissionList = arrayOf(
         Manifest.permission.CAMERA,
