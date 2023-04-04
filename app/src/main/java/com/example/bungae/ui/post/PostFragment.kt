@@ -36,8 +36,9 @@ class PostFragment : Fragment() {
 
     private var uriInfo: Uri? = null
 
-    private val postViewModel: PostViewModel by viewModels()
-
+    private val postViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(PostViewModel::class.java)
+    }
     private lateinit var navController: NavController
 
     private val permissionList = arrayOf(
