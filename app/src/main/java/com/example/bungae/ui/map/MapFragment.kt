@@ -10,8 +10,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.bungae.databinding.FragmentMapBinding
+import com.example.bungae.ui.mypage.PostListViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -29,9 +31,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
 
-    private val mapViewModel by lazy {
-        ViewModelProvider(this).get(MapViewModel::class.java)
-    }
+    private val mapViewModel: MapViewModel by viewModels()
 
     private var mapFragment: SupportMapFragment? = null
 

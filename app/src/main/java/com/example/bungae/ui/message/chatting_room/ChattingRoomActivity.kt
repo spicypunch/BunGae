@@ -3,6 +3,7 @@ package com.example.bungae.ui.message.chatting_room
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -36,9 +37,7 @@ class ChattingRoomActivity : AppCompatActivity() {
         ChattingRoomAdapter(profileImage, auth)
     }
 
-    private val chattingRoomViewModel by lazy {
-        ViewModelProvider(this).get(ChattingRoomViewModel::class.java)
-    }
+    private val chattingRoomViewModel: ChattingRoomViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

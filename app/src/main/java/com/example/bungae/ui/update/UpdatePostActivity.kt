@@ -13,6 +13,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -31,9 +32,7 @@ class UpdatePostActivity : AppCompatActivity() {
 
     private var uriInfo: Uri? = null
 
-    private val updatePostViewModel by lazy {
-        ViewModelProvider(this).get(PostViewModel::class.java)
-    }
+    private val updatePostViewModel: PostViewModel by viewModels()
 
     private val permissionList = arrayOf(
         Manifest.permission.CAMERA,

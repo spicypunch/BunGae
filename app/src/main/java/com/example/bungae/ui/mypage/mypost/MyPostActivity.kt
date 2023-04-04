@@ -1,6 +1,7 @@
 package com.example.bungae.ui.mypage.mypost
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -17,9 +18,7 @@ class MyPostActivity : AppCompatActivity() {
 
     private val adapter by lazy { PostListAdapter() }
 
-    private val postListViewModel by lazy {
-        ViewModelProvider(this).get(PostListViewModel::class.java)
-    }
+    private val postListViewModel: PostListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

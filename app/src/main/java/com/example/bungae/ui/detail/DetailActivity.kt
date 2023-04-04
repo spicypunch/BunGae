@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -31,9 +32,7 @@ class DetailActivity : AppCompatActivity() {
 
     private lateinit var profileData: ProfileData
 
-    private val detailViewModel by lazy {
-        ViewModelProvider(this).get(DetailViewModel::class.java)
-    }
+    private val detailViewModel: DetailViewModel by viewModels()
 
     private val getList: ActivityResultLauncher<ItemData> =
         registerForActivityResult(ActivityContract()) { result: HashMap<String, String>? ->

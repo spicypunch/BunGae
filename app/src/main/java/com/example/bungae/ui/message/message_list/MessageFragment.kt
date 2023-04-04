@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +15,7 @@ import com.example.bungae.data.ChatModel
 import com.example.bungae.databinding.FragmentMessageBinding
 import com.example.bungae.singleton.GetProfileImage
 import com.example.bungae.ui.message.adapter.MessageAdapter
+import com.example.bungae.ui.message.chatting_room.ChattingRoomViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,9 +35,7 @@ class MessageFragment : Fragment() {
     private val binding
         get() = _binding!!
 
-    private val messageViewModel by lazy {
-        ViewModelProvider(requireActivity()).get(MessageViewModel::class.java)
-    }
+    private val messageViewModel: MessageViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

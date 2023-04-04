@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -38,7 +39,6 @@ class PostFragment : Fragment() {
     private val postViewModel by lazy {
         ViewModelProvider(requireActivity()).get(PostViewModel::class.java)
     }
-
     private lateinit var navController: NavController
 
     private val permissionList = arrayOf(

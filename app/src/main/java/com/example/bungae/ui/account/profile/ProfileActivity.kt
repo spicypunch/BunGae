@@ -11,10 +11,10 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.bungae.R
 import com.example.bungae.databinding.ActivityWriteProfileBinding
@@ -28,9 +28,7 @@ class ProfileActivity : AppCompatActivity() {
     private var uriInfo: Uri? = null
     private var nickNameCheckResult: Boolean = false
 
-    private val profileViewModel by lazy {
-        ViewModelProvider(this).get(ProfileViewModel::class.java)
-    }
+    private val profileViewModel: ProfileViewModel by viewModels()
 
     private var time: Long = 0
 
