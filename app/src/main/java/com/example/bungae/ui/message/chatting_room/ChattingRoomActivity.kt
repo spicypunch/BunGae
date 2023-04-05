@@ -48,7 +48,6 @@ class ChattingRoomActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
             profileImage = GetProfileImage.getProfileImage(chatInfoData.uid)
-            Log.e("popular", profileImage.toString())
         }
 
         CoroutineScope(Dispatchers.IO).launch {
