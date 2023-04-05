@@ -3,8 +3,11 @@ package com.example.bungae.ui.account.login
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,14 +27,17 @@ class LoginViewModel @Inject constructor(
         _success.value = true
     }
 
-    fun signIn(email: String, passwd:String) {
-        if (email.isNotEmpty() && passwd.isNotEmpty()) {
-            auth.signInWithEmailAndPassword(email, passwd)
-                .addOnCompleteListener { task ->
-                    _message.value = task.isSuccessful
+    suspend fun signIn(email: String, passwd:String) {
+        viewModelScope.launch {
+            if (email.isNotEmpty() && passwd.isNotEmpty()) {
+                try {
+                    val authResult = auth.signInWithEmailAndPassword(email, passwd).await()
+                    _message.value = (authResult.user != null)
+                } catch (e: Exception) {
+                    _success.value = false
                 }
-        } else {
-            _success.value = false
+            }
         }
+
     }
 }

@@ -11,6 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.bungae.databinding.ActivityLoginBinding
 import com.example.bungae.ui.account.signup.SignUpActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
@@ -40,7 +43,9 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnLogin.setOnClickListener {
-            loginViewModel.signIn(binding.editId.text.toString(), binding.editPw.text.toString())
+            CoroutineScope(Dispatchers.IO).launch {
+                loginViewModel.signIn(binding.editId.text.toString(), binding.editPw.text.toString())
+            }
         }
 
         binding.btnSignup.setOnClickListener {
