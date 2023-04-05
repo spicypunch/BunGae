@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -23,12 +24,8 @@ class LoginViewModel @Inject constructor(
     val success: LiveData<Boolean>
         get() = _success
 
-    init {
-        _success.value = true
-    }
-
-    suspend fun signIn(email: String, passwd:String) {
-        viewModelScope.launch {
+    fun signIn(email: String, passwd:String) {
+        viewModelScope.launch {Dispatchers.IO
             if (email.isNotEmpty() && passwd.isNotEmpty()) {
                 try {
                     val authResult = auth.signInWithEmailAndPassword(email, passwd).await()

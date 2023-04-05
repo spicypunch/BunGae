@@ -43,9 +43,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnLogin.setOnClickListener {
-            CoroutineScope(Dispatchers.IO).launch {
-                loginViewModel.signIn(binding.editId.text.toString(), binding.editPw.text.toString())
-            }
+            loginViewModel.signIn(binding.editId.text.toString(), binding.editPw.text.toString())
         }
 
         binding.btnSignup.setOnClickListener {
