@@ -25,7 +25,7 @@ class LoginViewModel @Inject constructor(
         get() = _success
 
     fun signIn(email: String, passwd:String) {
-        viewModelScope.launch {Dispatchers.IO
+        viewModelScope.launch {
             if (email.isNotEmpty() && passwd.isNotEmpty()) {
                 try {
                     val authResult = auth.signInWithEmailAndPassword(email, passwd).await()

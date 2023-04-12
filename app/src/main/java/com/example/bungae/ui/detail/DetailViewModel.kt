@@ -36,7 +36,6 @@ class DetailViewModel @Inject constructor(
 
     fun getProfileData(user: String) {
         viewModelScope.launch {
-            Dispatchers.IO
             try {
                 val dbResult = db.collection("Profile")
                     .whereEqualTo("uid", user)
@@ -52,7 +51,6 @@ class DetailViewModel @Inject constructor(
 
     fun getProfileImage(user: String) {
         viewModelScope.launch {
-            Dispatchers.IO
             val imgRef = imageStorage.reference.child("profile/image_${user}.jpg")
             val downloadUrl = imgRef.downloadUrl.await()
             _profileImage.value = downloadUrl
@@ -61,7 +59,6 @@ class DetailViewModel @Inject constructor(
 
     fun deleteItem(item: ItemData) {
         viewModelScope.launch {
-            Dispatchers.IO
             try {
                 db.collection("ItemInfo")
                     .document("${item.uid}_${item.date}")

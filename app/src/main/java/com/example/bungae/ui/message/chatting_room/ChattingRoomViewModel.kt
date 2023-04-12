@@ -52,7 +52,6 @@ class ChattingRoomViewModel @Inject constructor(
         chatModel.comments.put("comment", comment)
 
         viewModelScope.launch {
-            Dispatchers.IO
             try {
                 db.collection("ChatRoom")
                     .document()

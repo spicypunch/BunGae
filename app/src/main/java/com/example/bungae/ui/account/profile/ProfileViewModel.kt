@@ -36,7 +36,7 @@ class ProfileViewModel @Inject constructor(
         get() = _checkFirestore
 
     fun checkNickName(nickName: String) {
-        viewModelScope.launch {Dispatchers.IO
+        viewModelScope.launch {
             try {
                 val dbResult = db.collection("Profile")
                     .whereEqualTo("nickname", nickName)
@@ -50,7 +50,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun createProfile(nickName: String, age: Int, gender: Boolean) {
-        viewModelScope.launch {Dispatchers.IO
+        viewModelScope.launch {
             try {
                 if (nickName.isEmpty()) {
                     _message.value = "사용할 닉네임을 입력해주세요."
@@ -74,7 +74,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun uploadImageToFirebase(uriInfo: Uri?) {
-        viewModelScope.launch {Dispatchers.IO
+        viewModelScope.launch {
             val imageRef =
                 imageStorage.reference.child("profile/")
                     .child("image_${auth.currentUser!!.uid}.jpg")

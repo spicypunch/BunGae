@@ -42,7 +42,6 @@ class MyPageViewModel @Inject constructor(
 
     fun getNickname() {
         viewModelScope.launch {
-            Dispatchers.IO
             try {
                 val dbResult = db.collection("Profile")
                     .whereEqualTo("uid", auth.currentUser!!.uid)
@@ -61,7 +60,6 @@ class MyPageViewModel @Inject constructor(
 
     fun getProfileImage() {
         viewModelScope.launch {
-            Dispatchers.IO
             try {
                 val imgRef =
                     imageStorage.reference.child("profile/image_${auth.currentUser!!.uid}.jpg")
@@ -75,7 +73,7 @@ class MyPageViewModel @Inject constructor(
 
 
     fun updateImageToFirebase(uriInfo: Uri) {
-        viewModelScope.launch { Dispatchers.IO
+        viewModelScope.launch {
             try {
                 val fileName = "image_${auth.currentUser!!.uid}.jpg"
                 val imageRef = imageStorage.reference.child("profile/").child(fileName)
@@ -86,7 +84,7 @@ class MyPageViewModel @Inject constructor(
     }
 
     fun checkNickName(nickName: String) {
-        viewModelScope.launch {Dispatchers.IO
+        viewModelScope.launch {
             val dbResult = db.collection("Profile")
                 .whereEqualTo("nickname", nickName)
                 .get()
@@ -96,7 +94,7 @@ class MyPageViewModel @Inject constructor(
     }
 
     fun updateNickName(nickName: String) {
-        viewModelScope.launch { Dispatchers.IO
+        viewModelScope.launch {
                 db.collection("Profile")
                     .document(auth.currentUser!!.uid)
                     .update("nickname", nickName)

@@ -33,7 +33,6 @@ class PostListViewModel @Inject constructor(
 
     fun getFireStorage() {
         viewModelScope.launch {
-            Dispatchers.IO
             try {
                 val dbResult = db.collection("ItemInfo")
                     .get()
@@ -54,7 +53,6 @@ class PostListViewModel @Inject constructor(
 
     fun getMyPostList() {
         viewModelScope.launch {
-            Dispatchers.IO
             try {
                 val dbResult = db.collection("ItemInfo")
                     .whereEqualTo("uid", auth.currentUser!!.uid)

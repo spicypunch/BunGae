@@ -30,7 +30,6 @@ class SignUpViewModel @Inject constructor(
 
     private fun createAccount(email: String, passwd: String) {
         viewModelScope.launch {
-            Dispatchers.IO
             if (email.isNotEmpty() && passwd.isNotEmpty()) {
                 val authResult = auth.createUserWithEmailAndPassword(email, passwd).await()
                 if (authResult.user != null) {
@@ -42,6 +41,5 @@ class SignUpViewModel @Inject constructor(
                 _message.value = "빈칸을 전부 채워주세요!"
             }
         }
-
     }
 }

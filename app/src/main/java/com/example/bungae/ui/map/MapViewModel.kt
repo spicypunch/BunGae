@@ -30,7 +30,6 @@ class MapViewModel @Inject constructor(
 
     fun getItemList() {
         viewModelScope.launch {
-            Dispatchers.IO
             try {
                 val dbResult = db.collection("ItemInfo")
                     .get().await()
