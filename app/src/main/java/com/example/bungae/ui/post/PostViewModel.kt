@@ -57,7 +57,6 @@ class PostViewModel @Inject constructor(
 
     fun uploadImageToFirebase(uriInfo: Uri?) {
         viewModelScope.launch {
-            Dispatchers.IO
             val imageRef =
                 FirebaseStorage.getInstance().reference.child("ItemInfo/")
                     .child("image_${auth.currentUser!!.uid}_${dateFormat.format(currentTime)}.jpg")
@@ -69,7 +68,6 @@ class PostViewModel @Inject constructor(
 
     private fun getImageUrl() {
         viewModelScope.launch {
-            Dispatchers.IO
             val imgRef = FirebaseStorage.getInstance().reference.child(
                 "ItemInfo/image_${auth.currentUser!!.uid}_${dateFormat.format(currentTime)}.jpg"
             )
@@ -87,7 +85,6 @@ class PostViewModel @Inject constructor(
         imageUrl: String
     ) {
         viewModelScope.launch {
-            Dispatchers.IO
             if (title.isBlank() || content.isBlank()) {
                 _blankCheck.value = false
             } else {
@@ -115,7 +112,6 @@ class PostViewModel @Inject constructor(
 
     fun updateImageToFirebase(uriInfo: Uri, date: String) {
         viewModelScope.launch {
-            Dispatchers.IO
             val fileName = "image_${auth.currentUser!!.uid}_${date}.jpg"
             val imageRef =
                 FirebaseStorage.getInstance().reference.child("ItemInfo/").child(fileName)
@@ -126,7 +122,6 @@ class PostViewModel @Inject constructor(
 
     private fun getUpdateItemUrl(date: String) {
         viewModelScope.launch {
-            Dispatchers.IO
             val imgRef = FirebaseStorage.getInstance().reference.child(
                 "ItemInfo/image_${auth.currentUser!!.uid}_${date}.jpg"
             )
@@ -144,7 +139,6 @@ class PostViewModel @Inject constructor(
         date: String
     ) {
         viewModelScope.launch {
-            Dispatchers.IO
             if (title.isBlank() || content.isBlank()) {
                 _blankCheck.value = false
             } else {
