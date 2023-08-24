@@ -4,10 +4,9 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.bungae.ui.home.adpater.PostListAdapter
 import com.example.bungae.databinding.ActivityMypostBinding
+import com.example.bungae.ui.home.adpater.PostListAdapter
 import com.example.bungae.ui.mypage.PostListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

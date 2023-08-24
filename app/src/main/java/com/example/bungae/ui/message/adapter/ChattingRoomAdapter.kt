@@ -13,19 +13,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bungae.data.ChatModel
 import com.example.bungae.databinding.ItemChattingBinding
 import com.google.firebase.auth.FirebaseAuth
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 class ChattingRoomAdapter(
     private val uri: Uri?,
     private val auth: FirebaseAuth
-    ) : ListAdapter<ChatModel, ChattingRoomAdapter.MyViewHolder>(diffUtil) {
+) : ListAdapter<ChatModel, ChattingRoomAdapter.MyViewHolder>(diffUtil) {
 
     class MyViewHolder(
         private val binding: ItemChattingBinding,
         private var uri: Uri?,
         private val auth: FirebaseAuth
-        ) :
+    ) :
         RecyclerView.ViewHolder(binding.root) {
         val root = binding.root
 

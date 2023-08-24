@@ -13,28 +13,28 @@ import com.example.bungae.data.ChatListData
 import com.example.bungae.databinding.ItemMessageBinding
 import com.example.bungae.ui.message.chatting_room.ChattingRoomActivity
 import com.google.firebase.auth.FirebaseAuth
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
-class MessageAdapter (
+class MessageAdapter(
     val auth: FirebaseAuth
-): ListAdapter<ChatListData, MessageAdapter.MyViewHolder>(diffUtil) {
+) : ListAdapter<ChatListData, MessageAdapter.MyViewHolder>(diffUtil) {
 
-    class MyViewHolder (
+    class MyViewHolder(
         private val binding: ItemMessageBinding,
         val auth: FirebaseAuth
-        ) : RecyclerView.ViewHolder(binding.root){
+    ) : RecyclerView.ViewHolder(binding.root) {
         val root = binding.root
 
         fun bind(item: ChatListData) {
             if (item.uid != auth.currentUser!!.uid) {
                 binding.tvMessageNickname.text = item.senderNickname
                 binding.tvMessage.text = item.message
-                Glide.with(itemView).load(R.drawable.ic_baseline_person_24).into(binding.imageProfile)
+                Glide.with(itemView).load(R.drawable.ic_baseline_person_24)
+                    .into(binding.imageProfile)
             } else {
                 binding.tvMessageNickname.text = item.receiverNickname
                 binding.tvMessage.text = item.message
-                Glide.with(itemView).load(R.drawable.ic_baseline_person_24).into(binding.imageProfile)
+                Glide.with(itemView).load(R.drawable.ic_baseline_person_24)
+                    .into(binding.imageProfile)
             }
 
             itemView.setOnClickListener {
@@ -54,7 +54,8 @@ class MessageAdapter (
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val binding: ItemMessageBinding = ItemMessageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding: ItemMessageBinding =
+            ItemMessageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding, auth)
     }
 

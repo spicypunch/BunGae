@@ -10,7 +10,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.bungae.data.ChatInfoData
 import com.example.bungae.data.ItemData
@@ -102,7 +101,7 @@ class DetailActivity : AppCompatActivity() {
         builder.setTitle("게시글 삭제")
         builder.setMessage("게시글을 삭제하시겠습니까?")
         builder.setNegativeButton("아니요", null)
-        builder.setPositiveButton("네", object: DialogInterface.OnClickListener {
+        builder.setPositiveButton("네", object : DialogInterface.OnClickListener {
             override fun onClick(p0: DialogInterface?, p1: Int) {
                 detailViewModel.deleteItem(item)
             }

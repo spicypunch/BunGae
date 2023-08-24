@@ -53,11 +53,13 @@ class LocationProvider(val context: Context) {
 
                 //네트워크를 통한 위치 파악이 가능한 경우에 위치를 가져옴
                 if (isNetworkManager) {
-                    networkLocation = locationManager?.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+                    networkLocation =
+                        locationManager?.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
                 }
                 //GPS를 통한 위치 파악이 가능한 경우에 위치를 가져옴
                 if (isGPSEnabled) {
-                    gpsLocation = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+                    gpsLocation =
+                        locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
                 }
                 if (gpsLocation != null && networkLocation != null) {
                     //두 개 위치가 있다면 정확도 높은 것으로 선택됨
@@ -83,12 +85,14 @@ class LocationProvider(val context: Context) {
         }
         return location
     }
+
     //위도 정보를 가져오는 함수
-    fun getLocationLatitude() : Double {
+    fun getLocationLatitude(): Double {
         return location?.latitude ?: 0.0
     }
+
     //경도 정보를 가져오는 함수
-    fun getLocationLongitude() : Double {
+    fun getLocationLongitude(): Double {
         return location?.longitude ?: 0.0
     }
 }

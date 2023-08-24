@@ -18,7 +18,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.bungae.R
 import com.example.bungae.databinding.FragmentMypageBinding
@@ -27,7 +26,8 @@ import com.example.bungae.ui.mypage.mypost.MyPostActivity
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -156,7 +156,10 @@ class MyPageFragment : Fragment() {
             put(MediaStore.Images.Media.DISPLAY_NAME, "img_$now.jpg")
             put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
         }
-        return activity?.contentResolver?.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, content)
+        return activity?.contentResolver?.insert(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            content
+        )
     }
 
     private fun openQuestionDialog() {
@@ -164,7 +167,7 @@ class MyPageFragment : Fragment() {
         builder.setTitle("사진 수정")
         builder.setMessage("프로필 사진을 수정하시겠습니까?")
         builder.setNegativeButton("아니요", null)
-        builder.setPositiveButton("네", object: DialogInterface.OnClickListener {
+        builder.setPositiveButton("네", object : DialogInterface.OnClickListener {
             override fun onClick(p0: DialogInterface?, p1: Int) {
                 openLoadImageDialog(requireContext())
             }
@@ -203,7 +206,7 @@ class MyPageFragment : Fragment() {
         builder.setTitle("사진 수정")
         builder.setMessage("선택한 사진으로 수정하시겠습니까?")
         builder.setNegativeButton("아니요", null)
-        builder.setPositiveButton("네", object: DialogInterface.OnClickListener {
+        builder.setPositiveButton("네", object : DialogInterface.OnClickListener {
             override fun onClick(p0: DialogInterface?, p1: Int) {
                 uriInfo?.let { myPageViewModel.updateImageToFirebase(it) }
             }

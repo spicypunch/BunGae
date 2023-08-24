@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.bungae.databinding.FragmentPostMapBinding
 import com.example.bungae.ui.map.LocationProvider
@@ -22,7 +21,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
-import java.util.*
+import java.util.Locale
 
 @AndroidEntryPoint
 class PostMapFragment : Fragment(), OnMapReadyCallback {

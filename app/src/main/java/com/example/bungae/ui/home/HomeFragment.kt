@@ -8,17 +8,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bungae.databinding.FragmentHomeBinding
 import com.example.bungae.ui.home.adpater.PostListAdapter
 import com.example.bungae.ui.mypage.PostListViewModel
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment() : Fragment() {

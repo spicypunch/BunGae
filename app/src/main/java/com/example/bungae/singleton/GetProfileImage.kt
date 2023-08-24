@@ -1,12 +1,8 @@
 package com.example.bungae.singleton
 
 import android.net.Uri
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
-import javax.inject.Inject
 
 object GetProfileImage {
 

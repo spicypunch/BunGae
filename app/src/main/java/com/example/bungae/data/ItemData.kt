@@ -1,7 +1,7 @@
 package com.example.bungae.data
 
 // 테스트용
-data class ItemData (
+data class ItemData(
     var uid: String = "",
     var title: String = "",
     var content: String = "",
@@ -9,4 +9,4 @@ data class ItemData (
     var category: String = "",
     var date: String = "",
     var imageUrl: String = ""
-): java.io.Serializable
+) : java.io.Serializable
