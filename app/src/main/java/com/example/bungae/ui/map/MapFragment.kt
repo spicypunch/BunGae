@@ -3,7 +3,6 @@ package com.example.bungae.ui.map
 import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +10,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.example.bungae.databinding.FragmentMapBinding
-import com.example.bungae.ui.mypage.PostListViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -21,7 +18,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
+import java.util.Locale
 
 @AndroidEntryPoint
 class MapFragment : Fragment(), OnMapReadyCallback {
@@ -80,7 +77,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             var location: Location
             for (i in it) {
                 location = searchLocation(i.address)
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(location.latitude, location.longitude), 16f))
+                mMap.moveCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        LatLng(
+                            location.latitude,
+                            location.longitude
+                        ), 16f
+                    )
+                )
                 setMarker(i.title)
                 getMyLocation()
             }
@@ -90,8 +94,15 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             if (binding.editSearchMap.text.toString().isBlank()) {
                 Toast.makeText(context, "주소를 입력해주세요", Toast.LENGTH_SHORT).show()
             } else {
-               val location = searchLocation(binding.editSearchMap.text.toString())
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(location.latitude, location.longitude), 16f))
+                val location = searchLocation(binding.editSearchMap.text.toString())
+                mMap.moveCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        LatLng(
+                            location.latitude,
+                            location.longitude
+                        ), 16f
+                    )
+                )
                 setMarker(binding.editSearchMap.text.toString())
             }
         }
@@ -107,7 +118,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         setMarker("현재 위치")
     }
 
-    private fun searchLocation(address: String) : Location {
+    private fun searchLocation(address: String): Location {
         return try {
             Geocoder(requireContext(), Locale.KOREA).getFromLocationName(address, 1)?.let {
                 Location("").apply {

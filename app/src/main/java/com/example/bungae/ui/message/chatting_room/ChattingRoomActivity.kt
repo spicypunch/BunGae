@@ -6,7 +6,6 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bungae.data.ChatInfoData
 import com.example.bungae.data.ProfileData
@@ -15,7 +14,6 @@ import com.example.bungae.singleton.GetMyProfile
 import com.example.bungae.singleton.GetProfileImage
 import com.example.bungae.ui.message.adapter.ChattingRoomAdapter
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

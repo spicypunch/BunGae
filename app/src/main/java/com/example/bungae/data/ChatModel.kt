@@ -1,4 +1,5 @@
 package com.example.bungae.data
+
 class ChatModel(
     val users: HashMap<String, Boolean> = HashMap(),
     val comments: HashMap<String, Comment> = HashMap()

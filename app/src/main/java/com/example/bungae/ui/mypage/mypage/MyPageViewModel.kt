@@ -6,13 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bungae.data.ProfileData
-import com.example.bungae.singleton.GetProfileImage
-import com.example.bungae.singleton.GetProfileImage.getProfileImage
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -95,10 +92,10 @@ class MyPageViewModel @Inject constructor(
 
     fun updateNickName(nickName: String) {
         viewModelScope.launch {
-                db.collection("Profile")
-                    .document(auth.currentUser!!.uid)
-                    .update("nickname", nickName)
-                    .await()
-            }
+            db.collection("Profile")
+                .document(auth.currentUser!!.uid)
+                .update("nickname", nickName)
+                .await()
+        }
     }
 }

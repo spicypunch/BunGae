@@ -5,4 +5,4 @@ data class ProfileData(
     var nickname: String = "",
     var age: Int = 0,
     var gender: Boolean = true,
-): java.io.Serializable
+) : java.io.Serializable

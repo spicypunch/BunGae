@@ -19,11 +19,15 @@ class SignUpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding  = ActivitySignupBinding.inflate(layoutInflater)
+        binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.btnRegister.setOnClickListener {
-            signUpActivity.checkPasswd(binding.editId.text.toString(), binding.editPw.text.toString(), binding.editPw2.text.toString())
+            signUpActivity.checkPasswd(
+                binding.editId.text.toString(),
+                binding.editPw.text.toString(),
+                binding.editPw2.text.toString()
+            )
         }
 
         signUpActivity.message.observe(this, Observer {

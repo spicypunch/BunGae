@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.bungae.data.ItemData
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject

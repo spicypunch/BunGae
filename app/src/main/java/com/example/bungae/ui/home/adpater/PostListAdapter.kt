@@ -10,9 +10,10 @@ import com.example.bungae.data.ItemData
 import com.example.bungae.databinding.ItemHomeBinding
 import com.example.bungae.ui.detail.DetailActivity
 
-class PostListAdapter() : ListAdapter<ItemData, PostListAdapter.MyViewHolder>(diffUtil){
+class PostListAdapter() : ListAdapter<ItemData, PostListAdapter.MyViewHolder>(diffUtil) {
 
-    class MyViewHolder(private val binding: ItemHomeBinding) : RecyclerView.ViewHolder(binding.root) {
+    class MyViewHolder(private val binding: ItemHomeBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         val root = binding.root
         fun bind(item: ItemData) {
             binding.data = item
@@ -26,7 +27,8 @@ class PostListAdapter() : ListAdapter<ItemData, PostListAdapter.MyViewHolder>(di
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val binding: ItemHomeBinding = ItemHomeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding: ItemHomeBinding =
+            ItemHomeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
     }
 
